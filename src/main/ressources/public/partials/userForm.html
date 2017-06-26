@@ -1,0 +1,123 @@
+<div class="row">
+    <div class="col-md-12">
+        <form ng-submit="update(adherent)">
+            <h2 class="page-header">Fiche adhérent</h2>
+
+            <div class="form-group">
+                <label for="inputName">Nom</label>
+                <input id="inputName" type="text" class="form-control" placeholder="Nom" ng-model="adherent.lastname" />
+            </div>
+
+            <div class="form-group">
+                <label for="inputFirstName">Prénom</label>
+                <input id="inputFirstName" type="text" class="form-control" placeholder="Prénom" ng-model="adherent.firstname" />
+            </div>
+
+            <div class="form-group">
+                <label for="inputBirthday">Date de naissance</label>
+                <input id="inputBirthday" type="date" class="form-control" ng-model="adherent.birthday" placeholder="yyyy-MM-dd" />
+            </div>
+
+            <div class="form-group">
+                <label for="inputTel">Numéro de téléphone</label>
+                <input id="inputTel" type="tel" class="form-control" ng-model="adherent.telNumber" />
+            </div>
+
+            <div class="form-group">
+                <label for="inputLicenceNumber">Numéro de licence</label>
+                <input id="inputLicenceNumber" type="text" class="form-control" placeholder="Numéro de licence" ng-model="adherent.licenceNumber" />
+            </div>
+
+            <h2 class="page-header">Information saison 2016-2017</h2>
+
+
+            <div class="form-group">
+                <label for="selectLevel">Type de licence</label>
+                <select id="selectLevel" class="form-control" ng-model="adherent.licenceType">
+          <option>Adulte</option>
+          <option>Moins de 18 ans</option>
+          <option>Moins de 14 ans</option>
+        </select>
+            </div>
+
+            <div class="form-group">
+                <label for="optionsAdhesion1">Type d'adhésion : </label>
+                <div class="radio-inline">
+                    <label>
+            <input type="radio" name="optionsAdhesion" id="optionsAdhesion1" ng-model="adherent.membershipType" value="plongee">
+            Plongée
+          </label>
+                </div>
+                <div class="radio-inline">
+                    <label>
+            <input type="radio" name="optionsAdhesion" id="optionsAdhesion2" ng-model="adherent.membershipType" value="hockey">
+            Hockey
+          </label>
+                </div>
+                <div class="radio-inline">
+                    <label>
+                        <input type="radio" name="optionsAdhesion" id="optionsAdhesion3" ng-model="adherent.membershipType" value="enfant"> Enfant
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="optionsAdhesion1">Assurance : </label>
+                <div class="checkbox-inline">
+                    <label>
+            <input type="checkbox" ng-model="adherent.assurance">
+            Assurance piscine
+          </label>
+                </div>
+            </div>
+
+            <div class="form-group" ng-show="adherent.membershipType == 'plongee'">
+                <label for="selectLevel">Niveau actuel : </label>
+                <select id="selectLevel" class="form-control" ng-model="adherent.actualLevel">
+          <option>Aucun</option>
+          <option>Niveau 1</option>
+          <option>Niveau 2</option>
+          <option>Niveau 3</option>
+        </select>
+            </div>
+
+            <div class="form-group" ng-show="adherent.membershipType == 'plongee'">
+                <label for="selectLevel">Niveau Préparé : </label>
+                <select id="selectLevel" class="form-control" ng-model="adherent.preparedLevel">
+          <option>Aucun</option>
+          <option>Niveau 1</option>
+          <option>Niveau 2</option>
+          <option>Niveau 3</option>
+        </select>
+            </div>
+
+            <div class="form-group" ng-show="adherent.membershipType == 'hockey'">
+                <label for="selectTeam">Equipe : </label>
+                <select id="selectTeam" class="form-control" ng-model="adherent.team">
+          <option>Aucune</option>
+          <option>Equipe 1</option>
+          <option>Equipe 2</option>
+          <option>Equipe fille</option>
+        </select>
+            </div>
+
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">Tout mettre à jour</button>
+            </div>
+            <div class="alert alert-info" role="info" ng-show="updateState=='wip'">
+                <button type="button" class="close" data-dismiss="info" aria-label="Close"><span aria-hidden="true">&times;</span></button> Mis à jour en cours ...
+            </div>
+            <div class="alert alert-success" role="success" ng-show="updateState=='done'">
+                <button type="button" class="close" data-dismiss="success" aria-label="Close"><span aria-hidden="true">&times;</span></button> Adhérent mis à jour !
+            </div>
+
+        </form>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <h2 class="page-header">Debug</h2>
+        <pre>updateState = {{updateState | json}}</pre>
+        <pre>adherent = {{adherent | json}}</pre>
+    </div>
+</div>

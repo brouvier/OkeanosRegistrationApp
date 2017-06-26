@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project default="create_run_jar" name="Create Runnable Jar for Project okeanosSparkApp with Jar-in-Jar Loader">
+    <!--this file was created by Eclipse Runnable JAR file Export Wizard-->
+    <!--ANT 1.7 is required-->
+    <!--define folder properties-->
+    <property name="dir.buildfile" value="."/>
+    <property name="dir.workspace" value="C:/Users/Baptiste/Outils/eclipse-jee-neon-3_x64/workspace"/>
+    <property name="dir.jarfile" value="//192.168.0.17/homes/OkeanosAdm"/>
+    <target name="create_run_jar">
+        <jar destfile="${dir.jarfile}/OkeanosApp.jar">
+            <manifest>
+                <attribute name="Main-Class" value="org.eclipse.jdt.internal.jarinjarloader.JarRsrcLoader"/>
+                <attribute name="Rsrc-Main-Class" value="okeanos.restApp.OkeanosSparkApp"/>
+                <attribute name="Class-Path" value="."/>
+                <attribute name="Rsrc-Class-Path" value="./ sql2o-1.5.4.jar h2-1.4.193.jar spark-core-2.0.0.jar slf4j-api-1.7.2.jar jetty-server-9.0.2.v20130417.jar javax.servlet-3.0.0.v201112011016.jar jetty-http-9.0.2.v20130417.jar jetty-util-9.0.2.v20130417.jar jetty-io-9.0.2.v20130417.jar jetty-webapp-9.0.2.v20130417.jar jetty-xml-9.0.2.v20130417.jar jetty-servlet-9.0.2.v20130417.jar jetty-security-9.0.2.v20130417.jar slf4j-simple-1.7.5.jar gson-2.2.4.jar"/>
+            </manifest>
+            <zipfileset src="jar-in-jar-loader.zip"/>
+            <fileset dir="C:/Users/Baptiste/WorkspaceTFS/OkeanosRegistrationApp/okeanosSparkApp/target/classes"/>
+            <zipfileset dir="C:/Users/Baptiste/.m2/repository/org/sql2o/sql2o/1.5.4" includes="sql2o-1.5.4.jar"/>
+            <zipfileset dir="C:/Users/Baptiste/.m2/repository/com/h2database/h2/1.4.193" includes="h2-1.4.193.jar"/>
+            <zipfileset dir="C:/Users/Baptiste/.m2/repository/com/sparkjava/spark-core/2.0.0" includes="spark-core-2.0.0.jar"/>
+            <zipfileset dir="C:/Users/Baptiste/.m2/repository/org/slf4j/slf4j-api/1.7.2" includes="slf4j-api-1.7.2.jar"/>
+            <zipfileset dir="C:/Users/Baptiste/.m2/repository/org/eclipse/jetty/jetty-server/9.0.2.v20130417" includes="jetty-server-9.0.2.v20130417.jar"/>
+            <zipfileset dir="C:/Users/Baptiste/.m2/repository/org/eclipse/jetty/orbit/javax.servlet/3.0.0.v201112011016" includes="javax.servlet-3.0.0.v201112011016.jar"/>
+            <zipfileset dir="C:/Users/Baptiste/.m2/repository/org/eclipse/jetty/jetty-http/9.0.2.v20130417" includes="jetty-http-9.0.2.v20130417.jar"/>
+            <zipfileset dir="C:/Users/Baptiste/.m2/repository/org/eclipse/jetty/jetty-util/9.0.2.v20130417" includes="jetty-util-9.0.2.v20130417.jar"/>
+            <zipfileset dir="C:/Users/Baptiste/.m2/repository/org/eclipse/jetty/jetty-io/9.0.2.v20130417" includes="jetty-io-9.0.2.v20130417.jar"/>
+            <zipfileset dir="C:/Users/Baptiste/.m2/repository/org/eclipse/jetty/jetty-webapp/9.0.2.v20130417" includes="jetty-webapp-9.0.2.v20130417.jar"/>
+            <zipfileset dir="C:/Users/Baptiste/.m2/repository/org/eclipse/jetty/jetty-xml/9.0.2.v20130417" includes="jetty-xml-9.0.2.v20130417.jar"/>
+            <zipfileset dir="C:/Users/Baptiste/.m2/repository/org/eclipse/jetty/jetty-servlet/9.0.2.v20130417" includes="jetty-servlet-9.0.2.v20130417.jar"/>
+            <zipfileset dir="C:/Users/Baptiste/.m2/repository/org/eclipse/jetty/jetty-security/9.0.2.v20130417" includes="jetty-security-9.0.2.v20130417.jar"/>
+            <zipfileset dir="C:/Users/Baptiste/.m2/repository/org/slf4j/slf4j-simple/1.7.5" includes="slf4j-simple-1.7.5.jar"/>
+            <zipfileset dir="C:/Users/Baptiste/.m2/repository/com/google/code/gson/gson/2.2.4" includes="gson-2.2.4.jar"/>
+        </jar>
+    </target>
+</project>
