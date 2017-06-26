@@ -60,6 +60,8 @@
                     <li ng-show="security.isLogin=='true'">
                         <a href="#/accountList"><i class="fa fa-table "></i>Liste des comptes utilisateurs</a></li>
                     <li ng-show="security.isAdmin=='true'">
+                        <a href="#/divingTraining"><i class="fa fa-table "></i>Liste des formations de plongée</a></li>
+                    <li ng-show="security.isAdmin=='true'">
                         <a href="#/subscriptionType"><i class="fa fa-table "></i>Liste des types d'adhésions</a></li>
                     <li>
                         <pre>security = {{security | json}}</pre>
@@ -99,6 +101,7 @@
     <script src="app/app.js"></script>
     <script src="app/app-service.js"></script>
     <script src="app/app-controller.js"></script>
+    <script src="app/app-controller-diving_training.js"></script>
 
 
 </body>

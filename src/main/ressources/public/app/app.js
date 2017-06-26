@@ -35,6 +35,11 @@ okeanosApp.config(['$routeProvider', '$httpProvider',
                 controller: 'accountListCtrl',
                 authorized: true
             })
+            .when('/divingTraining', {
+                templateUrl: 'partials/diving_training.html',
+                controller: 'divingTrainingCtrl',
+                authorized: true
+            })
             .when('/subscriptionType', {
                 templateUrl: 'partials/subscriptionType.html',
                 controller: 'subscriptionTypeCtrl',

@@ -77,6 +77,13 @@ okeanosApp.factory('Account', function ($resource) {
 });
 
 /* 
+ * Gesion des types de formation de plongée
+ */
+okeanosApp.factory('DivingTraining', function ($resource) {
+    return $resource(okeanoAppUrl + 'diving_training/:id'); // Note the full endpoint address
+});
+
+/* 
  * Gesion des types d'adhésions
  */
 okeanosApp.factory('SubscriptionType', function ($resource) {

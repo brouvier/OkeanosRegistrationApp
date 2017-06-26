@@ -2,9 +2,7 @@ package okeanos.restApp.resources;
 
 import static okeanos.util.JsonUtil.toJson;
 import static spark.Spark.exception;
-import static spark.Spark.options;
 
-import okeanos.util.AppProperties;
 import spark.Request;
 import spark.Response;
 
@@ -17,12 +15,12 @@ public abstract class AbstractResource {
 			response.body(toJson(new ResponseError(e)));
 		});
 
-		options(AppProperties.API_CONTEXT + "/*", (request, response) -> {
-
-			response.header("test", "pipo");
-
-			return "OK";
-		});
+		// options(AppProperties.API_CONTEXT + "/*", (request, response) -> {
+		//
+		// response.header("test", "pipo");
+		//
+		// return "OK";
+		// });
 
 	}
 

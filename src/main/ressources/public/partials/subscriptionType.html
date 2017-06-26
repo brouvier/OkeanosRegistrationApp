@@ -1,9 +1,9 @@
 <div class="row">
     <div class="col-md-12">
-        <h2>Liste des types d'adhésions
-            <span class="glyphicon glyphicon-refresh" aria-hidden="true" ng-click="refreshSubscriptionType()"></span></h2>
+        <h2>Liste des types d'adhésions</h2>
 
-        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#createModal">Ajouter un type d'adhésion</button>
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createModal"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Ajouter un type d'adhésion</button>
+        <button type="button" class="btn btn-info" ng-click="refreshList()"><span class="glyphicon glyphicon-refresh" aria-hidden="true"></span> Rafraichir la liste</button>
 
         <div class="table-responsive">
             <table class="table table-striped table-bordered table-hover">
