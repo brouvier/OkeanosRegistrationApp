@@ -17,6 +17,14 @@ public class SubscriptionTypeDao {
 		}
 	}
 
+	public static SubscriptionType getItemById(Long id) {
+		String sql = "SELECT id, label, createdOn FROM subscription_type WHERE id = :id";
+
+		try (Connection con = Sql2oDao.sql2o.open()) {
+			return con.createQuery(sql).addParameter("id", id).executeAndFetchFirst(SubscriptionType.class);
+		}
+	}
+
 	public static SubscriptionType save(SubscriptionType item) {
 
 		if (item == null || "".equals(item.getLabel())) {
@@ -44,14 +52,6 @@ public class SubscriptionTypeDao {
 			}
 			return getItemById(item.getId());
 
-		}
-	}
-
-	public static SubscriptionType getItemById(Long id) {
-		String sql = "SELECT id, label, createdOn FROM subscription_type WHERE id = :id";
-
-		try (Connection con = Sql2oDao.sql2o.open()) {
-			return con.createQuery(sql).addParameter("id", id).executeAndFetchFirst(SubscriptionType.class);
 		}
 	}
 

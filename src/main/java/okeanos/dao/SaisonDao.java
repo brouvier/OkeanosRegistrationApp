@@ -1,6 +1,5 @@
 package okeanos.dao;
 
-import java.util.Date;
 import java.util.List;
 
 import org.sql2o.Connection;
@@ -17,16 +16,6 @@ public class SaisonDao {
 		}
 	}
 
-	public static Saison newItem(String label, Date start_date, Date end_date) {
-		String sql = "insert into saison (label, start_date, end_date) values (:label, :start_date, :end_date)";
-
-		try (Connection con = Sql2oDao.sql2o.open()) {
-			Long insertedId = (Long) con.createQuery(sql, true).addParameter("label", label)
-					.addParameter("start_date", start_date).addParameter("end_date", end_date).executeUpdate().getKey();
-			return getItemById(insertedId);
-		}
-	}
-
 	public static Saison getItemById(Long id) {
 		String sql = "SELECT id, label, start_date, end_date, createdOn FROM saison WHERE id = :id";
 
@@ -35,21 +24,46 @@ public class SaisonDao {
 		}
 	}
 
-	public static Saison updateItem(Saison item) {
-		String sql = "update saison set label = :label, start_date = :start_date, end_date = :end_date where id = :id";
+	public static Saison save(Saison item) {
 
-		try (Connection con = Sql2oDao.sql2o.open()) {
-			con.createQuery(sql).bind(item).executeUpdate();
+		if (item == null || "".equals(item.getLabel())) {
+			System.out.println("Error : cannot save empty item !");
+			return null;
 		}
 
-		return item;
+		if (item.getId() == null) { // Mode crÃ©ation
+			System.out.println("CrÃ©ation d'un item : " + item.getLabel());
+			String sql = "insert into saison (label, start_date, end_date) values (:label, :start_date, :end_date)";
+
+			try (Connection con = Sql2oDao.sql2o.open()) {
+				Long insertedId = (Long) con.createQuery(sql, true).addParameter("label", item.getLabel())
+						.addParameter("start_date", item.getStart_date()).addParameter("end_date", item.getEnd_date())
+						.executeUpdate().getKey();
+				System.out.println("ID généré : " + insertedId);
+				return getItemById(insertedId);
+			}
+
+		} else { // Mode modification
+			System.out.println("Mise Ã  jour d'un item : " + item.getLabel());
+			String sql = "update saison set label = :label, start_date = :start_date, end_date = :end_date where id = :id";
+
+			try (Connection con = Sql2oDao.sql2o.open()) {
+				con.createQuery(sql).bind(item).executeUpdate();
+			}
+			return getItemById(item.getId());
+
+		}
 	}
 
-	public static void deleteItem(Saison item) {
+	public static Boolean deleteItem(Long id) {
+		System.out.println("Suppression d'un item : " + id);
 		String sql = "delete from saison where id = :id";
 
 		try (Connection con = Sql2oDao.sql2o.open()) {
-			con.createQuery(sql).bind(item).executeUpdate();
+			con.createQuery(sql).addParameter("id", id).executeUpdate();
+			return true;
+		} catch (Exception e) {
+			return false;
 		}
 	}
 

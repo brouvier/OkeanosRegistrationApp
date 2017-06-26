@@ -16,16 +16,6 @@ public class AccountDao {
 		}
 	}
 
-	public static Account newItem(String mail, String password, Boolean admin) {
-		String sql = "insert into account (mail, password, admin) values (:mail, :password, :admin)";
-
-		try (Connection con = Sql2oDao.sql2o.open()) {
-			Long insertedId = (Long) con.createQuery(sql, true).addParameter("mail", mail)
-					.addParameter("password", password).addParameter("admin", admin).executeUpdate().getKey();
-			return getItemById(insertedId);
-		}
-	}
-
 	public static Account getItemById(Long id) {
 		String sql = "SELECT id, mail, password, admin, createdOn FROM account WHERE id = :id";
 
@@ -39,6 +29,16 @@ public class AccountDao {
 
 		try (Connection con = Sql2oDao.sql2o.open()) {
 			return con.createQuery(sql).addParameter("mail", mail).executeAndFetchFirst(Account.class);
+		}
+	}
+
+	public static Account newItem(String mail, String password, Boolean admin) {
+		String sql = "insert into account (mail, password, admin) values (:mail, :password, :admin)";
+
+		try (Connection con = Sql2oDao.sql2o.open()) {
+			Long insertedId = (Long) con.createQuery(sql, true).addParameter("mail", mail)
+					.addParameter("password", password).addParameter("admin", admin).executeUpdate().getKey();
+			return getItemById(insertedId);
 		}
 	}
 

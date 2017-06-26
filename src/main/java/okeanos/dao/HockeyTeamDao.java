@@ -16,6 +16,14 @@ public class HockeyTeamDao {
 		}
 	}
 
+	public static HockeyTeam getItemById(Long id) {
+		String sql = "SELECT id, label, createdOn FROM hockey_team WHERE id = :id";
+
+		try (Connection con = Sql2oDao.sql2o.open()) {
+			return con.createQuery(sql).addParameter("id", id).executeAndFetchFirst(HockeyTeam.class);
+		}
+	}
+
 	public static HockeyTeam newItem(String label) {
 		String sql = "insert into hockey_team (label) values (:label)";
 
@@ -25,29 +33,45 @@ public class HockeyTeamDao {
 		}
 	}
 
-	public static HockeyTeam getItemById(Long id) {
-		String sql = "SELECT id, label, createdOn FROM hockey_team WHERE id = :id";
+	public static HockeyTeam save(HockeyTeam item) {
 
-		try (Connection con = Sql2oDao.sql2o.open()) {
-			return con.createQuery(sql).addParameter("id", id).executeAndFetchFirst(HockeyTeam.class);
+		if (item == null || "".equals(item.getLabel())) {
+			System.out.println("Error : cannot save empty item !");
+			return null;
+		}
+
+		if (item.getId() == null) { // Mode crÃ©ation
+			System.out.println("CrÃ©ation d'un item : " + item.getLabel());
+			String sql = "insert into hockey_team (label) values (:label)";
+
+			try (Connection con = Sql2oDao.sql2o.open()) {
+				Long insertedId = (Long) con.createQuery(sql, true).addParameter("label", item.getLabel())
+						.executeUpdate().getKey();
+				System.out.println("ID généré : " + insertedId);
+				return getItemById(insertedId);
+			}
+
+		} else { // Mode modification
+			System.out.println("Mise Ã  jour d'un item : " + item.getLabel());
+			String sql = "update hockey_team set label = :label where id = :id";
+
+			try (Connection con = Sql2oDao.sql2o.open()) {
+				con.createQuery(sql).bind(item).executeUpdate();
+			}
+			return getItemById(item.getId());
+
 		}
 	}
 
-	public static HockeyTeam updateItem(HockeyTeam item) {
-		String sql = "update hockey_team set label = :label where id = :id";
-
-		try (Connection con = Sql2oDao.sql2o.open()) {
-			con.createQuery(sql).bind(item).executeUpdate();
-		}
-
-		return item;
-	}
-
-	public static void deleteItem(HockeyTeam item) {
+	public static Boolean deleteItem(Long id) {
+		System.out.println("Suppression d'un item : " + id);
 		String sql = "delete from hockey_team where id = :id";
 
 		try (Connection con = Sql2oDao.sql2o.open()) {
-			con.createQuery(sql).bind(item).executeUpdate();
+			con.createQuery(sql).addParameter("id", id).executeUpdate();
+			return true;
+		} catch (Exception e) {
+			return false;
 		}
 	}
 

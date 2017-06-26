@@ -16,15 +16,6 @@ public class DivingTrainingDao {
 		}
 	}
 
-	public static DivingTraining newItem(String label) {
-		String sql = "insert into diving_training (label) values (:label)";
-
-		try (Connection con = Sql2oDao.sql2o.open()) {
-			Long insertedId = (Long) con.createQuery(sql, true).addParameter("label", label).executeUpdate().getKey();
-			return getItemById(insertedId);
-		}
-	}
-
 	public static DivingTraining getItemById(Long id) {
 		String sql = "SELECT id, label, createdOn FROM diving_training WHERE id = :id";
 
@@ -33,21 +24,45 @@ public class DivingTrainingDao {
 		}
 	}
 
-	public static DivingTraining updateItem(DivingTraining item) {
-		String sql = "update diving_training set label = :label where id = :id";
+	public static DivingTraining save(DivingTraining item) {
 
-		try (Connection con = Sql2oDao.sql2o.open()) {
-			con.createQuery(sql).bind(item).executeUpdate();
+		if (item == null || "".equals(item.getLabel())) {
+			System.out.println("Error : cannot save empty item !");
+			return null;
 		}
 
-		return item;
+		if (item.getId() == null) { // Mode crÃ©ation
+			System.out.println("CrÃ©ation d'un item : " + item.getLabel());
+			String sql = "insert into diving_training (label) values (:label)";
+
+			try (Connection con = Sql2oDao.sql2o.open()) {
+				Long insertedId = (Long) con.createQuery(sql, true).addParameter("label", item.getLabel())
+						.executeUpdate().getKey();
+				System.out.println("ID généré : " + insertedId);
+				return getItemById(insertedId);
+			}
+
+		} else { // Mode modification
+			System.out.println("Mise Ã  jour d'un item : " + item.getLabel());
+			String sql = "update diving_training set label = :label where id = :id";
+
+			try (Connection con = Sql2oDao.sql2o.open()) {
+				con.createQuery(sql).bind(item).executeUpdate();
+			}
+			return getItemById(item.getId());
+
+		}
 	}
 
-	public static void deleteItem(DivingTraining item) {
+	public static Boolean deleteItem(Long id) {
+		System.out.println("Suppression d'un item : " + id);
 		String sql = "delete from diving_training where id = :id";
 
 		try (Connection con = Sql2oDao.sql2o.open()) {
-			con.createQuery(sql).bind(item).executeUpdate();
+			con.createQuery(sql).addParameter("id", id).executeUpdate();
+			return true;
+		} catch (Exception e) {
+			return false;
 		}
 	}
 
