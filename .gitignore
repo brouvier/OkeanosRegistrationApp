@@ -1,0 +1,16 @@
+# pour Baptiste
+*.classpath
+*.project
+
+#pour Roro
+.idea
+*.iml
+
+# pour les trucs serieux
+*.tmp
+*.class
+target
+
+# pour les frondeurs
+*.py
+*.php
