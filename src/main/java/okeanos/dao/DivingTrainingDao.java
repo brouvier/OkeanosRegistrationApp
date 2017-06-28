@@ -9,7 +9,7 @@ import okeanos.model.DivingTraining;
 public class DivingTrainingDao {
 
 	public static List<DivingTraining> getAllItems() {
-		String sql = "SELECT id, label, createdOn FROM diving_training";
+		String sql = "SELECT id, label, createdOn FROM diving_training ORDER BY label";
 
 		try (Connection con = Sql2oDao.sql2o.open()) {
 			return con.createQuery(sql).executeAndFetch(DivingTraining.class);
@@ -38,7 +38,7 @@ public class DivingTrainingDao {
 			try (Connection con = Sql2oDao.sql2o.open()) {
 				Long insertedId = (Long) con.createQuery(sql, true).addParameter("label", item.getLabel())
 						.executeUpdate().getKey();
-				System.out.println("ID généré : " + insertedId);
+				System.out.println("ID gï¿½nï¿½rï¿½ : " + insertedId);
 				return getItemById(insertedId);
 			}
 

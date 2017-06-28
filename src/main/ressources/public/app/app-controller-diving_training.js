@@ -4,6 +4,7 @@
 okeanosAppControllers.controller('divingTrainingCtrl', function ($scope, securityService, DivingTraining) {
     securityService.checkIsLogin();
 
+    $scope.adminMode = securityService.checkIsAdmin();
     $scope.trainingList = DivingTraining.query();
 
     $scope.edit = function (training) {
@@ -12,6 +13,11 @@ okeanosAppControllers.controller('divingTrainingCtrl', function ($scope, securit
     };
 
     $scope.saveItem = function () {
+        console.log('controle sécu : ' + securityService.checkIsAdmin());
+        if (securityService.checkIsAdmin() == false) {
+            console.log('Enregistrement non authorisé');
+            return false;
+        }
         console.log('Enregistrement d un training : ' + $scope.modalLabel);
         var training = new DivingTraining();
         training.id = $scope.modalId;
@@ -23,7 +29,11 @@ okeanosAppControllers.controller('divingTrainingCtrl', function ($scope, securit
     };
 
     $scope.remove = function (training) {
-        //console.log('Suppression du compte : ' + training.label);
+        if (securityService.checkIsAdmin() == false) {
+            console.log('Suppression non authorisé');
+            return false;
+        }
+        console.log('Suppression du compte : ' + training.label);
         $scope.trainingList = [];
         DivingTraining.delete(training);
 

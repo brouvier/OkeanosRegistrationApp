@@ -57,9 +57,9 @@ okeanosApp.config(['$routeProvider', '$httpProvider',
                     if (response.config.url.startsWith(okeanoAppUrl)) {
                         //Do your custom processing here
                         // do something on success
-                        console.log('myHttpInterceptor response : ' + response.config.url);
+                        //console.log('myHttpInterceptor response : ' + response.config.url);
                         securityService.setSecurity(response.headers('isLogin'), response.headers('isAdmin'));
-                        console.log(securityService.getSecurity());
+                        //console.log(securityService.getSecurity());
                     }
 
                     return response;

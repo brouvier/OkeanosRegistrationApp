@@ -64,8 +64,9 @@ okeanosApp.service('securityService', ['$location', function ($location) {
     this.checkIsAdmin = function () {
         this.checkIsLogin();
         if (security.isAdmin != "true") {
-            $location.path('/userForm');
-        };
+            return false;
+        }
+        return true;
     };
 }]);
 

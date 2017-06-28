@@ -6,81 +6,77 @@
             <div class="form-group">
                 <label for="inputLicenceNumber" class="col-sm-2 control-label">Numéro de licence</label>
                 <div class="col-sm-10">
-                    <input id="inputLicenceNumber" type="text" class="form-control"
-                           ng-model="adherent.licenceNumber"/></div>
+                    <input id="inputLicenceNumber" type="text" class="form-control" ng-model="adherent.licenceNumber" /></div>
             </div>
 
             <div class="form-group">
                 <label for="inputName" class="col-sm-2 control-label">Nom</label>
                 <div class="col-sm-10">
-                    <input id="inputName" type="text" class="form-control" required="required"
-                           ng-model="adherent.lastname"/></div>
+                    <input id="inputName" type="text" class="form-control" required="required" ng-model="adherent.lastname" /></div>
             </div>
 
             <div class="form-group">
                 <label for="inputFirstName" class="col-sm-2 control-label">Prénom</label>
                 <div class="col-sm-10">
-                    <input id="inputFirstName" type="text" class="form-control" required="required"
-                           ng-model="adherent.firstname"/></div>
+                    <input id="inputFirstName" type="text" class="form-control" required="required" ng-model="adherent.firstname" /></div>
             </div>
 
             <div class="form-group">
                 <label for="inputBirthday" class="col-sm-2 control-label">Date de naissance</label>
                 <div class="col-sm-10">
-                    <input id="inputBirthday" type="date" class="form-control" required="required"
-                           ng-model="adherent.birthday"
-                           placeholder="yyyy-MM-dd"/></div>
+                    <input id="inputBirthday" type="date" class="form-control" required="required" ng-model="adherent.birthday" placeholder="yyyy-MM-dd" /></div>
+            </div>
+
+            <div class="form-group">
+                <label for="inputBirthplace" class="col-sm-2 control-label">Lieu de naissance</label>
+                <div class="col-sm-10">
+                    <input id="inputBirthplace" type="text" class="form-control" required="required" ng-model="adherent.birthplace" /></div>
             </div>
 
             <div class="form-group">
                 <label for="inputTel" class="col-sm-2 control-label">Téléphone</label>
                 <div class="col-sm-10">
-                    <input id="inputTel" type="tel" class="form-control" required="required"
-                           ng-model="adherent.telNumber"/></div>
+                    <input id="inputTel" type="tel" class="form-control" required="required" ng-model="adherent.telNumber" /></div>
             </div>
 
             <div class="form-group">
                 <label for="inputAddress" class="col-sm-2 control-label">Adresse</label>
                 <div class="col-sm-10">
-                    <input id="inputAddress" type="tel" class="form-control" required="required"
-                           ng-model="adherent.address"/></div>
+                    <input id="inputAddress" type="tel" class="form-control" required="required" ng-model="adherent.address" /></div>
             </div>
 
             <div class="form-group">
                 <label for="inputPostalCode" class="col-sm-2 control-label">Code postal</label>
                 <div class="col-sm-10">
-                    <input id="inputPostalCode" type="tel" class="form-control" required="required"
-                           ng-model="adherent.postalCode"/></div>
+                    <input id="inputPostalCode" type="tel" class="form-control" required="required" ng-model="adherent.postalCode" /></div>
             </div>
 
             <div class="form-group">
                 <label for="inputCity" class="col-sm-2 control-label">Ville</label>
                 <div class="col-sm-10">
-                    <input id="inputCity" type="tel" class="form-control" required="required" ng-model="adherent.city"/>
+                    <input id="inputCity" type="tel" class="form-control" required="required" ng-model="adherent.city" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="inputJob" class="col-sm-2 control-label">Profession</label>
+                <div class="col-sm-10">
+                    <input id="inputJob" type="tel" class="form-control" required="required" ng-model="adherent.job" />
                 </div>
             </div>
 
             <h2 class="page-header">Personne à contacter en cas d'accident</h2>
 
             <div class="form-group">
-                <label for="inputNameAcc" class="col-sm-2 control-label">Nom</label>
+                <label for="inputNameAcc" class="col-sm-2 control-label">Contact</label>
                 <div class="col-sm-10">
-                    <input id="inputNameAcc" type="text" class="form-control" required="required"
-                           ng-model="adherent.lastnameAcc"/></div>
-            </div>
-
-            <div class="form-group">
-                <label for="inputFirstNameAcc" class="col-sm-2 control-label">Prénom</label>
-                <div class="col-sm-10">
-                    <input id="inputFirstNameAcc" type="text" class="form-control" required="required"
-                           ng-model="adherent.firstnameAcc"/></div>
+                    <input id="inputNameAcc" type="text" class="form-control" required="required" ng-model="adherent.emergency_contact" /></div>
             </div>
 
             <div class="form-group">
                 <label for="inputTelAcc" class="col-sm-2 control-label">Téléphone</label>
                 <div class="col-sm-10">
-                    <input id="inputTelAcc" type="tel" class="form-control" required="required"
-                           ng-model="adherent.telNumberAcc"/></div>
+                    <input id="inputTelAcc" type="tel" class="form-control" required="required" ng-model="adherent.emergency_tel_number" /></div>
             </div>
 
             <h2 class="page-header">Information saison 2016-2017</h2>
@@ -181,14 +177,12 @@
 
             <div class="alert alert-info" role="info" ng-show="updateState=='wip'">
                 <button type="button" class="close" data-dismiss="info" aria-label="Close"><span aria-hidden="true">&times;</span>
-                </button>
-                Mis à jour en cours ...
+                </button> Mis à jour en cours ...
             </div>
 
             <div class="alert alert-success" role="success" ng-show="updateState=='done'">
                 <button type="button" class="close" data-dismiss="success" aria-label="Close"><span aria-hidden="true">&times;</span>
-                </button>
-                Adhérent mis à jour !
+                </button> Adhérent mis à jour !
             </div>
 
         </form>
