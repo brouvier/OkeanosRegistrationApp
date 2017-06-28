@@ -1,114 +1,194 @@
 <div class="row">
     <div class="col-md-12">
-        <form ng-submit="update(adherent)">
+        <form ng-submit="update(adherent)" class="form-horizontal">
             <h2 class="page-header">Fiche adhérent</h2>
 
             <div class="form-group">
-                <label for="inputName">Nom</label>
-                <input id="inputName" type="text" class="form-control" placeholder="Nom" ng-model="adherent.lastname" />
+                <label for="inputLicenceNumber" class="col-sm-2 control-label">Numéro de licence</label>
+                <div class="col-sm-10">
+                    <input id="inputLicenceNumber" type="text" class="form-control"
+                           ng-model="adherent.licenceNumber"/></div>
             </div>
 
             <div class="form-group">
-                <label for="inputFirstName">Prénom</label>
-                <input id="inputFirstName" type="text" class="form-control" placeholder="Prénom" ng-model="adherent.firstname" />
+                <label for="inputName" class="col-sm-2 control-label">Nom</label>
+                <div class="col-sm-10">
+                    <input id="inputName" type="text" class="form-control" required="required"
+                           ng-model="adherent.lastname"/></div>
             </div>
 
             <div class="form-group">
-                <label for="inputBirthday">Date de naissance</label>
-                <input id="inputBirthday" type="date" class="form-control" ng-model="adherent.birthday" placeholder="yyyy-MM-dd" />
+                <label for="inputFirstName" class="col-sm-2 control-label">Prénom</label>
+                <div class="col-sm-10">
+                    <input id="inputFirstName" type="text" class="form-control" required="required"
+                           ng-model="adherent.firstname"/></div>
             </div>
 
             <div class="form-group">
-                <label for="inputTel">Numéro de téléphone</label>
-                <input id="inputTel" type="tel" class="form-control" ng-model="adherent.telNumber" />
+                <label for="inputBirthday" class="col-sm-2 control-label">Date de naissance</label>
+                <div class="col-sm-10">
+                    <input id="inputBirthday" type="date" class="form-control" required="required"
+                           ng-model="adherent.birthday"
+                           placeholder="yyyy-MM-dd"/></div>
             </div>
 
             <div class="form-group">
-                <label for="inputLicenceNumber">Numéro de licence</label>
-                <input id="inputLicenceNumber" type="text" class="form-control" placeholder="Numéro de licence" ng-model="adherent.licenceNumber" />
+                <label for="inputTel" class="col-sm-2 control-label">Téléphone</label>
+                <div class="col-sm-10">
+                    <input id="inputTel" type="tel" class="form-control" required="required"
+                           ng-model="adherent.telNumber"/></div>
+            </div>
+
+            <div class="form-group">
+                <label for="inputAddress" class="col-sm-2 control-label">Adresse</label>
+                <div class="col-sm-10">
+                    <input id="inputAddress" type="tel" class="form-control" required="required"
+                           ng-model="adherent.address"/></div>
+            </div>
+
+            <div class="form-group">
+                <label for="inputPostalCode" class="col-sm-2 control-label">Code postal</label>
+                <div class="col-sm-10">
+                    <input id="inputPostalCode" type="tel" class="form-control" required="required"
+                           ng-model="adherent.postalCode"/></div>
+            </div>
+
+            <div class="form-group">
+                <label for="inputCity" class="col-sm-2 control-label">Ville</label>
+                <div class="col-sm-10">
+                    <input id="inputCity" type="tel" class="form-control" required="required" ng-model="adherent.city"/>
+                </div>
+            </div>
+
+            <h2 class="page-header">Personne à contacter en cas d'accident</h2>
+
+            <div class="form-group">
+                <label for="inputNameAcc" class="col-sm-2 control-label">Nom</label>
+                <div class="col-sm-10">
+                    <input id="inputNameAcc" type="text" class="form-control" required="required"
+                           ng-model="adherent.lastnameAcc"/></div>
+            </div>
+
+            <div class="form-group">
+                <label for="inputFirstNameAcc" class="col-sm-2 control-label">Prénom</label>
+                <div class="col-sm-10">
+                    <input id="inputFirstNameAcc" type="text" class="form-control" required="required"
+                           ng-model="adherent.firstnameAcc"/></div>
+            </div>
+
+            <div class="form-group">
+                <label for="inputTelAcc" class="col-sm-2 control-label">Téléphone</label>
+                <div class="col-sm-10">
+                    <input id="inputTelAcc" type="tel" class="form-control" required="required"
+                           ng-model="adherent.telNumberAcc"/></div>
             </div>
 
             <h2 class="page-header">Information saison 2016-2017</h2>
 
 
             <div class="form-group">
-                <label for="selectLevel">Type de licence</label>
-                <select id="selectLevel" class="form-control" ng-model="adherent.licenceType">
-          <option>Adulte</option>
-          <option>Moins de 18 ans</option>
-          <option>Moins de 14 ans</option>
-        </select>
+                <label for="selectLevel" class="col-sm-2 control-label">Type de licence</label>
+                <div class="col-sm-10">
+                    <select id="selectLevel" class="form-control" ng-model="adherent.licenceType">
+                        <option>Adulte</option>
+                        <option>Moins de 18 ans</option>
+                        <option>Moins de 14 ans</option>
+                    </select></div>
             </div>
 
             <div class="form-group">
-                <label for="optionsAdhesion1">Type d'adhésion : </label>
-                <div class="radio-inline">
-                    <label>
-            <input type="radio" name="optionsAdhesion" id="optionsAdhesion1" ng-model="adherent.membershipType" value="plongee">
-            Plongée
-          </label>
-                </div>
-                <div class="radio-inline">
-                    <label>
-            <input type="radio" name="optionsAdhesion" id="optionsAdhesion2" ng-model="adherent.membershipType" value="hockey">
-            Hockey
-          </label>
-                </div>
-                <div class="radio-inline">
-                    <label>
-                        <input type="radio" name="optionsAdhesion" id="optionsAdhesion3" ng-model="adherent.membershipType" value="enfant"> Enfant
-                    </label>
+                <label for="optionsAdhesion1" class="col-sm-2 control-label">Type d'adhésion : </label>
+                <div class="col-sm-10">
+                    <div class="radio-inline">
+                        <label>
+                            <input type="radio" name="optionsAdhesion" id="optionsAdhesion1"
+                                   ng-model="adherent.membershipType" value="plongee">
+                            Plongée
+                        </label>
+                    </div>
+                    <div class="radio-inline">
+                        <label>
+                            <input type="radio" name="optionsAdhesion" id="optionsAdhesion2"
+                                   ng-model="adherent.membershipType" value="hockey">
+                            Hockey
+                        </label>
+                    </div>
+                    <div class="radio-inline">
+                        <label>
+                            <input type="radio" name="optionsAdhesion" id="optionsAdhesion3"
+                                   ng-model="adherent.membershipType" value="enfant"> Enfant
+                        </label>
+                    </div>
                 </div>
             </div>
 
             <div class="form-group">
-                <label for="optionsAdhesion1">Assurance : </label>
-                <div class="checkbox-inline">
-                    <label>
-            <input type="checkbox" ng-model="adherent.assurance">
-            Assurance piscine
-          </label>
+                <label class="col-sm-2 control-label">Assurance : </label>
+                <div class="col-sm-10">
+                    <div class="checkbox" ng-show="adherent.membershipType !== 'hockey'">
+                        <label>
+                            <input type="checkbox" ng-model="adherent.assurance"> piscine
+                        </label>
+                    </div>
+
+                    <div ng-show="adherent.membershipType === 'hockey'">
+                        <label>
+                            obligatoire
+                        </label>
+                    </div>
                 </div>
             </div>
 
+
             <div class="form-group" ng-show="adherent.membershipType == 'plongee'">
-                <label for="selectLevel">Niveau actuel : </label>
-                <select id="selectLevel" class="form-control" ng-model="adherent.actualLevel">
-          <option>Aucun</option>
-          <option>Niveau 1</option>
-          <option>Niveau 2</option>
-          <option>Niveau 3</option>
-        </select>
+                <label for="selectLevel" class="col-sm-2 control-label">Niveau actuel : </label>
+                <div class="col-sm-10">
+                    <select id="selectLevel" class="form-control" ng-model="adherent.actualLevel">
+                        <option>Aucun</option>
+                        <option>Niveau 1</option>
+                        <option>Niveau 2</option>
+                        <option>Niveau 3</option>
+                    </select></div>
             </div>
 
             <div class="form-group" ng-show="adherent.membershipType == 'plongee'">
-                <label for="selectLevel">Niveau Préparé : </label>
-                <select id="selectLevel" class="form-control" ng-model="adherent.preparedLevel">
-          <option>Aucun</option>
-          <option>Niveau 1</option>
-          <option>Niveau 2</option>
-          <option>Niveau 3</option>
-        </select>
+                <label for="selectLevel" class="col-sm-2 control-label">Niveau Préparé : </label>
+                <div class="col-sm-10">
+                    <select id="selectLevel" class="form-control" ng-model="adherent.preparedLevel">
+                        <option>Aucun</option>
+                        <option>Niveau 1</option>
+                        <option>Niveau 2</option>
+                        <option>Niveau 3</option>
+                    </select></div>
             </div>
 
+            <!--
             <div class="form-group" ng-show="adherent.membershipType == 'hockey'">
                 <label for="selectTeam">Equipe : </label>
                 <select id="selectTeam" class="form-control" ng-model="adherent.team">
-          <option>Aucune</option>
-          <option>Equipe 1</option>
-          <option>Equipe 2</option>
-          <option>Equipe fille</option>
-        </select>
-            </div>
+                    <option>Aucune</option>
+                    <option>Equipe 1</option>
+                    <option>Equipe 2</option>
+                    <option>Equipe fille</option>
+                </select>
+            </div>-->
 
             <div class="form-group">
-                <button type="submit" class="btn btn-primary">Tout mettre à jour</button>
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button type="submit" class="btn btn-primary">Tout mettre à jour</button>
+                </div>
             </div>
+
             <div class="alert alert-info" role="info" ng-show="updateState=='wip'">
-                <button type="button" class="close" data-dismiss="info" aria-label="Close"><span aria-hidden="true">&times;</span></button> Mis à jour en cours ...
+                <button type="button" class="close" data-dismiss="info" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
+                Mis à jour en cours ...
             </div>
+
             <div class="alert alert-success" role="success" ng-show="updateState=='done'">
-                <button type="button" class="close" data-dismiss="success" aria-label="Close"><span aria-hidden="true">&times;</span></button> Adhérent mis à jour !
+                <button type="button" class="close" data-dismiss="success" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
+                Adhérent mis à jour !
             </div>
 
         </form>
