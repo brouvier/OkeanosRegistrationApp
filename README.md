@@ -15,6 +15,7 @@ Un exemple pourri pour partir, mais il a le mérite d'exister.
 2. prendre le jar dans : target\okeanosSparkApp-0.0.1-SNAPSHOT-jar-with-dependencies.jar
 3. copier au meme niveau le dossier \security
 4. copier au meme niveau le dossier \src\main\ressources\public
-5. executer le jar : java -jar okeanosSparkApp-0.0.1-SNAPSHOT-jar-with-dependencies.jar
+5. copier au meme niveau le dossier \h2
+6. executer le jar : java -jar okeanosSparkApp-0.0.1-SNAPSHOT-jar-with-dependencies.jar
 
 le serveur se lance sur https://localhost:8080
