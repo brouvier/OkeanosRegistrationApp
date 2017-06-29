@@ -14,7 +14,7 @@ import okeanos.util.JsonUtil;
 
 public class AccountResource extends AbstractResource {
 
-	protected String ressourcePath = AppProperties.API_CONTEXT + "/account";
+	protected static String ressourcePath = AppProperties.API_CONTEXT + "/account";
 
 	public AccountResource() {
 		super.setupEndpoints();

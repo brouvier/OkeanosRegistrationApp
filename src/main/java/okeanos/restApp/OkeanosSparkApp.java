@@ -1,9 +1,10 @@
 package okeanos.restApp;
 
-import static spark.SparkBase.externalStaticFileLocation;
-import static spark.SparkBase.setIpAddress;
-import static spark.SparkBase.setPort;
-import static spark.SparkBase.staticFileLocation;
+import static spark.Spark.externalStaticFileLocation;
+import static spark.Spark.ipAddress;
+import static spark.Spark.port;
+import static spark.Spark.staticFileLocation;
+import static spark.Spark.secure;
 
 import okeanos.restApp.resources.AccountResource;
 import okeanos.restApp.resources.AdherentInfoResource;
@@ -17,14 +18,13 @@ import okeanos.restApp.resources.SecurityResource;
 import okeanos.restApp.resources.SubscriptionResource;
 import okeanos.restApp.resources.SubscriptionTypeResource;
 import okeanos.util.AppProperties;
-import spark.Spark;
 
 public class OkeanosSparkApp {
 
 	public static void main(String[] args) throws Exception {
 
-		setIpAddress(AppProperties.getProperties().restHostName);
-		setPort(new Integer(AppProperties.getProperties().restHostPort));
+		ipAddress(AppProperties.getProperties().restHostName);
+		port(new Integer(AppProperties.getProperties().restHostPort));
 
 		if ("localhost".equals(AppProperties.getProperties().restHostName)) {
 			String projectDir = System.getProperty("user.dir");
@@ -34,7 +34,7 @@ public class OkeanosSparkApp {
 			staticFileLocation(AppProperties.STATIC_FILE_PATH);
 		}
 
-		Spark.setSecure(AppProperties.keyStorePath, AppProperties.keyStorePassword, AppProperties.trustStorePath,
+		secure(AppProperties.keyStorePath, AppProperties.keyStorePassword, AppProperties.trustStorePath,
 				AppProperties.trustStorePassword);
 
 		new AccountResource();
