@@ -34,8 +34,10 @@ public class OkeanosSparkApp {
 			staticFileLocation(AppProperties.STATIC_FILE_PATH);
 		}
 
-		secure(AppProperties.keyStorePath, AppProperties.keyStorePassword, AppProperties.trustStorePath,
-				AppProperties.trustStorePassword);
+		secure(AppProperties.keyStorePath,
+			   AppProperties.keyStorePassword,
+			   AppProperties.trustStorePath,
+			   AppProperties.trustStorePassword);
 
 		new AccountResource();
 		new AdherentInfoResource();
