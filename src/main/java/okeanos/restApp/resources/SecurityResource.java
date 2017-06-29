@@ -31,6 +31,10 @@ public class SecurityResource extends AbstractResource {
 		return user.isAdmin();
 	}
 
+	public static Long getCurrentUserId(Request request) {
+		return sessionList.get(request.session().id());
+	}
+
 	public SecurityResource() {
 
 		/**
@@ -65,7 +69,7 @@ public class SecurityResource extends AbstractResource {
 		});
 
 		/**
-		 * URL de déconnection
+		 * URL de dï¿½connection
 		 */
 		get(ressourcePath + "/logout", (request, response) -> {
 			sessionList.remove(request.session().id());

@@ -14,25 +14,26 @@ import okeanos.util.JsonUtil;
 
 public class AdherentInfoResource extends AbstractResource {
 
-	protected String ressourcePath = AppProperties.API_CONTEXT + "/adherent_info";
+    protected String ressourcePath = AppProperties.API_CONTEXT + "/adherent_info";
 
-	public AdherentInfoResource() {
-		super.setupEndpoints();
+    public AdherentInfoResource() {
+        super.setupEndpoints();
 
-		get(ressourcePath, (request, response) -> {
-			setSecurity(request, response);
-			return JsonUtil.toJson(AdherentInfoDao.getAllItems());
-		});
+        get(ressourcePath, (request, response) -> {
+            setSecurity(request, response);
+            return JsonUtil.toJson(AdherentInfoDao.getAllItems());
+        });
 
-		get(ressourcePath + "/:id", (request, response) -> AdherentInfoDao.getItemById(new Long(request.params(":id"))),
-				json());
+        get(ressourcePath + "/:id", (request, response) -> AdherentInfoDao.getItemById(new Long(request.params(":id"))),
+            json());
 
-		delete(ressourcePath + "/:id",
-				(request, response) -> AdherentInfoDao.deleteItem(new Long(request.params(":id"))), json());
+        delete(ressourcePath + "/:id",
+               (request, response) -> AdherentInfoDao.deleteItem(new Long(request.params(":id"))), json());
 
-		post(ressourcePath,
-				(request, response) -> AdherentInfoDao.save(new Gson().fromJson(request.body(), AdherentInfo.class)),
-				json());
-	}
+        post(ressourcePath,
+             (request, response) -> AdherentInfoDao.save(new Gson().fromJson(request.body(),
+                                                                             AdherentInfo.class),
+                                                                             SecurityResource.getCurrentUserId(request)), json());
+    }
 
 }

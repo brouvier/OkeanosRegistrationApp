@@ -5,7 +5,7 @@ import java.util.Date;
 public class AdherentInfo {
 
 	private Long id;
-	private Double fk_account_id;
+	private Long fk_account_id;
 	private String firstname;
 	private String lastname;
 	private Date birsthday;
@@ -21,7 +21,7 @@ public class AdherentInfo {
 	private String emergency_tel_number;
 	private Date createdOn;
 
-	public AdherentInfo(Long id, Double fk_account_id, String firstname, String lastname, Date birsthday,
+	public AdherentInfo(Long id, Long fk_account_id, String firstname, String lastname, Date birsthday,
 			String birthplace, String licence_number, String adresse, String zip_code, String city, String job,
 			String tel_number, String mobile_number, String emergency_contact, String emergency_tel_number,
 			Date createdOn) {
@@ -52,11 +52,11 @@ public class AdherentInfo {
 		this.id = id;
 	}
 
-	public Double getFk_account_id() {
+	public Long getFk_account_id() {
 		return fk_account_id;
 	}
 
-	public void setFk_account_id(Double fk_account_id) {
+	public void setFk_account_id(Long fk_account_id) {
 		this.fk_account_id = fk_account_id;
 	}
 

@@ -49,7 +49,7 @@ okeanosAppControllers.controller('loginCtrl', function ($scope, $location, $http
 /* 
  * Contrôleur d'ajout d'adhérents
  */
-okeanosAppControllers.controller('adherentFormCtrl', function ($scope, $location, securityService, sharedProperties) {
+okeanosAppControllers.controller('adherentFormCtrl', function ($scope, $location, $http, securityService, sharedProperties) {
     securityService.checkIsLogin();
 
     $scope.updateState = '';
@@ -63,7 +63,19 @@ okeanosAppControllers.controller('adherentFormCtrl', function ($scope, $location
         $scope.updateState = 'wip';
         sharedProperties.setCurrentEditedUser(adherent);
         sharedProperties.UpdateUsersList(adherent);
-        $scope.updateState = 'done';
+
+        $http
+            .post(okeanoAppUrl + 'adherent_info', adherent)
+            .then(function (response) {
+                console.log(response);
+                if (response.status == 200) {
+                    $scope.updateState = 'done';
+                } else {
+                    $scope.updateState = 'fail';
+                }
+            });
+
+
     };
 });
 
