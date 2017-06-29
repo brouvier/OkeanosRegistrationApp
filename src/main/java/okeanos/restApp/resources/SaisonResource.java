@@ -5,8 +5,6 @@ import static spark.Spark.delete;
 import static spark.Spark.get;
 import static spark.Spark.post;
 
-import com.google.gson.Gson;
-
 import okeanos.dao.SaisonDao;
 import okeanos.model.Saison;
 import okeanos.util.AppProperties;
@@ -30,8 +28,15 @@ public class SaisonResource extends AbstractResource {
 		delete(ressourcePath + "/:id", (request, response) -> SaisonDao.deleteItem(new Long(request.params(":id"))),
 				json());
 
-		post(ressourcePath, (request, response) -> SaisonDao.save(new Gson().fromJson(request.body(), Saison.class)),
-				json());
+		post(ressourcePath, (request, response) -> {
+			setSecurity(request, response);
+			Saison saison = gson.fromJson(request.body(), Saison.class);
+			if (!SecurityResource.isAdmin(request)) {
+				// Modification non authorisée, on retourne l'objet initial
+				return JsonUtil.toJson(SaisonDao.getItemById(saison.getId()));
+			}
+			return JsonUtil.toJson(SaisonDao.save(saison));
+		});
 	}
 
 }

@@ -69,6 +69,9 @@
                         <a href="#/accountList"><span class="glyphicon glyphicon-list-alt" aria-hidden="true" /> Utilisateurs</a>
                     </li>
                     <li ng-show="security.isLogin=='true'">
+                        <a href="#/saison"><span class="glyphicon glyphicon-list-alt" aria-hidden="true" /> Saison</a>
+                    </li>
+                    <li ng-show="security.isLogin=='true'">
                         <a href="#/divingTraining"><span class="glyphicon glyphicon-list-alt" aria-hidden="true" /> Formations de plongée</a>
                     </li>
                     <li ng-show="security.isAdmin=='true'">
@@ -113,6 +116,7 @@
     <script src="app/app.js"></script>
     <script src="app/app-service.js"></script>
     <script src="app/app-controller.js"></script>
+    <script src="app/app-controller-saison.js"></script>
     <script src="app/app-controller-diving_training.js"></script>
 
 

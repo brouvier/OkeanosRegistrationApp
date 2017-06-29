@@ -78,10 +78,17 @@ okeanosApp.factory('Account', function ($resource) {
 });
 
 /* 
+ * Gesion des comptes utilisteurs
+ */
+okeanosApp.factory('Saison', function ($resource) {
+    return $resource(okeanoAppUrl + 'saison/:id');
+});
+
+/* 
  * Gesion des types de formation de plongée
  */
 okeanosApp.factory('DivingTraining', function ($resource) {
-    return $resource(okeanoAppUrl + 'diving_training/:id'); // Note the full endpoint address
+    return $resource(okeanoAppUrl + 'diving_training/:id');
 });
 
 /* 

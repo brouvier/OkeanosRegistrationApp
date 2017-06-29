@@ -19,6 +19,10 @@ public class SecurityResource extends AbstractResource {
 		return sessionList.containsKey(request.session().id());
 	}
 
+	public static Long currentAccountId(Request request) {
+		return sessionList.get(request.session().id());
+	}
+
 	public static Boolean isAdmin(Request request) {
 		if (!isLogin(request))
 			return false;
