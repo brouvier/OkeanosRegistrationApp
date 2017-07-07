@@ -31,6 +31,22 @@ public class AdherentInfoDao {
 		}
 	}
 
+	public static AdherentInfo getItemByAccountId(Long id) {
+		String sql = "SELECT id, fk_account_id, firstname, lastname, birsthday, birthplace, licence_number, adresse, "
+				+ "zip_code, city, job, tel_number, mobile_number, emergency_contact, emergency_tel_number, createdOn FROM adherent_info WHERE fk_account_id = :id";
+		
+		AdherentInfo ai = null;
+		try (Connection con = Sql2oDao.sql2o.open()) {
+			ai = con.createQuery(sql).addParameter("id", id).executeAndFetchFirst(AdherentInfo.class);
+		}
+		if(ai == null){
+			ai = new AdherentInfo(null, id, null, null, null,
+			null, null, null, null, null, null,
+			null, null, null, null, null);
+		}
+		return ai;
+	}
+
 	public static AdherentInfo save(AdherentInfo item, Long userAccountId) {
 
 		if (userAccountId == null) {
