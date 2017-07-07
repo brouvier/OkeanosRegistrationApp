@@ -43,12 +43,14 @@ okeanosApp.service('securityService', ['$location', function ($location) {
     console.log('Init service securityService');
     var security = {
         isLogin: "false",
-        isAdmin: "false"
+        isAdmin: "false",
+        curentAccountId: null
     };
 
-    this.setSecurity = function (login, admin) {
+    this.setSecurity = function (login, admin, id) {
         security.isLogin = login;
         security.isAdmin = admin;
+        security.curentAccountId = id;
     };
 
     this.getSecurity = function () {
@@ -78,6 +80,13 @@ okeanosApp.factory('Account', function ($resource) {
 });
 
 /* 
+ * Gesion des informations adherent
+ */
+okeanosApp.factory('AdherentInfo', function ($resource) {
+    return $resource(okeanoAppUrl + 'adherent_info/:id');
+});
+
+/* 
  * Gesion des comptes utilisteurs
  */
 okeanosApp.factory('Saison', function ($resource) {
@@ -89,6 +98,13 @@ okeanosApp.factory('Saison', function ($resource) {
  */
 okeanosApp.factory('DivingTraining', function ($resource) {
     return $resource(okeanoAppUrl + 'diving_training/:id');
+});
+
+/* 
+ * Gesion des équipes de hockey
+ */
+okeanosApp.factory('HockeyTeam', function ($resource) {
+    return $resource(okeanoAppUrl + 'hockey_team/:id');
 });
 
 /* 

@@ -1,88 +1,115 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" ng-app="okeanosApp">
+<html lang="fr" ng-app="okeanosApp">
 
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- BOOTSTRAP STYLES-->
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <!-- FONTAWESOME STYLES-->
-    <link href="assets/css/font-awesome.css" rel="stylesheet" />
-    <!-- CUSTOM STYLES-->
-    <link href="assets/css/custom.css" rel="stylesheet" />
-    <!-- GOOGLE FONTS-->
-    <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
-    <link rel="shortcut icon" type="image/x-icon" href="assets/img/logo_okeanos.ico" />
 
-    <!-- Custom styles for signin template -->
-    <link href="assets/css/customSignin.css" rel="stylesheet">
-
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="brouvier">
 
     <title>Okeanos - Gestionnaire d'inscriptions</title>
-    <script>
-        document.write('<base href="' + document.location + '" />');
 
-    </script>
+    <link rel="shortcut icon" type="image/x-icon" href="assets/img/logo_okeanos.ico" />
+
+    <!-- Bootstrap Core CSS -->
+    <link href="https://blackrockdigital.github.io/startbootstrap-sb-admin-2/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- MetisMenu CSS -->
+    <link href="https://blackrockdigital.github.io/startbootstrap-sb-admin-2/vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="https://blackrockdigital.github.io/startbootstrap-sb-admin-2/dist/css/sb-admin-2.css" rel="stylesheet">
+
+    <!-- Morris Charts CSS -->
+    <link href="https://blackrockdigital.github.io/startbootstrap-sb-admin-2/vendor/morrisjs/morris.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="https://blackrockdigital.github.io/startbootstrap-sb-admin-2/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
 </head>
 
 <body>
 
     <div id="wrapper">
-        <div class="navbar navbar-inverse navbar-fixed-top">
-            <div class="adjust-nav">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-collapse">
+
+        <!-- Navigation -->
+        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0" ng-controller="loginCtrl">
+            <div class="navbar-header">
+                <img src="assets/img/logo_okeanos.jpg" class="img-thumbnail" width="50" height="50" />
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                    <a class="navbar-brand" href="#"><i class="fa fa-square-o "></i>&nbsp;Okeanos</a>
-                </div>
-                <div class="navbar-collapse collapse">
-                    <ul class="nav navbar-nav navbar-right">
-                        <li><a href="https://www.okeanos-grenoble.fr">Site du club</a></li>
-                        <li><a href="https://www.facebook.com/groups/328625265710/">Groupe Facebook</a></li>
+                <a class="navbar-brand" href="index.html"> Okeanos - Gestionnaire d'inscriptions</a>
+            </div>
+            <!-- /.navbar-header -->
+
+            <ul class="nav navbar-top-links navbar-right" ng-show="security.isLogin=='true'">
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-messages">
+                        <li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a></li>
+                        <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a></li>
+                        <li class="divider"></li>
+                        <li><a href="#/userLogin" ng-click="logout()"><i class="fa fa-sign-out fa-fw"></i> Logout</a></li>
+                    </ul>
+                    <!-- /.dropdown-user -->
+                </li>
+                <!-- /.dropdown -->
+            </ul>
+            <!-- /.navbar-top-links -->
+
+            <div class="navbar-default sidebar" role="navigation" ng-show="security.isLogin=='true'">
+                <div class="sidebar-nav navbar-collapse">
+                    <ul class="nav" id="side-menu">
+
+                        <li>
+                            <a href="#"><i class="fa fa-edit fa-fw"></i> Mon compte<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li><a href="#/adherentInfo">Mes informations</a></li>
+                                <li><a href="#userForm">Mon adhésion</a></li>
+                            </ul>
+                        </li>
+                        <li ng-show="security.isAdmin=='true'">
+                            <a href="#"><i class="fa fa-dashboard fa-fw"></i> Administration<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li><a href="#/usersList">Liste des comptes utilisateurs</a></li>
+                                <li><a href="#/accountList">Liste des adhérents</a></li>
+                                <li><a href="#">Classeurs d'équipe</a></li>
+                                <li><a href="#">Classeurs de plongée</a></li>
+                            </ul>
+                        </li>
+                        <li ng-show="security.isAdmin=='true'">
+                            <a href="#"><i class="fa fa-wrench fa-fw"></i> Configuration<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li><a href="#/saison">Liste des saisons</a></li>
+                                <li><a href="#/subscriptionType">Type de formation</a></li>
+                                <li><a href="#/divingTraining">Formations plongée</a></li>
+                                <li><a href="#/hockeyTeam">Equipe hockey</a></li>
+                            </ul>
+                        </li>
+
+                        <li>
+                            <pre>security = {{security | json}}</pre>
+                        </li>
                     </ul>
                 </div>
+                <!-- /.sidebar-collapse -->
             </div>
-        </div>
-
-        <nav class="navbar-default navbar-side" role="navigation">
-            <div class="sidebar-collapse" ng-controller="loginCtrl">
-                <ul class="nav" id="main-menu">
-                    <li class="text-center user-image-back">
-                        <img src="assets/img/logo_okeanos.jpg" class="img-thumbnail" width="100" height="100" /></li>
-                    <li ng-show="security.isLogin=='true'">
-                        <a href="#/userLogin" ng-click="logout()"><span class="glyphicon glyphicon-off" aria-hidden="true" /> Déconnection
-                        </a>
-                    </li>
-                    <li ng-show="security.isLogin=='true'">
-                        <a href="#/userForm"><span class="glyphicon glyphicon-user" aria-hidden="true" /> Mon compte</a>
-                    </li>
-                    <li ng-show="security.isLogin=='true'">
-                        <a href="#"><span class="glyphicon glyphicon-ok" aria-hidden="true" /> Certificat médical pré-rempli</a>
-                    </li>
-                    <li ng-show="security.isAdmin=='true'">
-                        <a href="#/usersList"><span class="glyphicon glyphicon-list-alt" aria-hidden="true" /> Adérents</a>
-                    </li>
-                    <li ng-show="security.isAdmin=='true'">
-                        <a href="#/accountList"><span class="glyphicon glyphicon-list-alt" aria-hidden="true" /> Utilisateurs</a>
-                    </li>
-                    <li ng-show="security.isLogin=='true'">
-                        <a href="#/saison"><span class="glyphicon glyphicon-list-alt" aria-hidden="true" /> Saison</a>
-                    </li>
-                    <li ng-show="security.isLogin=='true'">
-                        <a href="#/divingTraining"><span class="glyphicon glyphicon-list-alt" aria-hidden="true" /> Formations de plongée</a>
-                    </li>
-                    <li ng-show="security.isAdmin=='true'">
-                        <a href="#/subscriptionType"><span class="glyphicon glyphicon-list-alt" aria-hidden="true" /> Types d'adhésions
-                        </a>
-                    </li>
-                    <li>
-                        <pre>security = {{security | json}}</pre>
-                    </li>
-                </ul>
-            </div>
+            <!-- /.navbar-static-side -->
         </nav>
 
         <div id="page-wrapper">
@@ -90,35 +117,45 @@
                 <div ng-view></div>
             </div>
         </div>
+
+        <!-- /#page-wrapper -->
+
     </div>
-
-    <!-- SCRIPTS -AT THE BOTOM TO REDUCE THE LOAD TIME-->
-    <!-- JQUERY SCRIPTS -->
-    <script src="assets/js/jquery-1.10.2.js"></script>
-    <!-- BOOTSTRAP SCRIPTS -->
-    <script src="assets/js/bootstrap.min.js"></script>
-    <!-- METISMENU SCRIPTS -->
-    <script src="assets/js/jquery.metisMenu.js"></script>
-    <!-- CUSTOM SCRIPTS -->
-    <script src="assets/js/custom.js"></script>
+    <!-- /#wrapper -->
 
 
-    <!--script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script-->
-    <!--script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script-->
+
+    <!-- jQuery -->
+    <script src="https://blackrockdigital.github.io/startbootstrap-sb-admin-2/vendor/jquery/jquery.min.js"></script>
+    <script src="https://blackrockdigital.github.io/startbootstrap-sb-admin-2/vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script src="https://blackrockdigital.github.io/startbootstrap-sb-admin-2/vendor/metisMenu/metisMenu.min.js"></script>
 
 
-    <!--script src="https://code.angularjs.org/latest/angular.min.js"></script>
-<script src="https://code.angularjs.org/latest/angular-route.min.js"></script>
-<script src="https://code.angularjs.org/latest/angular-resource.min.js"></script-->
+    <!-- Morris Charts JavaScript -->
+    <script src="https://blackrockdigital.github.io/startbootstrap-sb-admin-2/vendor/raphael/raphael.min.js"></script>
+    <script src="https://blackrockdigital.github.io/startbootstrap-sb-admin-2/vendor/morrisjs/morris.min.js"></script>
+    <script src="https://blackrockdigital.github.io/startbootstrap-sb-admin-2/data/morris-data.js"></script>
+
+    <!-- Custom Theme JavaScript -->
+    <script src="https://blackrockdigital.github.io/startbootstrap-sb-admin-2/dist/js/sb-admin-2.js"></script>
+
     <script src="assets/js/angular.min.js"></script>
     <script src="assets/js/angular-route.min.js"></script>
     <script src="assets/js/angular-resource.min.js"></script>
+
     <script src="app/app.js"></script>
     <script src="app/app-service.js"></script>
     <script src="app/app-controller.js"></script>
     <script src="app/app-controller-saison.js"></script>
     <script src="app/app-controller-diving_training.js"></script>
+    <script src="app/app-controller-hockey_team.js"></script>
+    <script src="app/app-controller-account.js"></script>
+    <script src="app/app-controller-subscription_type.js"></script>
+    <script src="app/app-controller-login.js"></script>
+    <script src="app/app-controller-adherent_info.js"></script>
 
+
+    </script>
 
 </body>
 

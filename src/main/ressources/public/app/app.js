@@ -25,6 +25,11 @@ okeanosApp.config(['$routeProvider', '$httpProvider',
                 controller: 'adherentFormCtrl',
                 authorized: true
             })
+            .when('/adherentInfo', {
+                templateUrl: 'partials/adherent_info.html',
+                controller: 'adherentInfoCtrl',
+                authorized: true
+            })
             .when('/usersList', {
                 templateUrl: 'partials/usersList.html',
                 controller: 'listUsrCtrl',
@@ -45,6 +50,11 @@ okeanosApp.config(['$routeProvider', '$httpProvider',
                 controller: 'divingTrainingCtrl',
                 authorized: true
             })
+            .when('/hockeyTeam', {
+                templateUrl: 'partials/hockey_team.html',
+                controller: 'hockeyTeamCtrl',
+                authorized: true
+            })
             .when('/subscriptionType', {
                 templateUrl: 'partials/subscriptionType.html',
                 controller: 'subscriptionTypeCtrl',
@@ -63,7 +73,7 @@ okeanosApp.config(['$routeProvider', '$httpProvider',
                         //Do your custom processing here
                         // do something on success
                         //console.log('myHttpInterceptor response : ' + response.config.url);
-                        securityService.setSecurity(response.headers('isLogin'), response.headers('isAdmin'));
+                        securityService.setSecurity(response.headers('isLogin'), response.headers('isAdmin'), response.headers('curentAccountId'));
                         //console.log(securityService.getSecurity());
                     }
 
