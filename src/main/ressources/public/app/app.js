@@ -60,6 +60,11 @@ okeanosApp.config(['$routeProvider', '$httpProvider',
                 controller: 'subscriptionTypeCtrl',
                 authorized: true
             })
+            .when('/ffessmLicence', {
+                templateUrl: 'partials/ffessm_licence.html',
+                controller: 'ffessmLicenceCtrl',
+                authorized: true
+            })
             .otherwise({
                 redirectTo: '/userForm'
             });

@@ -28,7 +28,7 @@ public class FfessmLicenceDao {
 
 		if (item == null || "".equals(item.getLabel())) {
 			System.out.println("Error : cannot save empty item !");
-			return null;
+			return item;
 		}
 
 		if (item.getId() == null) { // Mode cr√©ation
@@ -36,11 +36,16 @@ public class FfessmLicenceDao {
 			String sql = "insert into ffessm_licence (fk_saison_id, label, price) values (:fk_saison_id, :label, :price)";
 
 			try (Connection con = Sql2oDao.sql2o.open()) {
-				Long insertedId = (Long) con.createQuery(sql, true).addParameter("label", item.getFk_saison_id())
-						.addParameter("label", item.getLabel()).addParameter("label", item.getPrice()).executeUpdate()
+				Long insertedId = (Long) con.createQuery(sql, true).addParameter("fk_saison_id", item.getFk_saison_id())
+						.addParameter("label", item.getLabel()).addParameter("price", item.getPrice()).executeUpdate()
 						.getKey();
-				System.out.println("ID gÈnÈrÈ : " + insertedId);
+				System.out.println("ID g√©n√©r√© : " + insertedId);
 				return getItemById(insertedId);
+			} catch (Exception e) {
+				// TODO: handle exception
+				System.out.println(e.getMessage());
+				e.printStackTrace();
+				return item;
 			}
 
 		} else { // Mode modification

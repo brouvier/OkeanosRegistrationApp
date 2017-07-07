@@ -113,3 +113,10 @@ okeanosApp.factory('HockeyTeam', function ($resource) {
 okeanosApp.factory('SubscriptionType', function ($resource) {
     return $resource(okeanoAppUrl + 'subscription_type/:id'); // Note the full endpoint address
 });
+
+/* 
+ * Gesion des licences ffessm
+ */
+okeanosApp.factory('FfessmLicence', function ($resource) {
+    return $resource(okeanoAppUrl + 'ffessm_licence/:id');
+});

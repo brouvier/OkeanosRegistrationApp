@@ -8,7 +8,6 @@ import org.sql2o.Connection;
 
 import okeanos.model.AdherentInfo;
 
-
 public class AdherentInfoDao {
 
 	private static Logger logger = LoggerFactory.getLogger(AdherentInfoDao.class);
@@ -34,31 +33,28 @@ public class AdherentInfoDao {
 	public static AdherentInfo getItemByAccountId(Long id) {
 		String sql = "SELECT id, fk_account_id, firstname, lastname, birsthday, birthplace, licence_number, adresse, "
 				+ "zip_code, city, job, tel_number, mobile_number, emergency_contact, emergency_tel_number, createdOn FROM adherent_info WHERE fk_account_id = :id";
-		
+
 		AdherentInfo ai = null;
 		try (Connection con = Sql2oDao.sql2o.open()) {
 			ai = con.createQuery(sql).addParameter("id", id).executeAndFetchFirst(AdherentInfo.class);
 		}
-		if(ai == null){
-			ai = new AdherentInfo(null, id, null, null, null,
-			null, null, null, null, null, null,
-			null, null, null, null, null);
+		if (ai == null) {
+			ai = new AdherentInfo(null, id, null, null, null, null, null, null, null, null, null, null, null, null,
+					null, null);
 		}
 		return ai;
 	}
 
-	public static AdherentInfo save(AdherentInfo item, Long userAccountId) {
+	public static AdherentInfo save(AdherentInfo item) {
 
-		if (userAccountId == null) {
+		if (item == null) {
 			logger.error("Error : cannot save empty item !");
 			return null;
 		}
 
-        item.setFk_account_id(userAccountId);
-
 		if (item.getId() == null) { // Mode création
 			logger.debug("Création d'un item");
-			String sql = "insert into account (fk_account_id, firstname, lastname, birsthday, birthplace, licence_number, adresse, "
+			String sql = "insert into adherent_info (fk_account_id, firstname, lastname, birsthday, birthplace, licence_number, adresse, "
 					+ "zip_code, city, job, tel_number, mobile_number, emergency_contact, emergency_tel_number) "
 					+ "values (:fk_account_id, :firstname, :lastname, :birsthday, :birthplace, :licence_number, :adresse, :zip_code, "
 					+ ":city, :job, :tel_number, :mobile_number, :emergency_contact, :emergency_tel_number)";
@@ -77,6 +73,10 @@ public class AdherentInfoDao {
 						.addParameter("emergency_tel_number", item.getEmergency_tel_number()).executeUpdate().getKey();
 				logger.debug("ID généré : {}", insertedId);
 				return getItemById(insertedId);
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+				e.printStackTrace();
+				return item;
 			}
 
 		} else { // Mode modification

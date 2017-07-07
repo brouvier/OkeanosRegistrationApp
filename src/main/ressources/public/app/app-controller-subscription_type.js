@@ -5,7 +5,7 @@ okeanosAppControllers.controller('subscriptionTypeCtrl', function ($scope, $loca
     securityService.checkIsAdmin();
 
     console.log('Appel de la liste des type de souscription');
-    $scope.refreshSubscriptionType();
+    $scope.subscriptionTypeList = SubscriptionType.query();
 
     $scope.createSubscriptionType = function () {
         console.log('Création d un element');
