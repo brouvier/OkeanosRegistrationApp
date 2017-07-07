@@ -24,7 +24,7 @@ public class AdherentInfoResource extends AbstractResource {
             return JsonUtil.toJson(AdherentInfoDao.getAllItems());
         });
 
-        get(ressourcePath + "/:id", (request, response) -> AdherentInfoDao.getItemById(new Long(request.params(":id"))),
+        get(ressourcePath + "/:id", (request, response) -> AdherentInfoDao.getItemByAccountId(new Long(request.params(":id"))),
             json());
 
         delete(ressourcePath + "/:id",
