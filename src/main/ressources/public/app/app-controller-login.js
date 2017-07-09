@@ -22,7 +22,7 @@ okeanosAppControllers.controller('loginCtrl', function ($scope, $location, $http
                     console.log('Login response = ' + response.data);
                     if (response.data == 'true') {
                         $scope.alerte = "Connection succed";
-                        $location.path("userForm");
+                        $location.path("dashboard");
                     } else {
                         $scope.alerte = "Erreur de connexion !";
                     }

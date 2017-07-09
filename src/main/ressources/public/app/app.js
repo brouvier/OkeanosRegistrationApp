@@ -20,6 +20,11 @@ okeanosApp.config(['$routeProvider', '$httpProvider',
                 templateUrl: 'partials/userLogin.html',
                 controller: 'loginCtrl'
             })
+            .when('/dashboard', {
+                templateUrl: 'partials/dashboard.html',
+                controller: 'adherentFormCtrl',
+                authorized: true
+            })
             .when('/userForm', {
                 templateUrl: 'partials/userForm.html',
                 controller: 'adherentFormCtrl',
@@ -66,7 +71,7 @@ okeanosApp.config(['$routeProvider', '$httpProvider',
                 authorized: true
             })
             .otherwise({
-                redirectTo: '/userForm'
+                redirectTo: '/dashboard'
             });
 
 
@@ -87,7 +92,7 @@ okeanosApp.config(['$routeProvider', '$httpProvider',
                 'responseError': function (rejection) {
                     console.log('responseError');
                     if (rejection.status === 401) {
-                        $location.url('/userLogin');
+                        $location.url('/dashboard');
                     }
                 }
             };
