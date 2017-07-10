@@ -100,17 +100,6 @@ okeanosApp.config(['$routeProvider', '$httpProvider',
 
 }]);
 
-/*
-
-okeanosApp.run(function ($rootScope, $location, securityService) {
-    $rootScope.$on("$routeChangeStart", function (event, next, current) {
-        if (next.$$route.authorized && !securityService.isConnected()) {
-            $location.url("/userLogin");
-        }
-    });
-});
-*/
-
 okeanosApp.run(function ($rootScope, $location, $window) {
     $rootScope.$on('$routeChangeSuccess', function () {
         //console.log($location);

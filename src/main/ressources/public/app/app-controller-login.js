@@ -16,7 +16,6 @@ okeanosAppControllers.controller('loginCtrl', function ($scope, $location, $http
                     console.log('Sign up response = ' + response.data);
                 });
         } else {
-            $scope.alerte = "Tentative de connexion";
             $http.get(okeanoAppUrl + 'security/login/' + $scope.login.email + '/' + $scope.login.password)
                 .then(function (response) {
                     console.log('Login response = ' + response.data);
