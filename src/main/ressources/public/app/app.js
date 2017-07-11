@@ -22,17 +22,17 @@ okeanosApp.config(['$routeProvider', '$httpProvider',
             })
             .when('/dashboard', {
                 templateUrl: 'partials/dashboard.html',
-                controller: 'adherentFormCtrl',
-                authorized: true
-            })
-            .when('/userForm', {
-                templateUrl: 'partials/userForm.html',
-                controller: 'adherentFormCtrl',
+                controller: 'dashboardCtrl',
                 authorized: true
             })
             .when('/adherentInfo', {
                 templateUrl: 'partials/adherent_info.html',
                 controller: 'adherentInfoCtrl',
+                authorized: true
+            })
+            .when('/adherentInfoSaison', {
+                templateUrl: 'partials/adherent_info_saison.html',
+                controller: 'adherentInfoSaisonCtrl',
                 authorized: true
             })
             .when('/usersList', {
@@ -63,6 +63,11 @@ okeanosApp.config(['$routeProvider', '$httpProvider',
             .when('/subscriptionType', {
                 templateUrl: 'partials/subscriptionType.html',
                 controller: 'subscriptionTypeCtrl',
+                authorized: true
+            })
+            .when('/subscription', {
+                templateUrl: 'partials/subscription.html',
+                controller: 'subscriptionCtrl',
                 authorized: true
             })
             .when('/ffessmLicence', {

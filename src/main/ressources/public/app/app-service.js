@@ -108,6 +108,13 @@ okeanosApp.factory('HockeyTeam', function ($resource) {
 });
 
 /* 
+ * Gesion des tarifs d'adhésions
+ */
+okeanosApp.factory('Subscription', function ($resource) {
+    return $resource(okeanoAppUrl + 'subscription/:id');
+});
+
+/* 
  * Gesion des types d'adhésions
  */
 okeanosApp.factory('SubscriptionType', function ($resource) {

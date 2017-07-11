@@ -80,18 +80,18 @@
                             <a href="#"><i class="fa fa-edit fa-fw"></i> Mon compte<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li><a href="#/dashboard">Tableau de board</a></li>
-                                <li><a href="#/adherentInfo">Mes informations</a></li>
-                                <li><a href="#userForm">Mon adhésion</a></li>
+                                <li><a href="#/adherentInfo">Informations personnelles</a></li>
+                                <li><a href="#/adherentInfoSaison">Formulaire d'adhésion</a></li>
                                 <li><a href="#sickNote">Certificat médical</a></li>
                             </ul>
                         </li>
                         <li ng-show="security.isAdmin=='true'">
                             <a href="#"><i class="fa fa-dashboard fa-fw"></i> Administration<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
-                                <li><a href="#/usersList">Liste des comptes utilisateurs</a></li>
+                                <li><a href="#">Liste des comptes utilisateurs (TODO)</a></li>
                                 <li><a href="#/accountList">Liste des adhérents</a></li>
-                                <li><a href="#">Classeurs d'équipe</a></li>
-                                <li><a href="#">Classeurs de plongée</a></li>
+                                <li><a href="#">Classeurs d'équipe (TODO)</a></li>
+                                <li><a href="#">Classeurs de plongée (TODO)</a></li>
                             </ul>
                         </li>
                         <li ng-show="security.isAdmin=='true'">
@@ -99,6 +99,9 @@
                             <ul class="nav nav-second-level">
                                 <li><a href="#/saison">Liste des saisons</a></li>
                                 <li><a href="#/ffessmLicence">Tarif des licences</a></li>
+                                <li><a href="#/subscription">Tarif des adhésions</a></li>
+                                <li><a href="#">Tarif des assurances (TODO)</a></li>
+                                <hr />
                                 <li><a href="#/subscriptionType">Type de formation</a></li>
                                 <li><a href="#/divingTraining">Formations plongée</a></li>
                                 <li><a href="#/hockeyTeam">Equipe hockey</a></li>
@@ -154,9 +157,12 @@
     <script src="app/app-controller-hockey_team.js"></script>
     <script src="app/app-controller-account.js"></script>
     <script src="app/app-controller-subscription_type.js"></script>
+    <script src="app/app-controller-subscription.js"></script>
     <script src="app/app-controller-login.js"></script>
     <script src="app/app-controller-adherent_info.js"></script>
+    <script src="app/app-controller-adherent_info_saison.js"></script>
     <script src="app/app-controller-ffessm_licence.js"></script>
+    <script src="app/app-controller-dashboard.js"></script>
 
 </body>
 

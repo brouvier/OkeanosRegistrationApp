@@ -1,0 +1,104 @@
+<div class="row">
+    <div class="col-md-12">
+        <form ng-submit="update(adherent)" class="form-horizontal">
+            <h2 class="page-header">Fiche adhérent pour la saison en cours</h2>
+
+
+            <div class="form-group">
+                <label for="selectLevel" class="col-sm-2 control-label">Type de licence</label>
+                <div class="col-sm-10">
+                    <select id="selectLevel" class="form-control" ng-model="adherentInfoSaison.licenceType">
+                          <option ng-repeat="licence in licenceList"  value="{{licence.id}}">{{licence.label}}</option>
+                    </select></div>
+            </div>
+
+            <div class="form-group">
+                <label for="optionsAdhesion1" class="col-sm-2 control-label">Type d'adhésion : </label>
+                <div class="col-sm-10">
+                    <div class="radio-inline" ng-repeat="subscriptionType in subscriptionTypeList">
+                        <label>
+                            <input type="radio" name="optionSubscriptionType"
+                                   ng-model="adherentInfoSaison.subscriptionType" value="{{subscriptionType.id}}">
+                            {{subscriptionType.label}}
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Assurance : </label>
+                <div class="col-sm-10">
+                    <div class="checkbox" ng-show="adherentInfoSaison.membershipType !== 'hockey'">
+                        <label>
+                            <input type="checkbox" ng-model="adherentInfoSaison.assurance"> piscine
+                        </label>
+                    </div>
+
+                    <div ng-show="adherentInfoSaison.membershipType === 'hockey'">
+                        <label>
+                            obligatoire
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="form-group" ng-show="adherentInfoSaison.membershipType == 'plongee'">
+                <label for="selectLevel" class="col-sm-2 control-label">Niveau actuel : </label>
+                <div class="col-sm-10">
+                    <select id="selectLevel" class="form-control" ng-model="adherentInfoSaison.actualLevel">
+                        <option>Aucun</option>
+                        <option>Niveau 1</option>
+                        <option>Niveau 2</option>
+                        <option>Niveau 3</option>
+                    </select></div>
+            </div>
+
+            <div class="form-group" ng-show="adherentInfoSaison.membershipType == 'plongee'">
+                <label for="selectLevel" class="col-sm-2 control-label">Niveau Préparé : </label>
+                <div class="col-sm-10">
+                    <select id="selectLevel" class="form-control" ng-model="adherentInfoSaison.preparedLevel">
+                        <option>Aucun</option>
+                        <option>Niveau 1</option>
+                        <option>Niveau 2</option>
+                        <option>Niveau 3</option>
+                    </select></div>
+            </div>
+
+            <!--
+            <div class="form-group" ng-show="adherentInfoSaison.membershipType == 'hockey'">
+                <label for="selectTeam">Equipe : </label>
+                <select id="selectTeam" class="form-control" ng-model="adherentInfoSaison.team">
+                    <option>Aucune</option>
+                    <option>Equipe 1</option>
+                    <option>Equipe 2</option>
+                    <option>Equipe fille</option>
+                </select>
+            </div>-->
+
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button type="submit" class="btn btn-primary">Tout mettre à jour</button>
+                </div>
+            </div>
+
+            <div class="alert alert-info" role="info" ng-show="updateState=='wip'">
+                <button type="button" class="close" data-dismiss="info" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button> Mis à jour en cours ...
+            </div>
+
+            <div class="alert alert-success" role="success" ng-show="updateState=='done'">
+                <button type="button" class="close" data-dismiss="success" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button> Adhérent mis à jour !
+            </div>
+
+        </form>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <h2 class="page-header">Debug</h2>
+        <pre>updateState = {{updateState | json}}</pre>
+        <pre>adherentInfoSaison = {{adherentInfoSaison | json}}</pre>
+    </div>
+</div>

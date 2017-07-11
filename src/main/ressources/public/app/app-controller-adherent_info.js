@@ -1,5 +1,5 @@
 /* 
- * Contrôleur de la liste des saisons
+ * Contrôleur des informations adhérent
  */
 okeanosAppControllers.controller('adherentInfoCtrl', function ($scope, $http, securityService, AdherentInfo) {
     securityService.checkIsLogin();
