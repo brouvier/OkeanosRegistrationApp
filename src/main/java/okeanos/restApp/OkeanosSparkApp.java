@@ -1,11 +1,5 @@
 package okeanos.restApp;
 
-import static spark.Spark.externalStaticFileLocation;
-import static spark.Spark.ipAddress;
-import static spark.Spark.port;
-import static spark.Spark.staticFileLocation;
-import static spark.Spark.secure;
-
 import okeanos.restApp.resources.AccountResource;
 import okeanos.restApp.resources.AdherentInfoResource;
 import okeanos.restApp.resources.AdherentInfoSaisonResource;
@@ -15,9 +9,16 @@ import okeanos.restApp.resources.HockeyTeamResource;
 import okeanos.restApp.resources.InsuranceResource;
 import okeanos.restApp.resources.SaisonResource;
 import okeanos.restApp.resources.SecurityResource;
+import okeanos.restApp.resources.SickNoteResource;
 import okeanos.restApp.resources.SubscriptionResource;
 import okeanos.restApp.resources.SubscriptionTypeResource;
 import okeanos.util.AppProperties;
+
+import static spark.Spark.externalStaticFileLocation;
+import static spark.Spark.ipAddress;
+import static spark.Spark.port;
+import static spark.Spark.secure;
+import static spark.Spark.staticFileLocation;
 
 public class OkeanosSparkApp {
 
@@ -50,5 +51,6 @@ public class OkeanosSparkApp {
 		new SecurityResource();
 		new SubscriptionResource();
 		new SubscriptionTypeResource();
+		new SickNoteResource();
 	}
 }

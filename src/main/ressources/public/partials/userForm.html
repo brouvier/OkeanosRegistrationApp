@@ -139,7 +139,7 @@
             <div class="form-group" ng-show="adherent.membershipType == 'plongee'">
                 <label for="selectLevel" class="col-sm-2 control-label">Niveau actuel : </label>
                 <div class="col-sm-10">
-                    <select id="selectLevel" class="form-control" ng-model="adherent.actualLevel">
+                    <select id="selectLevel1" class="form-control" ng-model="adherent.actualLevel">
                         <option>Aucun</option>
                         <option>Niveau 1</option>
                         <option>Niveau 2</option>
@@ -150,13 +150,14 @@
             <div class="form-group" ng-show="adherent.membershipType == 'plongee'">
                 <label for="selectLevel" class="col-sm-2 control-label">Niveau Préparé : </label>
                 <div class="col-sm-10">
-                    <select id="selectLevel" class="form-control" ng-model="adherent.preparedLevel">
+                    <select id="selectLevel2" class="form-control" ng-model="adherent.preparedLevel">
                         <option>Aucun</option>
                         <option>Niveau 1</option>
                         <option>Niveau 2</option>
                         <option>Niveau 3</option>
                     </select></div>
             </div>
+
 
             <!--
             <div class="form-group" ng-show="adherent.membershipType == 'hockey'">

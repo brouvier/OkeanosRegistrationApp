@@ -70,6 +70,10 @@ okeanosApp.config(['$routeProvider', '$httpProvider',
                 controller: 'ffessmLicenceCtrl',
                 authorized: true
             })
+            .when('/sickNote', {
+                templateUrl: 'partials/sickNoteUpload.html',
+                authorized: true
+            })
             .otherwise({
                 redirectTo: '/dashboard'
             });
