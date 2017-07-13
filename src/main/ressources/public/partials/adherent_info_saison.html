@@ -1,20 +1,21 @@
 <div class="row">
     <div class="col-md-12">
-        <form ng-submit="update(adherent)" class="form-horizontal">
-            <h2 class="page-header">Fiche adhérent pour la saison en cours</h2>
+        <form ng-submit="save()" class="form-horizontal">
+            <h2 class="page-header">Fiche adhérent pour la saison en cours : {{currentSaison.label}}</h2>
 
 
             <div class="form-group">
-                <label for="selectLevel" class="col-sm-2 control-label">Type de licence</label>
-                <div class="col-sm-10">
+                <label for="selectLevel" class="col-sm-3 control-label">Type de licence</label>
+                <div class="col-sm-9">
                     <select id="selectLevel" class="form-control" ng-model="adherentInfoSaison.licenceType">
-                          <option ng-repeat="licence in licenceList"  value="{{licence.id}}">{{licence.label}}</option>
-                    </select></div>
+                          <option ng-repeat="licence in licenceList"  value="{{licence.id}}">{{licence.label}} ({{licence.price}}€)</option>
+                    </select>
+                </div>
             </div>
 
             <div class="form-group">
-                <label for="optionsAdhesion1" class="col-sm-2 control-label">Type d'adhésion : </label>
-                <div class="col-sm-10">
+                <label for="optionsAdhesion1" class="col-sm-3 control-label">Type d'adhésion : </label>
+                <div class="col-sm-9">
                     <div class="radio-inline" ng-repeat="subscriptionType in subscriptionTypeList">
                         <label>
                             <input type="radio" name="optionSubscriptionType"
@@ -26,8 +27,20 @@
             </div>
 
             <div class="form-group">
-                <label class="col-sm-2 control-label">Assurance : </label>
-                <div class="col-sm-10">
+                <label for="optionsAdhesion1" class="col-sm-3 control-label">Mon adhésion : </label>
+                <div class="col-sm-9">
+                    <div class="radio-inline" ng-repeat="subscription in subscriptionList">
+                        <label>
+                            <input type="radio" ng-model="adherentInfoSaison.subscription" value="{{subscription.id}}">
+                            {{subscription.label}} ({{subscription.price}}€)
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-3 control-label">Assurance : </label>
+                <div class="col-sm-9">
                     <div class="checkbox" ng-show="adherentInfoSaison.membershipType !== 'hockey'">
                         <label>
                             <input type="checkbox" ng-model="adherentInfoSaison.assurance"> piscine
@@ -42,42 +55,51 @@
                 </div>
             </div>
 
-
-            <div class="form-group" ng-show="adherentInfoSaison.membershipType == 'plongee'">
-                <label for="selectLevel" class="col-sm-2 control-label">Niveau actuel : </label>
-                <div class="col-sm-10">
-                    <select id="selectLevel" class="form-control" ng-model="adherentInfoSaison.actualLevel">
-                        <option>Aucun</option>
-                        <option>Niveau 1</option>
-                        <option>Niveau 2</option>
-                        <option>Niveau 3</option>
-                    </select></div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">Droit à l'image : </label>
+                <div class="col-sm-9">
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" ng-model="adherentInfoSaison.picture_authorisation"> J'autorise le club à utilise des photos de moi à des fin de communication.
+                        </label>
+                    </div>
+                </div>
             </div>
 
-            <div class="form-group" ng-show="adherentInfoSaison.membershipType == 'plongee'">
-                <label for="selectLevel" class="col-sm-2 control-label">Niveau Préparé : </label>
-                <div class="col-sm-10">
-                    <select id="selectLevel" class="form-control" ng-model="adherentInfoSaison.preparedLevel">
-                        <option>Aucun</option>
-                        <option>Niveau 1</option>
-                        <option>Niveau 2</option>
-                        <option>Niveau 3</option>
-                    </select></div>
-            </div>
-
-            <!--
-            <div class="form-group" ng-show="adherentInfoSaison.membershipType == 'hockey'">
-                <label for="selectTeam">Equipe : </label>
-                <select id="selectTeam" class="form-control" ng-model="adherentInfoSaison.team">
-                    <option>Aucune</option>
-                    <option>Equipe 1</option>
-                    <option>Equipe 2</option>
-                    <option>Equipe fille</option>
-                </select>
-            </div>-->
+            <h4 class="page-header">Section plongée</h4>
 
             <div class="form-group">
-                <div class="col-sm-offset-2 col-sm-10">
+                <label for="selectLevel" class="col-sm-3 control-label">Niveau actuel : </label>
+                <div class="col-sm-9">
+                    <select id="selectLevel" class="form-control" ng-model="adherentInfoSaison.actualLevel">
+                        <option>Aucun</option>
+                        <option ng-repeat="actualLevel in divingTrainingList"  value="{{actualLevel.id}}">{{actualLevel.label}}</option>
+                    </select></div>
+            </div>
+
+            <div class="form-group">
+                <label for="selectLevel" class="col-sm-3 control-label">Niveau Préparé : </label>
+                <div class="col-sm-9">
+                    <select id="selectLevel" class="form-control" ng-model="adherentInfoSaison.preparedLevel">
+                        <option>Aucun</option>
+                        <option ng-repeat="preparedLevel in divingTrainingList"  value="{{preparedLevel.id}}">{{preparedLevel.label}}</option>
+                    </select></div>
+            </div>
+
+            <h4 class="page-header">Section hockey</h4>
+
+            <div class="form-group">
+                <label for="selectTeam" class="col-sm-3 control-label">Equipe : </label>
+                <div class="col-sm-9">
+                    <select id="selectTeam" class="form-control" ng-model="adherentInfoSaison.team">
+                        <option>Aucune</option>
+                        <option ng-repeat="team in hockeyTeamList"  value="{{team.id}}">{{team.label}}</option>
+                </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-sm-offset-3 col-sm-9">
                     <button type="submit" class="btn btn-primary">Tout mettre à jour</button>
                 </div>
             </div>

@@ -87,6 +87,13 @@ okeanosApp.factory('AdherentInfo', function ($resource) {
 });
 
 /* 
+ * Gesion des informations adherent pour la saison
+ */
+okeanosApp.factory('AdherentInfoSaison', function ($resource) {
+    return $resource(okeanoAppUrl + 'adherent_info_saison/:id');
+});
+
+/* 
  * Gesion des comptes utilisteurs
  */
 okeanosApp.factory('Saison', function ($resource) {
