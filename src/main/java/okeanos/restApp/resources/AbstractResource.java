@@ -1,14 +1,16 @@
 package okeanos.restApp.resources;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import spark.Request;
-import spark.Response;
-
 import static okeanos.util.JsonUtil.toJson;
 import static spark.Spark.exception;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+import spark.Request;
+import spark.Response;
 
 public abstract class AbstractResource {
 
@@ -23,13 +25,6 @@ public abstract class AbstractResource {
 			response.status(400);
 			response.body(toJson(new ResponseError(e)));
 		});
-
-		// options(AppProperties.API_CONTEXT + "/*", (request, response) -> {
-		//
-		// response.header("test", "pipo");
-		//
-		// return "OK";
-		// });
 
 	}
 

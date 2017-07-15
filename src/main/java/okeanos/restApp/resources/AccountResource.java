@@ -1,6 +1,5 @@
 package okeanos.restApp.resources;
 
-import static okeanos.util.JsonUtil.json;
 import static spark.Spark.delete;
 import static spark.Spark.get;
 import static spark.Spark.post;
@@ -24,15 +23,20 @@ public class AccountResource extends AbstractResource {
 			return JsonUtil.toJson(AccountDao.getAllItems());
 		});
 
-		get(ressourcePath + "/:id", (request, response) -> AccountDao.getItemById(new Long(request.params(":id"))),
-				json());
+		get(ressourcePath + "/:id", (request, response) -> {
+			setSecurity(request, response);
+			return JsonUtil.toJson(AccountDao.getItemById(new Long(request.params(":id"))));
+		});
 
-		delete(ressourcePath + "/:id", (request, response) -> AccountDao.deleteItem(new Long(request.params(":id"))),
-				json());
+		delete(ressourcePath + "/:id", (request, response) -> {
+			setSecurity(request, response);
+			return JsonUtil.toJson(AccountDao.deleteItem(new Long(request.params(":id"))));
+		});
 
-		post(ressourcePath,
-				(request, response) -> AccountDao.updateItem(new Gson().fromJson(request.body(), Account.class)),
-				json());
+		post(ressourcePath, (request, response) -> {
+			setSecurity(request, response);
+			return JsonUtil.toJson(AccountDao.updateItem(new Gson().fromJson(request.body(), Account.class)));
+		});
 	}
 
 }

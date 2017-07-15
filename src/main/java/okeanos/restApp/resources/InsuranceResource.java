@@ -1,6 +1,5 @@
 package okeanos.restApp.resources;
 
-import static okeanos.util.JsonUtil.json;
 import static spark.Spark.delete;
 import static spark.Spark.get;
 import static spark.Spark.post;
@@ -24,14 +23,20 @@ public class InsuranceResource extends AbstractResource {
 			return JsonUtil.toJson(InsuranceDao.getAllItems());
 		});
 
-		get(ressourcePath + "/:id", (request, response) -> InsuranceDao.getItemById(new Long(request.params(":id"))),
-				json());
+		get(ressourcePath + "/:id", (request, response) -> {
+			setSecurity(request, response);
+			return JsonUtil.toJson(InsuranceDao.getItemById(new Long(request.params(":id"))));
+		});
 
-		delete(ressourcePath + "/:id", (request, response) -> InsuranceDao.deleteItem(new Long(request.params(":id"))),
-				json());
+		delete(ressourcePath + "/:id", (request, response) -> {
+			setSecurity(request, response);
+			return JsonUtil.toJson(InsuranceDao.deleteItem(new Long(request.params(":id"))));
+		});
 
-		post(ressourcePath,
-				(request, response) -> InsuranceDao.save(new Gson().fromJson(request.body(), Insurance.class)), json());
+		post(ressourcePath, (request, response) -> {
+			setSecurity(request, response);
+			return JsonUtil.toJson(InsuranceDao.save(new Gson().fromJson(request.body(), Insurance.class)));
+		});
 	}
 
 }

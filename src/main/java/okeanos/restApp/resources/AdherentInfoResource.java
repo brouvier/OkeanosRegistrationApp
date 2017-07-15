@@ -23,7 +23,7 @@ public class AdherentInfoResource extends AbstractResource {
 
 		get(ressourcePath + "/:id", (request, response) -> {
 			setSecurity(request, response);
-			return JsonUtil.toJson(AdherentInfoDao.getItemByAccountId(new Long(request.params(":id"))));
+			return gson.toJson(AdherentInfoDao.getItemByAccountId(new Long(request.params(":id"))));
 		});
 
 		delete(ressourcePath + "/:id", (request, response) -> {

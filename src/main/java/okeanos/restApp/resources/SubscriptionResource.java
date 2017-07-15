@@ -1,6 +1,5 @@
 package okeanos.restApp.resources;
 
-import static okeanos.util.JsonUtil.json;
 import static spark.Spark.delete;
 import static spark.Spark.get;
 import static spark.Spark.post;
@@ -24,15 +23,20 @@ public class SubscriptionResource extends AbstractResource {
 			return JsonUtil.toJson(SubscriptionDao.getAllItems());
 		});
 
-		get(ressourcePath + "/:id", (request, response) -> SubscriptionDao.getItemById(new Long(request.params(":id"))),
-				json());
+		get(ressourcePath + "/:id", (request, response) -> {
+			setSecurity(request, response);
+			return JsonUtil.toJson(SubscriptionDao.getItemById(new Long(request.params(":id"))));
+		});
 
-		delete(ressourcePath + "/:id",
-				(request, response) -> SubscriptionDao.deleteItem(new Long(request.params(":id"))), json());
+		delete(ressourcePath + "/:id", (request, response) -> {
+			setSecurity(request, response);
+			return JsonUtil.toJson(SubscriptionDao.deleteItem(new Long(request.params(":id"))));
+		});
 
-		post(ressourcePath,
-				(request, response) -> SubscriptionDao.save(new Gson().fromJson(request.body(), Subscription.class)),
-				json());
+		post(ressourcePath, (request, response) -> {
+			setSecurity(request, response);
+			return JsonUtil.toJson(SubscriptionDao.save(new Gson().fromJson(request.body(), Subscription.class)));
+		});
 	}
 
 }

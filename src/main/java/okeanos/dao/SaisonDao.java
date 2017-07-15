@@ -24,6 +24,14 @@ public class SaisonDao {
 		}
 	}
 
+	public static Saison getCurrentSaison() {
+		String sql = "SELECT id, label, start_date, end_date, createdOn FROM saison WHERE sysdate BETWEEN start_date AND end_date";
+
+		try (Connection con = Sql2oDao.sql2o.open()) {
+			return con.createQuery(sql).executeAndFetchFirst(Saison.class);
+		}
+	}
+
 	public static Saison save(Saison item) {
 
 		if (item == null || "".equals(item.getLabel())) {
@@ -39,7 +47,7 @@ public class SaisonDao {
 				Long insertedId = (Long) con.createQuery(sql, true).addParameter("label", item.getLabel())
 						.addParameter("start_date", item.getStart_date()).addParameter("end_date", item.getEnd_date())
 						.executeUpdate().getKey();
-				System.out.println("ID généré : " + insertedId);
+				System.out.println("ID gï¿½nï¿½rï¿½ : " + insertedId);
 				return getItemById(insertedId);
 			}
 

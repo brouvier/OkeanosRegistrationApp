@@ -1,6 +1,5 @@
 package okeanos.restApp.resources;
 
-import static okeanos.util.JsonUtil.json;
 import static spark.Spark.delete;
 import static spark.Spark.get;
 import static spark.Spark.post;
@@ -24,14 +23,27 @@ public class AdherentInfoSaisonResource extends AbstractResource {
 			return JsonUtil.toJson(AdherentInfoSaisonDao.getAllItems());
 		});
 
-		get(ressourcePath + "/:id",
-				(request, response) -> AdherentInfoSaisonDao.getItemById(new Long(request.params(":id"))), json());
+		get(ressourcePath + "/:id", (request, response) -> {
+			setSecurity(request, response);
+			return JsonUtil.toJson(AdherentInfoSaisonDao.getItemById(new Long(request.params(":id"))));
+		});
 
-		delete(ressourcePath + "/:id",
-				(request, response) -> AdherentInfoSaisonDao.deleteItem(new Long(request.params(":id"))), json());
+		get(ressourcePath + "/saison/:saison_id/account/:account_id", (request, response) -> {
+			setSecurity(request, response);
+			return JsonUtil.toJson(AdherentInfoSaisonDao.getIdBySaisonAndAccount(new Long(request.params(":saison_id")),
+					new Long(request.params(":account_id"))));
+		});
 
-		post(ressourcePath, (request, response) -> AdherentInfoSaisonDao
-				.save(new Gson().fromJson(request.body(), AdherentInfoSaison.class)), json());
+		delete(ressourcePath + "/:id", (request, response) -> {
+			setSecurity(request, response);
+			return JsonUtil.toJson(AdherentInfoSaisonDao.deleteItem(new Long(request.params(":id"))));
+		});
+
+		post(ressourcePath, (request, response) -> {
+			setSecurity(request, response);
+			return JsonUtil
+					.toJson(AdherentInfoSaisonDao.save(new Gson().fromJson(request.body(), AdherentInfoSaison.class)));
+		});
 	}
 
 }

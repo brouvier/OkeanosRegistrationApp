@@ -28,6 +28,16 @@ public class AdherentInfoSaisonDao {
 		}
 	}
 
+	public static Long getIdBySaisonAndAccount(Long saison_id, Long account_id) {
+		String sql = "SELECT id FROM adherent_info_saison "
+				+ "WHERE fk_saison_id = :saison_id AND fk_account_id = :account_id";
+
+		try (Connection con = Sql2oDao.sql2o.open()) {
+			return con.createQuery(sql).addParameter("saison_id", saison_id).addParameter("account_id", account_id)
+					.executeAndFetchFirst(Long.class);
+		}
+	}
+
 	public static AdherentInfoSaison newItem(Long fk_account_id, Long fk_saison_id, Long fk_ffessm_licence_id,
 			Long fk_subscription_id, Long fk_insurance_id, Boolean picture_authorisation, Long fk_actual_training_id,
 			Long fk_training_id, Long fk_team_id) {
@@ -75,7 +85,7 @@ public class AdherentInfoSaisonDao {
 						.addParameter("fk_actual_training_id", item.getFk_actual_training_id())
 						.addParameter("fk_training_id", item.getFk_team_id())
 						.addParameter("fk_team_id", item.getFk_team_id()).executeUpdate().getKey();
-				System.out.println("ID généré : " + insertedId);
+				System.out.println("ID gÃ©nÃ©rÃ© : " + insertedId);
 				return getItemById(insertedId);
 			}
 

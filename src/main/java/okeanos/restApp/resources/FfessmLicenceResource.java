@@ -1,6 +1,5 @@
 package okeanos.restApp.resources;
 
-import static okeanos.util.JsonUtil.json;
 import static spark.Spark.delete;
 import static spark.Spark.get;
 import static spark.Spark.post;
@@ -24,15 +23,20 @@ public class FfessmLicenceResource extends AbstractResource {
 			return JsonUtil.toJson(FfessmLicenceDao.getAllItems());
 		});
 
-		get(ressourcePath + "/:id",
-				(request, response) -> FfessmLicenceDao.getItemById(new Long(request.params(":id"))), json());
+		get(ressourcePath + "/:id", (request, response) -> {
+			setSecurity(request, response);
+			return JsonUtil.toJson(FfessmLicenceDao.getItemById(new Long(request.params(":id"))));
+		});
 
-		delete(ressourcePath + "/:id",
-				(request, response) -> FfessmLicenceDao.deleteItem(new Long(request.params(":id"))), json());
+		delete(ressourcePath + "/:id", (request, response) -> {
+			setSecurity(request, response);
+			return JsonUtil.toJson(FfessmLicenceDao.deleteItem(new Long(request.params(":id"))));
+		});
 
-		post(ressourcePath,
-				(request, response) -> FfessmLicenceDao.save(new Gson().fromJson(request.body(), FfessmLicence.class)),
-				json());
+		post(ressourcePath, (request, response) -> {
+			setSecurity(request, response);
+			return JsonUtil.toJson(FfessmLicenceDao.save(new Gson().fromJson(request.body(), FfessmLicence.class)));
+		});
 	}
 
 }

@@ -1,6 +1,5 @@
 package okeanos.restApp.resources;
 
-import static okeanos.util.JsonUtil.json;
 import static spark.Spark.delete;
 import static spark.Spark.get;
 import static spark.Spark.post;
@@ -24,14 +23,20 @@ public class DivingTrainingResource extends AbstractResource {
 			return JsonUtil.toJson(DivingTrainingDao.getAllItems());
 		});
 
-		get(ressourcePath + "/:id",
-				(request, response) -> DivingTrainingDao.getItemById(new Long(request.params(":id"))), json());
+		get(ressourcePath + "/:id", (request, response) -> {
+			setSecurity(request, response);
+			return JsonUtil.toJson(DivingTrainingDao.getItemById(new Long(request.params(":id"))));
+		});
 
-		delete(ressourcePath + "/:id",
-				(request, response) -> DivingTrainingDao.deleteItem(new Long(request.params(":id"))), json());
+		delete(ressourcePath + "/:id", (request, response) -> {
+			setSecurity(request, response);
+			return JsonUtil.toJson(DivingTrainingDao.deleteItem(new Long(request.params(":id"))));
+		});
 
-		post(ressourcePath, (request, response) -> DivingTrainingDao
-				.save(new Gson().fromJson(request.body(), DivingTraining.class)), json());
+		post(ressourcePath, (request, response) -> {
+			setSecurity(request, response);
+			return JsonUtil.toJson(DivingTrainingDao.save(new Gson().fromJson(request.body(), DivingTraining.class)));
+		});
 	}
 
 }

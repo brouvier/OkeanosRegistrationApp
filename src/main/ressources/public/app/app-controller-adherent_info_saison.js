@@ -1,39 +1,39 @@
 /* 
  * Contrôleur de la liste des formations de plongée
  */
-okeanosAppControllers.controller('adherentInfoSaisonCtrl', function ($scope, $http, securityService, Subscription, Saison, SubscriptionType, FfessmLicence, AdherentInfoSaison, HockeyTeam, DivingTraining) {
+okeanosAppControllers.controller('adherentInfoSaisonCtrl', function ($scope, $http, securityService, Subscription, SubscriptionType, FfessmLicence, AdherentInfoSaison, HockeyTeam, DivingTraining) {
     securityService.checkIsLogin();
 
-    /* TODO remplacer par un unique appel */
-    var saisonList = Saison.query(function () {
-        console.log('Search currentSaison');
-        var sysdate = new Date().getTime();
-        $scope.currentSaison = null;
+    $http.get(okeanoAppUrl + 'saison/currentSaison')
+        .then(function (response) {
+            $scope.currentSaison = response.data;
+            console.log('currentSaison == ' + $scope.currentSaison.label);
 
-        for (var i = 0; i < saisonList.length; i++) {
-            var start = new Date(saisonList[i].start_date).getTime();
-            var end = new Date(saisonList[i].end_date).getTime();
-            if (start <= sysdate && end > sysdate) {
-                $scope.currentSaison = saisonList[i];
-            }
-        }
-        if ($scope.currentSaison == null) {
-            console.log('Error : currentSaison == null');
-            return;
-        }
-        console.log('CurrentSaison == ' + $scope.currentSaison.label);
+            /* Recherche des informations d'adhésion */
+            $http.get(okeanoAppUrl + 'adherent_info_saison/saison/' + $scope.currentSaison.id + '/account/' + securityService.getSecurity().curentAccountId)
+                .then(function (response) {
+                    var adherent_info_saison_id = response.data;
+                    console.log('adherent_info_saison_id == ' + response.data);
 
-        /* TODO Filtrer par saison */
-        $scope.licenceList = FfessmLicence.query();
-        $scope.subscriptionList = Subscription.query();
+                    if (adherent_info_saison_id == "null") {
+                        $scope.adherentInfoSaison = new AdherentInfoSaison();
+                        $scope.adherentInfoSaison.fk_saison_id = $scope.currentSaison.id;
+                        $scope.adherentInfoSaison.fk_account_id = securityService.getSecurity().curentAccountId;
+                    } else {
+                        $scope.adherentInfoSaison = AdherentInfoSaison.get({
+                            id: adherent_info_saison_id
+                        });
+                    };
 
-        /* TODO créer la ressource 
-        $http.get(okeanoAppUrl + 'adherent_info_saison/account/' + securityService.getSecurity.curentAccountId + '/saison/' + $scope.currentSaison.id)
-            .then(function (response) {
-                console.log('Sign up response = ' + response.data);
-                $scope.adherentInfoSaison = angular.fromJson(response.data);
-            });*/
-    });
+                    console.log('adherentInfoSaison');
+                    console.log($scope.adherentInfoSaison);
+
+                });
+
+            /* TODO Filtrer par saison */
+            $scope.licenceList = FfessmLicence.query();
+            $scope.subscriptionList = Subscription.query();
+        });
 
     $scope.subscriptionTypeList = SubscriptionType.query();
     $scope.hockeyTeamList = HockeyTeam.query();
@@ -41,19 +41,8 @@ okeanosAppControllers.controller('adherentInfoSaisonCtrl', function ($scope, $ht
 
     $scope.save = function () {
         console.log('Enregistrement : ');
-        var item = new AdherentInfoSaison();
-        item.id = null;
-        item.fk_account_id = null;
-        item.fk_saison_id = $scope.adherentInfoSaison.fk_saison_id;
-        item.fk_ffessm_licence_id = $scope.adherentInfoSaison.licence;
-        item.fk_subscription_id = $scope.adherentInfoSaison.subscription;
-        item.fk_insurance_id = null;
-        item.picture_authorisation = $scope.adherentInfoSaison.picture_authorisation;
-        item.fk_actual_training_id = $scope.adherentInfoSaison.actualLevel;
-        item.fk_training_id = $scope.adherentInfoSaison.preparedLevel;
-        item.fk_team_id = $scope.adherentInfoSaison.team;
-        console.log(item);
-        //item.$save();
+        console.log($scope.adherentInfoSaison);
+        $scope.adherentInfoSaison.$save();
         console.log('Enregistrement terminé');
     };
 });

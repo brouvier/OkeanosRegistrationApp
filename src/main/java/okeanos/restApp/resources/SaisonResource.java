@@ -1,6 +1,5 @@
 package okeanos.restApp.resources;
 
-import static okeanos.util.JsonUtil.json;
 import static spark.Spark.delete;
 import static spark.Spark.get;
 import static spark.Spark.post;
@@ -22,11 +21,20 @@ public class SaisonResource extends AbstractResource {
 			return JsonUtil.toJson(SaisonDao.getAllItems());
 		});
 
-		get(ressourcePath + "/:id", (request, response) -> SaisonDao.getItemById(new Long(request.params(":id"))),
-				json());
+		get(ressourcePath + "/currentSaison", (request, response) -> {
+			setSecurity(request, response);
+			return JsonUtil.toJson(SaisonDao.getCurrentSaison());
+		});
 
-		delete(ressourcePath + "/:id", (request, response) -> SaisonDao.deleteItem(new Long(request.params(":id"))),
-				json());
+		get(ressourcePath + "/:id", (request, response) -> {
+			setSecurity(request, response);
+			return JsonUtil.toJson(SaisonDao.getItemById(new Long(request.params(":id"))));
+		});
+
+		delete(ressourcePath + "/:id", (request, response) -> {
+			setSecurity(request, response);
+			return JsonUtil.toJson(SaisonDao.deleteItem(new Long(request.params(":id"))));
+		});
 
 		post(ressourcePath, (request, response) -> {
 			setSecurity(request, response);
