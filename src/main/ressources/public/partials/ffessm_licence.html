@@ -37,8 +37,7 @@
                 <form ng-submit="saveItem()">
                     <div class="form-group">
                         <label for="inputSaison">Saison</label>
-                        <select id="inputSaison" class="form-control" ng-model="modalSaisonId" required="required">
-                          <option ng-repeat="saison in saisonList"  value="{{saison.id}}">{{saison.label}}</option>
+                        <select id="inputSaison" class="form-control" ng-model="modalSaisonId" ng-options="saison.id as saison.label for saison in saisonList" required="required">
                         </select>
                     </div>
                     <div class="form-group">
@@ -56,7 +55,6 @@
                         <!--input id="inputPrice" type="text" class="form-control" ng-model="modalPrice" /-->
                     </div>
                 </form>
-                <pre> $scope.modalSaisonId = {{modalSaisonId}}</pre>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-success" data-dismiss="modal" ng-click="saveItem()">Ajouter</button>
@@ -84,8 +82,7 @@
                     </div>
                     <div class="form-group">
                         <label for="inputSaison">Saison</label>
-                        <select id="inputSaison" class="form-control" ng-model="modalSaisonId" required="required">
-                          <option ng-repeat="saison in saisonList"  value="{{saison.id}}">{{saison.label}}</option>
+                        <select id="inputSaison" class="form-control" ng-model="modalSaisonId" ng-options="saison.id as saison.label for saison in saisonList" required="required">
                         </select>
                     </div>
                     <div class="form-group">
@@ -97,7 +94,6 @@
                         <input id="inputPrice" type="text" class="form-control" placeholder="Label" ng-model="modalPrice" />
                     </div>
                 </form>
-                <pre> $scope.modalSaisonId = {{modalSaisonId}}</pre>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-success" data-dismiss="modal" ng-click="saveItem()">Modifier</button>

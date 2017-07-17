@@ -75,6 +75,11 @@ okeanosApp.config(['$routeProvider', '$httpProvider',
                 controller: 'ffessmLicenceCtrl',
                 authorized: true
             })
+            .when('/insurance', {
+                templateUrl: 'partials/insurance.html',
+                controller: 'insuranceCtrl',
+                authorized: true
+            })
             .when('/sickNote', {
                 templateUrl: 'partials/sickNoteUpload.html',
                 authorized: true

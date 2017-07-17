@@ -1,13 +1,23 @@
 /* 
  * Contrôleur de la liste des formations de plongée
  */
-okeanosAppControllers.controller('adherentInfoSaisonCtrl', function ($scope, $http, securityService, Subscription, SubscriptionType, FfessmLicence, AdherentInfoSaison, HockeyTeam, DivingTraining) {
+okeanosAppControllers.controller('adherentInfoSaisonCtrl', function ($scope, $http, securityService, Subscription, SubscriptionType, FfessmLicence, AdherentInfoSaison, HockeyTeam, Insurance, DivingTraining) {
     securityService.checkIsLogin();
+
+    $scope.subscriptionTypeList = SubscriptionType.query();
+    $scope.hockeyTeamList = HockeyTeam.query();
+    $scope.divingTrainingList = DivingTraining.query();
 
     $http.get(okeanoAppUrl + 'saison/currentSaison')
         .then(function (response) {
             $scope.currentSaison = response.data;
             console.log('currentSaison == ' + $scope.currentSaison.label);
+
+
+            /* TODO Filtrer par saison */
+            $scope.licenceList = FfessmLicence.query();
+            $scope.subscriptionList = Subscription.query();
+            $scope.insuranceList = Insurance.query();
 
             /* Recherche des informations d'adhésion */
             $http.get(okeanoAppUrl + 'adherent_info_saison/saison/' + $scope.currentSaison.id + '/account/' + securityService.getSecurity().curentAccountId)
@@ -29,15 +39,7 @@ okeanosAppControllers.controller('adherentInfoSaisonCtrl', function ($scope, $ht
                     console.log($scope.adherentInfoSaison);
 
                 });
-
-            /* TODO Filtrer par saison */
-            $scope.licenceList = FfessmLicence.query();
-            $scope.subscriptionList = Subscription.query();
         });
-
-    $scope.subscriptionTypeList = SubscriptionType.query();
-    $scope.hockeyTeamList = HockeyTeam.query();
-    $scope.divingTrainingList = DivingTraining.query();
 
     $scope.save = function () {
         console.log('Enregistrement : ');

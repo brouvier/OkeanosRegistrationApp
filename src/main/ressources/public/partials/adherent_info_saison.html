@@ -5,33 +5,23 @@
 
 
             <div class="form-group">
-                <label for="selectLevel" class="col-sm-3 control-label">Type de licence</label>
+                <label for="selectLicence" class="col-sm-3 control-label">Ma licence FFESSM :</label>
                 <div class="col-sm-9">
-                    <select id="selectLevel" class="form-control" ng-model="adherentInfoSaison.fk_ffessm_licence_id">
-                          <option ng-repeat="licence in licenceList"  value="{{licence.id}}">{{licence.label}} ({{licence.price}}€)</option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label for="optionsAdhesion1" class="col-sm-3 control-label">Type d'adhésion : </label>
-                <div class="col-sm-9">
-                    <div class="radio-inline" ng-repeat="subscriptionType in subscriptionTypeList">
+                    <div class="radio-inline" ng-repeat="licence in licenceList">
                         <label>
-                            <input type="radio" name="optionSubscriptionType"
-                                   ng-model="adherentInfoSaison.subscriptionType" value="{{subscriptionType.id}}">
-                            {{subscriptionType.label}}
+                            <input type="radio" ng-model="adherentInfoSaison.fk_ffessm_licence_id" value={{licence.id}}>
+                            {{licence.label}} ({{licence.price}}€)
                         </label>
                     </div>
                 </div>
             </div>
 
             <div class="form-group">
-                <label for="optionsAdhesion1" class="col-sm-3 control-label">Mon adhésion : </label>
+                <label for="optionsAdhesion1" class="col-sm-3 control-label">Mon adhésion :</label>
                 <div class="col-sm-9">
                     <div class="radio-inline" ng-repeat="subscription in subscriptionList">
                         <label>
-                            <input type="radio" ng-model="adherentInfoSaison.fk_subscription_id" value="{{subscription.id}}">
+                            <input type="radio" ng-model="adherentInfoSaison.fk_subscription_id" value={{subscription.id}}>
                             {{subscription.label}} ({{subscription.price}}€)
                         </label>
                     </div>
@@ -39,18 +29,11 @@
             </div>
 
             <div class="form-group">
-                <label class="col-sm-3 control-label">Assurance : </label>
+                <label for="selectInsurance" class="col-sm-3 control-label">Assurance : </label>
                 <div class="col-sm-9">
                     <div class="checkbox" ng-show="adherentInfoSaison.membershipType !== 'hockey'">
-                        <label>
-                            <input type="checkbox" ng-model="adherentInfoSaison.assurance"> piscine
-                        </label>
-                    </div>
-
-                    <div ng-show="adherentInfoSaison.membershipType === 'hockey'">
-                        <label>
-                            obligatoire
-                        </label>
+                        <select id="selectInsurance" class="form-control" ng-model="adherentInfoSaison.fk_insurance_id" ng-options="insurance.id as insurance.label + ' (' + insurance.price + '€)' for insurance in insuranceList">
+                    </select>
                     </div>
                 </div>
             </div>
@@ -69,21 +52,19 @@
             <h4 class="page-header">Section plongée</h4>
 
             <div class="form-group">
-                <label for="selectLevel" class="col-sm-3 control-label">Niveau actuel : </label>
+                <label for="selectActualTraining" class="col-sm-3 control-label">Niveau actuel : </label>
                 <div class="col-sm-9">
-                    <select id="selectLevel" class="form-control" ng-model="adherentInfoSaison.fk_actual_training_id">
-                        <option>Aucun</option>
-                        <option ng-repeat="actualLevel in divingTrainingList"  value="{{actualLevel.id}}">{{actualLevel.label}}</option>
-                    </select></div>
+                    <select id="selectActualTraining" class="form-control" ng-model="adherentInfoSaison.fk_actual_training_id" ng-options="actualLevel.id as actualLevel.label for actualLevel in divingTrainingList">
+                    </select>
+                </div>
             </div>
 
             <div class="form-group">
-                <label for="selectLevel" class="col-sm-3 control-label">Niveau Préparé : </label>
+                <label for="selectTraining" class="col-sm-3 control-label">Niveau Préparé : </label>
                 <div class="col-sm-9">
-                    <select id="selectLevel" class="form-control" ng-model="adherentInfoSaison.fk_training_id">
-                        <option>Aucun</option>
-                        <option ng-repeat="preparedLevel in divingTrainingList"  value="{{preparedLevel.id}}">{{preparedLevel.label}}</option>
-                    </select></div>
+                    <select id="selectTraining" class="form-control" ng-model="adherentInfoSaison.fk_training_id" ng-options="preparedLevel.id as preparedLevel.label for preparedLevel in divingTrainingList">
+                    </select>
+                </div>
             </div>
 
             <h4 class="page-header">Section hockey</h4>
@@ -91,10 +72,8 @@
             <div class="form-group">
                 <label for="selectTeam" class="col-sm-3 control-label">Equipe : </label>
                 <div class="col-sm-9">
-                    <select id="selectTeam" class="form-control" ng-model="adherentInfoSaison.fk_team_id">
-                        <option>Aucune</option>
-                        <option ng-repeat="team in hockeyTeamList"  value="{{team.id}}">{{team.label}}</option>
-                </select>
+                    <select id="selectTeam" class="form-control" ng-model="adherentInfoSaison.fk_team_id" ng-options="team.id as team.label for team in hockeyTeamList">
+                    </select>
                 </div>
             </div>
 
@@ -104,23 +83,12 @@
                 </div>
             </div>
 
-            <div class="alert alert-info" role="info" ng-show="updateState=='wip'">
-                <button type="button" class="close" data-dismiss="info" aria-label="Close"><span aria-hidden="true">&times;</span>
-                </button> Mis à jour en cours ...
-            </div>
-
-            <div class="alert alert-success" role="success" ng-show="updateState=='done'">
-                <button type="button" class="close" data-dismiss="success" aria-label="Close"><span aria-hidden="true">&times;</span>
-                </button> Adhérent mis à jour !
-            </div>
-
         </form>
     </div>
 </div>
 <div class="row">
     <div class="col-md-12">
         <h2 class="page-header">Debug</h2>
-        <pre>updateState = {{updateState | json}}</pre>
         <pre>adherentInfoSaison = {{adherentInfoSaison | json}}</pre>
     </div>
 </div>

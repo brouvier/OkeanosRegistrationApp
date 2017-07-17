@@ -134,3 +134,10 @@ okeanosApp.factory('SubscriptionType', function ($resource) {
 okeanosApp.factory('FfessmLicence', function ($resource) {
     return $resource(okeanoAppUrl + 'ffessm_licence/:id');
 });
+
+/* 
+ * Gesion des assurances
+ */
+okeanosApp.factory('Insurance', function ($resource) {
+    return $resource(okeanoAppUrl + 'insurance/:id');
+});

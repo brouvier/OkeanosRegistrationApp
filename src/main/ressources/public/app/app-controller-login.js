@@ -14,6 +14,7 @@ okeanosAppControllers.controller('loginCtrl', function ($scope, $location, $http
             $http.get(okeanoAppUrl + 'security/signup/' + $scope.login.email + '/' + $scope.login.password)
                 .then(function (response) {
                     console.log('Sign up response = ' + response.data);
+                    $location.path("dashboard");
                 });
         } else {
             $http.get(okeanoAppUrl + 'security/login/' + $scope.login.email + '/' + $scope.login.password)

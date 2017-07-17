@@ -5,7 +5,14 @@ okeanosAppControllers.controller('saisonListCtrl', function ($scope, securitySer
     securityService.checkIsLogin();
 
     $scope.adminMode = securityService.checkIsAdmin();
-    $scope.saisonList = Saison.query();
+    Saison.query(function (sl, getResponseHeaders) {
+        $scope.saisonList = sl; // get row data
+        for (var i = 0; i < $scope.saisonList.length; i++) {
+            var saison = $scope.saisonList[i];
+            saison.start_date = new Date(saison.start_date); // convert filed to date
+            saison.end_date = new Date(saison.end_date); // convert filed to date
+        }
+    });
 
     $scope.edit = function (saison) {
         $scope.modalId = saison.id;
