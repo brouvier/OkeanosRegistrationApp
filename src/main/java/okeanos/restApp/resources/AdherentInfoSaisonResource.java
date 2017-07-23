@@ -4,9 +4,14 @@ import static spark.Spark.delete;
 import static spark.Spark.get;
 import static spark.Spark.post;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.google.gson.Gson;
 
+import okeanos.dao.AdherentInfoDao;
 import okeanos.dao.AdherentInfoSaisonDao;
+import okeanos.model.AdherentInfo;
 import okeanos.model.AdherentInfoSaison;
 import okeanos.util.AppProperties;
 import okeanos.util.JsonUtil;
@@ -21,6 +26,19 @@ public class AdherentInfoSaisonResource extends AbstractResource {
 		get(ressourcePath, (request, response) -> {
 			setSecurity(request, response);
 			return JsonUtil.toJson(AdherentInfoSaisonDao.getAllItems());
+		});
+
+		get(ressourcePath + "/saison/:saisonId", (request, response) -> {
+			setSecurity(request, response);
+
+			List<AdherentInfoSaison> list = AdherentInfoSaisonDao
+					.getAllItemsForSaison(new Long(request.params(":saisonId")));
+			ArrayList<Adherent> res = new ArrayList<Adherent>();
+			for (AdherentInfoSaison infoSaison : list) {
+				res.add(new Adherent(infoSaison));
+			}
+
+			return JsonUtil.toJson(res);
 		});
 
 		get(ressourcePath + "/:id", (request, response) -> {
@@ -44,6 +62,16 @@ public class AdherentInfoSaisonResource extends AbstractResource {
 			return JsonUtil
 					.toJson(AdherentInfoSaisonDao.save(new Gson().fromJson(request.body(), AdherentInfoSaison.class)));
 		});
+	}
+
+	private class Adherent {
+		public AdherentInfo info;
+		public AdherentInfoSaison infoSaison;
+
+		public Adherent(AdherentInfoSaison infoSaison) {
+			this.infoSaison = infoSaison;
+			this.info = AdherentInfoDao.getItemByAccountId(infoSaison.getFk_account_id());
+		}
 	}
 
 }

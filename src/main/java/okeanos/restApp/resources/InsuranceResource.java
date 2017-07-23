@@ -23,6 +23,11 @@ public class InsuranceResource extends AbstractResource {
 			return JsonUtil.toJson(InsuranceDao.getAllItems());
 		});
 
+		get(ressourcePath + "/saison/:saisonId", (request, response) -> {
+			setSecurity(request, response);
+			return JsonUtil.toJson(InsuranceDao.getAllItemsForSaison(new Long(request.params(":saisonId"))));
+		});
+
 		get(ressourcePath + "/:id", (request, response) -> {
 			setSecurity(request, response);
 			return JsonUtil.toJson(InsuranceDao.getItemById(new Long(request.params(":id"))));

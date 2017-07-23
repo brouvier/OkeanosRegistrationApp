@@ -23,6 +23,11 @@ public class SubscriptionResource extends AbstractResource {
 			return JsonUtil.toJson(SubscriptionDao.getAllItems());
 		});
 
+		get(ressourcePath + "/saison/:saisonId", (request, response) -> {
+			setSecurity(request, response);
+			return JsonUtil.toJson(SubscriptionDao.getAllItemsForSaison(new Long(request.params(":saisonId"))));
+		});
+
 		get(ressourcePath + "/:id", (request, response) -> {
 			setSecurity(request, response);
 			return JsonUtil.toJson(SubscriptionDao.getItemById(new Long(request.params(":id"))));

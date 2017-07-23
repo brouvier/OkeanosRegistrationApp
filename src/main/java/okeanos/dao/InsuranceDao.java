@@ -16,6 +16,14 @@ public class InsuranceDao {
 		}
 	}
 
+	public static List<Insurance> getAllItemsForSaison(Long saisonId) {
+		String sql = "SELECT id, fk_saison_id, label, price, createdOn FROM insurance WHERE fk_saison_id = :saisonId";
+
+		try (Connection con = Sql2oDao.sql2o.open()) {
+			return con.createQuery(sql).addParameter("saisonId", saisonId).executeAndFetch(Insurance.class);
+		}
+	}
+
 	public static Insurance getItemById(Long id) {
 		String sql = "SELECT id, fk_saison_id, label, price, createdOn FROM insurance WHERE id = :id";
 
@@ -39,7 +47,7 @@ public class InsuranceDao {
 				Long insertedId = (Long) con.createQuery(sql, true).addParameter("fk_saison_id", item.getFk_saison_id())
 						.addParameter("label", item.getLabel()).addParameter("price", item.getPrice()).executeUpdate()
 						.getKey();
-				System.out.println("ID généré : " + insertedId);
+				System.out.println("ID gï¿½nï¿½rï¿½ : " + insertedId);
 				return getItemById(insertedId);
 			}
 

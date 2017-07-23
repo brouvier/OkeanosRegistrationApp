@@ -16,6 +16,14 @@ public class FfessmLicenceDao {
 		}
 	}
 
+	public static List<FfessmLicence> getAllItemsForSaison(Long saisonId) {
+		String sql = "SELECT id, fk_saison_id, label, price, createdOn FROM ffessm_licence WHERE fk_saison_id = :saisonId";
+
+		try (Connection con = Sql2oDao.sql2o.open()) {
+			return con.createQuery(sql).addParameter("saisonId", saisonId).executeAndFetch(FfessmLicence.class);
+		}
+	}
+
 	public static FfessmLicence getItemById(Long id) {
 		String sql = "SELECT id, fk_saison_id, label, price, createdOn FROM ffessm_licence WHERE id = :id";
 

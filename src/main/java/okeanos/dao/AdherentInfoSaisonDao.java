@@ -18,6 +18,16 @@ public class AdherentInfoSaisonDao {
 		}
 	}
 
+	public static List<AdherentInfoSaison> getAllItemsForSaison(Long saisonId) {
+		String sql = "SELECT id, fk_account_id, fk_saison_id, fk_ffessm_licence_id, fk_subscription_id, "
+				+ "fk_insurance_id, picture_authorisation, fk_actual_training_id, fk_training_id, "
+				+ "fk_team_id, createdOn FROM adherent_info_saison WHERE fk_saison_id = :saisonId";
+
+		try (Connection con = Sql2oDao.sql2o.open()) {
+			return con.createQuery(sql).addParameter("saisonId", saisonId).executeAndFetch(AdherentInfoSaison.class);
+		}
+	}
+
 	public static AdherentInfoSaison getItemById(Long id) {
 		String sql = "SELECT id, fk_account_id, fk_saison_id, fk_ffessm_licence_id, fk_subscription_id, "
 				+ "fk_insurance_id, picture_authorisation, fk_actual_training_id, fk_training_id, "

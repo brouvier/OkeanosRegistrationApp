@@ -16,6 +16,14 @@ public class SubscriptionDao {
 		}
 	}
 
+	public static List<Subscription> getAllItemsForSaison(Long saisonId) {
+		String sql = "SELECT id, fk_saison_id, fk_subscription_type_id, label, price, createdOn FROM subscription WHERE fk_saison_id = :saisonId";
+
+		try (Connection con = Sql2oDao.sql2o.open()) {
+			return con.createQuery(sql).addParameter("saisonId", saisonId).executeAndFetch(Subscription.class);
+		}
+	}
+
 	public static Subscription getItemById(Long id) {
 		String sql = "SELECT id, fk_saison_id, fk_subscription_type_id, label, price, createdOn FROM subscription WHERE id = :id";
 
@@ -40,7 +48,7 @@ public class SubscriptionDao {
 						.addParameter("fk_subscription_type_id", item.getFk_subscription_type_id())
 						.addParameter("label", item.getLabel()).addParameter("price", item.getPrice()).executeUpdate()
 						.getKey();
-				System.out.println("ID généré : " + insertedId);
+				System.out.println("ID gï¿½nï¿½rï¿½ : " + insertedId);
 				return getItemById(insertedId);
 			}
 

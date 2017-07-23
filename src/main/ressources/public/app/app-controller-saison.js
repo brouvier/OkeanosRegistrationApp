@@ -11,6 +11,7 @@ okeanosAppControllers.controller('saisonListCtrl', function ($scope, securitySer
             var saison = $scope.saisonList[i];
             saison.start_date = new Date(saison.start_date); // convert filed to date
             saison.end_date = new Date(saison.end_date); // convert filed to date
+            saison.createdOn = new Date(saison.createdOn); // convert filed to date
         }
     });
 

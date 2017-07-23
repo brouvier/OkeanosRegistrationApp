@@ -23,6 +23,11 @@ public class FfessmLicenceResource extends AbstractResource {
 			return JsonUtil.toJson(FfessmLicenceDao.getAllItems());
 		});
 
+		get(ressourcePath + "/saison/:saisonId", (request, response) -> {
+			setSecurity(request, response);
+			return JsonUtil.toJson(FfessmLicenceDao.getAllItemsForSaison(new Long(request.params(":saisonId"))));
+		});
+
 		get(ressourcePath + "/:id", (request, response) -> {
 			setSecurity(request, response);
 			return JsonUtil.toJson(FfessmLicenceDao.getItemById(new Long(request.params(":id"))));
