@@ -14,10 +14,19 @@ okeanosAppControllers.controller('adherentInfoSaisonCtrl', function ($scope, $ht
             console.log('currentSaison == ' + $scope.currentSaison.label);
 
 
-            /* TODO Filtrer par saison */
-            $scope.licenceList = FfessmLicence.query();
-            $scope.subscriptionList = Subscription.query();
-            $scope.insuranceList = Insurance.query();
+            /* Listes filtrees par saison */
+            $http.get(okeanoAppUrl + 'ffessm_licence/saison/' + $scope.currentSaison.id)
+                .then(function (response) {
+                    $scope.licenceList = response.data;
+                });
+            $http.get(okeanoAppUrl + 'subscription/saison/' + $scope.currentSaison.id)
+                .then(function (response) {
+                    $scope.subscriptionList = response.data;
+                });
+            $http.get(okeanoAppUrl + 'insurance/saison/' + $scope.currentSaison.id)
+                .then(function (response) {
+                    $scope.insuranceList = response.data;
+                });
 
             /* Recherche des informations d'adhésion */
             $http.get(okeanoAppUrl + 'adherent_info_saison/saison/' + $scope.currentSaison.id + '/account/' + securityService.getSecurity().curentAccountId)

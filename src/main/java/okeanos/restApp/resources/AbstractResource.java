@@ -31,7 +31,11 @@ public abstract class AbstractResource {
 	protected void setSecurity(Request request, Response response) {
 		response.header("isLogin", SecurityResource.isLogin(request).toString());
 		response.header("isAdmin", SecurityResource.isAdmin(request).toString());
-		response.header("curentAccountId", SecurityResource.currentAccountId(request).toString());
+		Long curentAccountId = SecurityResource.currentAccountId(request);
+		if (curentAccountId != null)
+			response.header("curentAccountId", curentAccountId.toString());
+		else
+			response.header("curentAccountId", "");
 	}
 
 }

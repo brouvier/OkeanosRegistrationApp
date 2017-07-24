@@ -4,7 +4,10 @@
 okeanosAppControllers.controller('adherentInfoSaisonListCtrl', function ($scope, $http, securityService, Saison) {
     securityService.checkIsAdmin();
 
-    $scope.saisonList = Saison.query();
+    $http.get(okeanoAppUrl + '/saison')
+        .then(function (response) {
+            $scope.saisonList = response.data;
+        });
 
     var getList = function (saisonId) {
         /* Recherche des informations des adhésion */
@@ -25,7 +28,9 @@ okeanosAppControllers.controller('adherentInfoSaisonListCtrl', function ($scope,
         });
 
     $scope.$watch("currentSaison", function (newValue, oldValue) {
-        console.log('currentSaison have change !')
-        getList($scope.currentSaison.id);
+        if ($scope.currentSaison != null) {
+            console.log('currentSaison have change !')
+            getList($scope.currentSaison.id);
+        }
     });
 });
