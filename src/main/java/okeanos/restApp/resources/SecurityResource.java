@@ -85,18 +85,23 @@ public class SecurityResource extends AbstractResource {
 		/**
 		 * URL d'inscription
 		 */
-		get(ressourcePath + "/signup/:mail/:pass", (request, response) -> {
+		get(ressourcePath + "/signup/:mail/:pass/:confirmPass", (request, response) -> {
 
 			String userMail = request.params(":mail");
 			String userPass = request.params(":pass");
+			String confirmPass = request.params(":confirmPass");
 
-			System.out.println("signup request receve : " + userMail);
+			System.out.println("signup request receve : " + userMail + userPass);
 
-			if (userMail == null || "".equals(userMail)) {
+			if (userMail == null || "".equals(userMail) || "undefined".equals(userMail)) {
 				return false;
 			}
 
-			if (userPass == null || "".equals(userPass)) {
+			if (userPass == null || "".equals(userPass) || "undefined".equals(userPass)) {
+				return false;
+			}
+
+			if (!confirmPass.equals(userPass)) {
 				return false;
 			}
 
