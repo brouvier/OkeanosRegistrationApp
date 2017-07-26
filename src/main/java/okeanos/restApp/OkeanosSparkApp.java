@@ -1,5 +1,10 @@
 package okeanos.restApp;
 
+import static spark.Spark.externalStaticFileLocation;
+import static spark.Spark.ipAddress;
+import static spark.Spark.port;
+import static spark.Spark.secure;
+
 import okeanos.restApp.resources.AccountResource;
 import okeanos.restApp.resources.AdherentInfoResource;
 import okeanos.restApp.resources.AdherentInfoSaisonResource;
@@ -14,12 +19,6 @@ import okeanos.restApp.resources.SubscriptionResource;
 import okeanos.restApp.resources.SubscriptionTypeResource;
 import okeanos.util.AppProperties;
 
-import static spark.Spark.externalStaticFileLocation;
-import static spark.Spark.ipAddress;
-import static spark.Spark.port;
-import static spark.Spark.secure;
-import static spark.Spark.staticFileLocation;
-
 public class OkeanosSparkApp {
 
 	public static void main(String[] args) throws Exception {
@@ -27,18 +26,18 @@ public class OkeanosSparkApp {
 		ipAddress(AppProperties.getProperties().restHostName);
 		port(new Integer(AppProperties.getProperties().restHostPort));
 
-		if ("localhost".equals(AppProperties.getProperties().restHostName)) {
-			String projectDir = System.getProperty("user.dir");
-			String staticDir = "/src/main/ressources/public";
-			externalStaticFileLocation(projectDir + staticDir);
-		} else {
-			staticFileLocation(AppProperties.STATIC_FILE_PATH);
-		}
+		// if ("localhost".equals(AppProperties.getProperties().restHostName)) {
+		String projectDir = System.getProperty("user.dir");
+		String staticDir = "/src/main/ressources/public";
+		externalStaticFileLocation(projectDir + staticDir);
+		// } else {
+		// staticFileLocation(AppProperties.STATIC_FILE_PATH);
+		// }
 
-		secure(AppProperties.keyStorePath,
-			   AppProperties.keyStorePassword,
-			   AppProperties.trustStorePath,
-			   AppProperties.trustStorePassword);
+		secure(AppProperties.keyStorePath, AppProperties.keyStorePassword, AppProperties.trustStorePath,
+				AppProperties.trustStorePassword);
+
+		// BrrSparkUtil.fullCORS();
 
 		new AccountResource();
 		new AdherentInfoResource();
