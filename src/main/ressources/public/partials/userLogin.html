@@ -14,12 +14,10 @@
                             <input type="email" class="form-control" placeholder="Email address" autofocus ng-model="login.email" />
                         </div>
                         <div class="form-group">
-                            <input type="password" class="form-control" placeholder="Password" ng-model="login.password"
-                                   id="loginPassword" required/>
+                            <input type="password" class="form-control" placeholder="Password" ng-model="login.password" id="loginPassword" required/>
                         </div>
                         <div class="form-group">
-                            <input type="password" class="form-control" placeholder="Confirm password"
-                                   ng-model="login.confirmPassword" ng-show="login.mode == 'Inscription'" ng-required="login.mode == 'Inscription'" />
+                            <input type="password" class="form-control" placeholder="Confirm password" ng-model="login.confirmPassword" ng-show="login.mode == 'Inscription'" ng-required="login.mode == 'Inscription'" />
                         </div>
 
                         <div class="form-group">
@@ -36,5 +34,12 @@
                 </form>
             </div>
         </div>
+    </div>
+</div>
+<div class="row" ng-show="modeDebug">
+    <div class="col-md-12">
+        <h2 class="page-header">Debug</h2>
+        <pre>alerte = {{alerte}}</pre>
+        <pre>security = {{security | json}}</pre>
     </div>
 </div>

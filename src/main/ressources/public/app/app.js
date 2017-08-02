@@ -7,6 +7,7 @@ var okeanosApp = angular.module('okeanosApp', [
 ]);
 
 var okeanoAppUrl = 'https://localhost:8080/api/v1/';
+var modeDebug = true;
 
 /**
  * Configuration du module principal : routeApp
@@ -110,6 +111,7 @@ okeanosApp.config(['$routeProvider', '$httpProvider',
                 },
                 'responseError': function (rejection) {
                     console.log('responseError');
+                    console.log(rejection);
                     if (rejection.status === 401) {
                         $location.url('/dashboard');
                     }

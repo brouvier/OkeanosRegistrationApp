@@ -7,6 +7,7 @@ use okeanos;
 create table if not exists account (
 	id IDENTITY,
 	mail varchar(512),
+	salt varchar(512),
 	password varchar(512),
 	admin boolean default false,
 	createdOn timestamp default current_timestamp()

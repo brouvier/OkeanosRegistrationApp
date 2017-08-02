@@ -6,13 +6,15 @@ public class Account {
 
 	private Long id;
 	private String mail;
+	private String salt;
 	private String password;
 	private Boolean admin;
 	private Date createdOn;
 
-	public Account(Long id, String mail, String password, Boolean admin, Date createdOn) {
+	public Account(Long id, String mail, String salt, String password, Boolean admin, Date createdOn) {
 		this.id = id;
 		this.mail = mail;
+		this.salt = salt;
 		this.password = password;
 		this.admin = admin;
 		this.createdOn = createdOn;
@@ -32,6 +34,14 @@ public class Account {
 
 	public void setMail(String mail) {
 		this.mail = mail;
+	}
+
+	public String getSalt() {
+		return salt;
+	}
+
+	public void setSalt(String salt) {
+		this.salt = salt;
 	}
 
 	public String getPassword() {

@@ -9,7 +9,7 @@ import okeanos.model.Account;
 public class AccountDao {
 
 	public static List<Account> getAllItems() {
-		String sql = "SELECT id, mail, password, admin, createdOn FROM account";
+		String sql = "SELECT id, mail, salt, password, admin, createdOn FROM account";
 
 		try (Connection con = Sql2oDao.sql2o.open()) {
 			return con.createQuery(sql).executeAndFetch(Account.class);
@@ -17,7 +17,7 @@ public class AccountDao {
 	}
 
 	public static Account getItemById(Long id) {
-		String sql = "SELECT id, mail, password, admin, createdOn FROM account WHERE id = :id";
+		String sql = "SELECT id, mail, salt, password, admin, createdOn FROM account WHERE id = :id";
 
 		try (Connection con = Sql2oDao.sql2o.open()) {
 			return con.createQuery(sql).addParameter("id", id).executeAndFetchFirst(Account.class);
@@ -25,18 +25,18 @@ public class AccountDao {
 	}
 
 	public static Account getItemByMail(String mail) {
-		String sql = "SELECT id, mail, password, admin, createdOn FROM account WHERE mail = :mail";
+		String sql = "SELECT id, mail, salt, password, admin, createdOn FROM account WHERE mail = :mail";
 
 		try (Connection con = Sql2oDao.sql2o.open()) {
 			return con.createQuery(sql).addParameter("mail", mail).executeAndFetchFirst(Account.class);
 		}
 	}
 
-	public static Account newItem(String mail, String password, Boolean admin) {
-		String sql = "insert into account (mail, password, admin) values (:mail, :password, :admin)";
+	public static Account newItem(String mail, String salt, String password, Boolean admin) {
+		String sql = "insert into account (mail, salt, password, admin) values (:mail, :salt, :password, :admin)";
 
 		try (Connection con = Sql2oDao.sql2o.open()) {
-			Long insertedId = (Long) con.createQuery(sql, true).addParameter("mail", mail)
+			Long insertedId = (Long) con.createQuery(sql, true).addParameter("mail", mail).addParameter("salt", salt)
 					.addParameter("password", password).addParameter("admin", admin).executeUpdate().getKey();
 			return getItemById(insertedId);
 		}
@@ -53,7 +53,7 @@ public class AccountDao {
 	}
 
 	public static Account updatePassword(Account item) {
-		String sql = "update account set password = :password where id = :id";
+		String sql = "update account set salt = :salt, password = :password where id = :id";
 
 		try (Connection con = Sql2oDao.sql2o.open()) {
 			con.createQuery(sql).bind(item).executeUpdate();

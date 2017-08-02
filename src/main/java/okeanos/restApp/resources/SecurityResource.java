@@ -1,9 +1,11 @@
 package okeanos.restApp.resources;
 
 import static spark.Spark.get;
+import static spark.Spark.post;
 
 import java.util.HashMap;
 
+import okeanos.controler.LoginControler;
 import okeanos.dao.AccountDao;
 import okeanos.model.Account;
 import okeanos.util.AppProperties;
@@ -42,38 +44,44 @@ public class SecurityResource extends AbstractResource {
 	public SecurityResource() {
 
 		/**
-		 * URL de connexion
+		 * URL d'inscription
 		 */
-		get(ressourcePath + "/login/:mail/:pass", (request, response) -> {
+		post(ressourcePath + "/signup", (request, response) -> {
 
-			String userMail = request.params(":mail");
-			String userPass = request.params(":pass");
+			AccountBean bean = gson.fromJson(request.body(), AccountBean.class);
+			System.out.println("signup request receve : " + bean.mail);
 
-			if (userMail == null || "".equals(userMail)) {
-				return false;
+			try {
+				Account user = LoginControler.createAccount(bean.mail, bean.password);
+				sessionList.put(request.session().id(), user.getId());
+				setSecurity(request, response);
+			} catch (Exception e) {
+				return e.getMessage();
 			}
-
-			if (userPass == null || "".equals(userPass)) {
-				return false;
-			}
-
-			Account user = AccountDao.getItemByMail(userMail);
-			if (user == null) {
-				return false;
-			}
-
-			if (!user.getPassword().equals(userPass)) {
-				return false;
-			}
-
-			sessionList.put(request.session().id(), user.getId());
-			setSecurity(request, response);
 
 			return true;
 		});
 
 		/**
-		 * URL de d�connection
+		 * URL de connexion
+		 */
+		post(ressourcePath + "/login", (request, response) -> {
+
+			AccountBean bean = gson.fromJson(request.body(), AccountBean.class);
+			System.out.println("login request receve : " + bean.mail);
+			try {
+				Account user = LoginControler.loginAcount(bean.mail, bean.password);
+				sessionList.put(request.session().id(), user.getId());
+				setSecurity(request, response);
+			} catch (Exception e) {
+				return e.getMessage();
+			}
+
+			return true;
+		});
+
+		/**
+		 * URL deconnexion
 		 */
 		get(ressourcePath + "/logout", (request, response) -> {
 			sessionList.remove(request.session().id());
@@ -81,36 +89,11 @@ public class SecurityResource extends AbstractResource {
 
 			return true;
 		});
+	}
 
-		/**
-		 * URL d'inscription
-		 */
-		get(ressourcePath + "/signup/:mail/:pass/:confirmPass", (request, response) -> {
-
-			String userMail = request.params(":mail");
-			String userPass = request.params(":pass");
-			String confirmPass = request.params(":confirmPass");
-
-			System.out.println("signup request receve : " + userMail + userPass);
-
-			if (userMail == null || "".equals(userMail) || "undefined".equals(userMail)) {
-				return false;
-			}
-
-			if (userPass == null || "".equals(userPass) || "undefined".equals(userPass)) {
-				return false;
-			}
-
-			if (!confirmPass.equals(userPass)) {
-				return false;
-			}
-
-			Account user = AccountDao.newItem(userMail, userPass, true);
-			sessionList.put(request.session().id(), user.getId());
-			setSecurity(request, response);
-
-			return true;
-		});
+	private class AccountBean {
+		public String mail;
+		public String password;
 	}
 
 }
