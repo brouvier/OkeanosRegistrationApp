@@ -14,7 +14,7 @@ public class PropertiesResource extends AbstractResource {
 		get(ressourcePath, (request, response) -> {
 			StringBuilder sb = new StringBuilder();
 			sb.append("'use strict';").append(System.getProperty("line.separator"));
-			sb.append("var okeanoAppUrl = 'https://").append(AppProperties.getProperties().restHostName).append(":")
+			sb.append("var okeanoAppUrl = '").append(AppProperties.getProperties().frontRestAcces).append(":")
 					.append(AppProperties.getProperties().restHostPort).append(AppProperties.API_CONTEXT).append("';")
 					.append(System.getProperty("line.separator"));
 			sb.append("var modeDebug = ").append(AppProperties.getProperties().frontModeDebug).append(";");

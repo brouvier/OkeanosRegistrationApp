@@ -39,7 +39,7 @@ public class AppProperties {
 
 	public final String restHostName;
 	public final String restHostPort;
-	public final String frontHostName;
+	public final String frontRestAcces;
 	public final String frontModeDebug;
 
 	public static AppProperties getProperties() {
@@ -60,7 +60,7 @@ public class AppProperties {
 
 		restHostName = prop.getProperty("restHostName");
 		restHostPort = prop.getProperty("restHostPort");
-		frontHostName = prop.getProperty("frontHostName");
+		frontRestAcces = prop.getProperty("frontRestAcces");
 		frontModeDebug = prop.getProperty("frontModeDebug");
 
 	}
@@ -110,7 +110,7 @@ public class AppProperties {
 
 		prop.setProperty("restHostName", "localhost");
 		prop.setProperty("restHostPort", "8080");
-		prop.setProperty("frontHostName", "localhost");
+		prop.setProperty("frontRestAcces", "https://localhost");
 		prop.setProperty("frontModeDebug", "true");
 
 		OutputStream output = null;
