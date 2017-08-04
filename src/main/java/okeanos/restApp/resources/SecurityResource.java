@@ -41,6 +41,10 @@ public class SecurityResource extends AbstractResource {
 		return sessionList.get(request.session().id());
 	}
 
+	public static Boolean isLoginAndCurrentAccount(Request request, Long accountId) {
+		return isLogin(request) & getCurrentUserId(request).equals(accountId);
+	}
+
 	public SecurityResource() {
 
 		/**

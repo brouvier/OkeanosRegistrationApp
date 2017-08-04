@@ -8,8 +8,12 @@ import okeanos.model.Account;
 
 public class AccountDao {
 
-	public static List<Account> getAllItems() {
-		String sql = "SELECT id, mail, salt, password, admin, createdOn FROM account";
+	public static List<Account> getAllItems(Boolean getPass) {
+		String sql = null;
+		if (getPass)
+			sql = "SELECT id, mail, salt, password, admin, createdOn FROM account";
+		else
+			sql = "SELECT id, mail, admin, createdOn FROM account";
 
 		try (Connection con = Sql2oDao.sql2o.open()) {
 			return con.createQuery(sql).executeAndFetch(Account.class);

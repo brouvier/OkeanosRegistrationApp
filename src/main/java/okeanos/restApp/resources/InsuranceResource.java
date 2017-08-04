@@ -20,26 +20,41 @@ public class InsuranceResource extends AbstractResource {
 
 		get(ressourcePath, (request, response) -> {
 			setSecurity(request, response);
+			if (!SecurityResource.isLogin(request)) {
+				throw new IllegalAccessException("Illegal Access");
+			}
 			return JsonUtil.toJson(InsuranceDao.getAllItems());
 		});
 
 		get(ressourcePath + "/saison/:saisonId", (request, response) -> {
 			setSecurity(request, response);
+			if (!SecurityResource.isLogin(request)) {
+				throw new IllegalAccessException("Illegal Access");
+			}
 			return JsonUtil.toJson(InsuranceDao.getAllItemsForSaison(new Long(request.params(":saisonId"))));
 		});
 
 		get(ressourcePath + "/:id", (request, response) -> {
 			setSecurity(request, response);
+			if (!SecurityResource.isLogin(request)) {
+				throw new IllegalAccessException("Illegal Access");
+			}
 			return JsonUtil.toJson(InsuranceDao.getItemById(new Long(request.params(":id"))));
 		});
 
 		delete(ressourcePath + "/:id", (request, response) -> {
 			setSecurity(request, response);
+			if (!SecurityResource.isAdmin(request)) {
+				throw new IllegalAccessException("Illegal Access");
+			}
 			return JsonUtil.toJson(InsuranceDao.deleteItem(new Long(request.params(":id"))));
 		});
 
 		post(ressourcePath, (request, response) -> {
 			setSecurity(request, response);
+			if (!SecurityResource.isAdmin(request)) {
+				throw new IllegalAccessException("Illegal Access");
+			}
 			return JsonUtil.toJson(InsuranceDao.save(new Gson().fromJson(request.body(), Insurance.class)));
 		});
 	}

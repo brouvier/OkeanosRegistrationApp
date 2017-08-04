@@ -20,26 +20,41 @@ public class SubscriptionResource extends AbstractResource {
 
 		get(ressourcePath, (request, response) -> {
 			setSecurity(request, response);
+			if (!SecurityResource.isLogin(request)) {
+				throw new IllegalAccessException("Illegal Access");
+			}
 			return JsonUtil.toJson(SubscriptionDao.getAllItems());
 		});
 
 		get(ressourcePath + "/saison/:saisonId", (request, response) -> {
 			setSecurity(request, response);
+			if (!SecurityResource.isLogin(request)) {
+				throw new IllegalAccessException("Illegal Access");
+			}
 			return JsonUtil.toJson(SubscriptionDao.getAllItemsForSaison(new Long(request.params(":saisonId"))));
 		});
 
 		get(ressourcePath + "/:id", (request, response) -> {
 			setSecurity(request, response);
+			if (!SecurityResource.isLogin(request)) {
+				throw new IllegalAccessException("Illegal Access");
+			}
 			return JsonUtil.toJson(SubscriptionDao.getItemById(new Long(request.params(":id"))));
 		});
 
 		delete(ressourcePath + "/:id", (request, response) -> {
 			setSecurity(request, response);
+			if (!SecurityResource.isAdmin(request)) {
+				throw new IllegalAccessException("Illegal Access");
+			}
 			return JsonUtil.toJson(SubscriptionDao.deleteItem(new Long(request.params(":id"))));
 		});
 
 		post(ressourcePath, (request, response) -> {
 			setSecurity(request, response);
+			if (!SecurityResource.isAdmin(request)) {
+				throw new IllegalAccessException("Illegal Access");
+			}
 			return JsonUtil.toJson(SubscriptionDao.save(new Gson().fromJson(request.body(), Subscription.class)));
 		});
 	}

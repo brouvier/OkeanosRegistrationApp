@@ -20,21 +20,31 @@ public class AccountResource extends AbstractResource {
 
 		get(ressourcePath, (request, response) -> {
 			setSecurity(request, response);
-			return JsonUtil.toJson(AccountDao.getAllItems());
+			if (!SecurityResource.isAdmin(request)) {
+				throw new IllegalAccessException("Illegal Access");
+			}
+			return JsonUtil.toJson(AccountDao.getAllItems(false));
 		});
 
 		get(ressourcePath + "/:id", (request, response) -> {
 			setSecurity(request, response);
-			return JsonUtil.toJson(AccountDao.getItemById(new Long(request.params(":id"))));
+			// Non implementé pour le moment
+			return null;
 		});
 
 		delete(ressourcePath + "/:id", (request, response) -> {
 			setSecurity(request, response);
+			if (!SecurityResource.isAdmin(request)) {
+				throw new IllegalAccessException("Illegal Access");
+			}
 			return JsonUtil.toJson(AccountDao.deleteItem(new Long(request.params(":id"))));
 		});
 
 		post(ressourcePath, (request, response) -> {
 			setSecurity(request, response);
+			if (!SecurityResource.isAdmin(request)) {
+				throw new IllegalAccessException("Illegal Access");
+			}
 			return JsonUtil.toJson(AccountDao.updateItem(new Gson().fromJson(request.body(), Account.class)));
 		});
 	}

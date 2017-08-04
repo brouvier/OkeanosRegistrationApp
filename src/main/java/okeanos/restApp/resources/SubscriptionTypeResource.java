@@ -20,21 +20,33 @@ public class SubscriptionTypeResource extends AbstractResource {
 
 		get(ressourcePath, (request, response) -> {
 			setSecurity(request, response);
+			if (!SecurityResource.isLogin(request)) {
+				throw new IllegalAccessException("Illegal Access");
+			}
 			return JsonUtil.toJson(SubscriptionTypeDao.getAllItems());
 		});
 
 		get(ressourcePath + "/:id", (request, response) -> {
 			setSecurity(request, response);
+			if (!SecurityResource.isLogin(request)) {
+				throw new IllegalAccessException("Illegal Access");
+			}
 			return JsonUtil.toJson(SubscriptionTypeDao.getItemById(new Long(request.params(":id"))));
 		});
 
 		delete(ressourcePath + "/:id", (request, response) -> {
 			setSecurity(request, response);
+			if (!SecurityResource.isAdmin(request)) {
+				throw new IllegalAccessException("Illegal Access");
+			}
 			return JsonUtil.toJson(SubscriptionTypeDao.deleteItem(new Long(request.params(":id"))));
 		});
 
 		post(ressourcePath, (request, response) -> {
 			setSecurity(request, response);
+			if (!SecurityResource.isAdmin(request)) {
+				throw new IllegalAccessException("Illegal Access");
+			}
 			return JsonUtil
 					.toJson(SubscriptionTypeDao.save(new Gson().fromJson(request.body(), SubscriptionType.class)));
 		});

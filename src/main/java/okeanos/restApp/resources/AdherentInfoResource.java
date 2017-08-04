@@ -18,26 +18,34 @@ public class AdherentInfoResource extends AbstractResource {
 
 		get(ressourcePath, (request, response) -> {
 			setSecurity(request, response);
+			if (!SecurityResource.isAdmin(request)) {
+				throw new IllegalAccessException("Illegal Access");
+			}
 			return JsonUtil.toJson(AdherentInfoDao.getAllItems());
 		});
 
-		get(ressourcePath + "/:id", (request, response) -> {
+		get(ressourcePath + "/:accountId", (request, response) -> {
 			setSecurity(request, response);
-			return gson.toJson(AdherentInfoDao.getItemByAccountId(new Long(request.params(":id"))));
+			Long accountId = new Long(request.params(":accountId"));
+			if (!SecurityResource.isLoginAndCurrentAccount(request, accountId)) {
+				throw new IllegalAccessException("Illegal Access");
+			}
+			return gson.toJson(AdherentInfoDao.getItemByAccountId(accountId));
 		});
 
 		delete(ressourcePath + "/:id", (request, response) -> {
 			setSecurity(request, response);
+			if (!SecurityResource.isAdmin(request)) {
+				throw new IllegalAccessException("Illegal Access");
+			}
 			return JsonUtil.toJson(AdherentInfoDao.deleteItem(new Long(request.params(":id"))));
 		});
 
 		post(ressourcePath, (request, response) -> {
 			setSecurity(request, response);
 			AdherentInfo info = gson.fromJson(request.body(), AdherentInfo.class);
-			if (!SecurityResource.isAdmin(request)
-					&& !SecurityResource.getCurrentUserId(request).equals(info.getFk_account_id())) {
-				// Modification non authorisée, on retourne l'objet initial
-				return JsonUtil.toJson(AdherentInfoDao.getItemById(info.getId()));
+			if (!SecurityResource.isLoginAndCurrentAccount(request, info.getFk_account_id())) {
+				throw new IllegalAccessException("Illegal Access");
 			}
 			return JsonUtil.toJson(AdherentInfoDao.save(info));
 		});
