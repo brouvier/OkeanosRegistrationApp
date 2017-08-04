@@ -6,9 +6,6 @@ var okeanosApp = angular.module('okeanosApp', [
     'okeanosAppControllers'
 ]);
 
-var okeanoAppUrl = 'https://localhost:8080/api/v1/';
-var modeDebug = true;
-
 /**
  * Configuration du module principal : routeApp
  */

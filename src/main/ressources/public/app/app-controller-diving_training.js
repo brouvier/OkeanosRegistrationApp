@@ -3,6 +3,7 @@
  */
 okeanosAppControllers.controller('divingTrainingCtrl', function ($scope, securityService, DivingTraining) {
     securityService.checkIsLogin();
+    $scope.modeDebug = modeDebug;
 
     $scope.adminMode = securityService.checkIsAdmin();
     $scope.trainingList = DivingTraining.query();

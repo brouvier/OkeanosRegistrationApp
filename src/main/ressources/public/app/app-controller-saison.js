@@ -3,6 +3,7 @@
  */
 okeanosAppControllers.controller('saisonListCtrl', function ($scope, securityService, Saison) {
     securityService.checkIsLogin();
+    $scope.modeDebug = modeDebug;
 
     $scope.adminMode = securityService.checkIsAdmin();
     Saison.query(function (sl, getResponseHeaders) {

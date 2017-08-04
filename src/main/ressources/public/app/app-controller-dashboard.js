@@ -3,6 +3,8 @@
  */
 okeanosAppControllers.controller('dashboardCtrl', function ($scope, $http, securityService, AdherentInfo) {
     securityService.checkIsLogin();
+    $scope.modeDebug = modeDebug;
+
     /*
         var adherent = AdherentInfo.get({
             id: securityService.getSecurity().curentAccountId

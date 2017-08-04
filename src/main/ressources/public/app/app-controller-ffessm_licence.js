@@ -3,6 +3,7 @@
  */
 okeanosAppControllers.controller('ffessmLicenceCtrl', function ($scope, securityService, FfessmLicence, Saison) {
     securityService.checkIsLogin();
+    $scope.modeDebug = modeDebug;
 
     $scope.adminMode = securityService.checkIsAdmin();
     $scope.licenceList = FfessmLicence.query();

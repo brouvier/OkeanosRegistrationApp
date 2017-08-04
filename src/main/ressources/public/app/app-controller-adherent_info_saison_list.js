@@ -3,6 +3,7 @@
  */
 okeanosAppControllers.controller('adherentInfoSaisonListCtrl', function ($scope, $http, securityService, Saison) {
     securityService.checkIsAdmin();
+    $scope.modeDebug = modeDebug;
 
     $http.get(okeanoAppUrl + '/saison')
         .then(function (response) {

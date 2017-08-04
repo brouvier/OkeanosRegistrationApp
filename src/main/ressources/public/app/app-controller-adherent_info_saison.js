@@ -3,6 +3,7 @@
  */
 okeanosAppControllers.controller('adherentInfoSaisonCtrl', function ($scope, $http, securityService, Subscription, SubscriptionType, FfessmLicence, AdherentInfoSaison, HockeyTeam, Insurance, DivingTraining) {
     securityService.checkIsLogin();
+    $scope.modeDebug = modeDebug;
 
     $scope.subscriptionTypeList = SubscriptionType.query();
     $scope.hockeyTeamList = HockeyTeam.query();

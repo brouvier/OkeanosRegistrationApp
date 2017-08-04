@@ -3,6 +3,7 @@
  */
 okeanosAppControllers.controller('subscriptionCtrl', function ($scope, securityService, Subscription, Saison, SubscriptionType) {
     securityService.checkIsLogin();
+    $scope.modeDebug = modeDebug;
 
     $scope.adminMode = securityService.checkIsAdmin();
     $scope.subscriptionList = Subscription.query();

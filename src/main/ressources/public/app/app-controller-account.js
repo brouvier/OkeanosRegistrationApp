@@ -2,7 +2,8 @@
  * Contrôleur de la liste des comptes utilisateurs
  */
 okeanosAppControllers.controller('accountListCtrl', function ($scope, securityService, Account) {
-    securityService.checkIsLogin();
+    securityService.checkIsAdmin();
+    $scope.modeDebug = modeDebug;
 
     $scope.accounts = Account.query();
 

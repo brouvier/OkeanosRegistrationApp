@@ -12,6 +12,7 @@ import okeanos.restApp.resources.DivingTrainingResource;
 import okeanos.restApp.resources.FfessmLicenceResource;
 import okeanos.restApp.resources.HockeyTeamResource;
 import okeanos.restApp.resources.InsuranceResource;
+import okeanos.restApp.resources.PropertiesResource;
 import okeanos.restApp.resources.SaisonResource;
 import okeanos.restApp.resources.SecurityResource;
 import okeanos.restApp.resources.SickNoteResource;
@@ -51,5 +52,6 @@ public class OkeanosSparkApp {
 		new SubscriptionResource();
 		new SubscriptionTypeResource();
 		new SickNoteResource();
+		new PropertiesResource();
 	}
 }

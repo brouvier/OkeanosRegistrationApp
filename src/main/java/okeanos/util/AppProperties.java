@@ -22,7 +22,7 @@ public class AppProperties {
 	protected static final String LOG_FILE_NAME = APPLICATION_NAME + ".log";
 
 	public static final String STATIC_FILE_PATH = "/public";
-	public static final String API_CONTEXT = "/api/v1";
+	public static final String API_CONTEXT = "/api/v1/";
 
 	public final static String keyStorePath = "./security/okeanosKeyStore.jks";
 	public final static String keyStorePassword = "Ok34n0sStorePass";
@@ -40,6 +40,7 @@ public class AppProperties {
 	public final String restHostName;
 	public final String restHostPort;
 	public final String frontHostName;
+	public final String frontModeDebug;
 
 	public static AppProperties getProperties() {
 		if (appProperties == null) {
@@ -60,6 +61,7 @@ public class AppProperties {
 		restHostName = prop.getProperty("restHostName");
 		restHostPort = prop.getProperty("restHostPort");
 		frontHostName = prop.getProperty("frontHostName");
+		frontModeDebug = prop.getProperty("frontModeDebug");
 
 	}
 
@@ -109,6 +111,7 @@ public class AppProperties {
 		prop.setProperty("restHostName", "localhost");
 		prop.setProperty("restHostPort", "8080");
 		prop.setProperty("frontHostName", "localhost");
+		prop.setProperty("frontModeDebug", "true");
 
 		OutputStream output = null;
 

@@ -3,6 +3,7 @@
  */
 okeanosAppControllers.controller('insuranceCtrl', function ($scope, securityService, Insurance, Saison) {
     securityService.checkIsLogin();
+    $scope.modeDebug = modeDebug;
 
     $scope.adminMode = securityService.checkIsAdmin();
     $scope.insuranceList = Insurance.query();
