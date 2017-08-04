@@ -55,6 +55,9 @@ create table if not exists subscription_type (
 	createdOn timestamp default current_timestamp()
 );
 
+MERGE INTO subscription_type (id, label) KEY(id) VALUES (1, 'Plongée');
+MERGE INTO subscription_type (id, label) KEY(id) VALUES (2, 'Hockey');
+
 create table if not exists subscription (
 	id IDENTITY,
 	fk_saison_id bigint not null,

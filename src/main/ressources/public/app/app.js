@@ -66,11 +66,6 @@ okeanosApp.config(['$routeProvider', '$httpProvider',
                 controller: 'hockeyTeamCtrl',
                 authorized: true
             })
-            .when('/subscriptionType', {
-                templateUrl: 'partials/subscriptionType.html',
-                controller: 'subscriptionTypeCtrl',
-                authorized: true
-            })
             .when('/subscription', {
                 templateUrl: 'partials/subscription.html',
                 controller: 'subscriptionCtrl',
