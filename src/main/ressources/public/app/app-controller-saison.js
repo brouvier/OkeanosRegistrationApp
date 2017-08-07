@@ -6,15 +6,6 @@ okeanosAppControllers.controller('saisonListCtrl', function ($scope, securitySer
     $scope.modeDebug = modeDebug;
 
     $scope.adminMode = securityService.checkIsAdmin();
-    Saison.query(function (sl, getResponseHeaders) {
-        $scope.saisonList = sl; // get row data
-        for (var i = 0; i < $scope.saisonList.length; i++) {
-            var saison = $scope.saisonList[i];
-            saison.start_date = new Date(saison.start_date); // convert filed to date
-            saison.end_date = new Date(saison.end_date); // convert filed to date
-            saison.createdOn = new Date(saison.createdOn); // convert filed to date
-        }
-    });
 
     $scope.edit = function (saison) {
         $scope.modalId = saison.id;
@@ -59,6 +50,18 @@ okeanosAppControllers.controller('saisonListCtrl', function ($scope, securitySer
         $scope.modalLabel = null;
         $scope.modalStartDate = null;
         $scope.modalEndDate = null;
-        $scope.saisonList = Saison.query();
+        //$scope.saisonList = Saison.query();
+
+        Saison.query(function (sl, getResponseHeaders) {
+            $scope.saisonList = sl; // get row data
+            for (var i = 0; i < $scope.saisonList.length; i++) {
+                var saison = $scope.saisonList[i];
+                saison.start_date = new Date(saison.start_date); // convert filed to date
+                saison.end_date = new Date(saison.end_date); // convert filed to date
+                saison.createdOn = new Date(saison.createdOn); // convert filed to date
+            }
+        });
     };
+
+    $scope.refreshList();
 });

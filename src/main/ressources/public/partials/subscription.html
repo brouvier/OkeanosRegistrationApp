@@ -44,8 +44,7 @@
                     </div>
                     <div class="form-group">
                         <label for="inputSubscriptionType">Type d'inscription</label>
-                        <select id="inputSubscriptionType" class="form-control" ng-model="modalSubscriptionTypeId" required="required">
-                          <option ng-repeat="subscriptionType in subscriptionTypeList"  value="{{subscriptionType.id}}">{{subscriptionType.label}}</option>
+                        <select id="inputSubscriptionType" class="form-control" ng-model="modalSubscriptionTypeId" ng-options="subscriptionType.id as subscriptionType.label for subscriptionType in subscriptionTypeList" required="required">
                         </select>
                     </div>
                     <div class="form-group">
@@ -96,9 +95,8 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="inputSaison">Type d'inscription</label>
-                        <select id="inputSaison" class="form-control" ng-model="modalSubscriptionTypeId" required="required">
-                          <option ng-repeat="subscriptionType in subscriptionTypeList"  value="{{subscriptionType.id}}">{{subscriptionType.label}}</option>
+                        <label for="inputSubscriptionType">Type d'inscription</label>
+                        <select id="inputSubscriptionType" class="form-control" ng-model="modalSubscriptionTypeId" ng-options="subscriptionType.id as subscriptionType.label for subscriptionType in subscriptionTypeList" required="required">
                         </select>
                     </div>
                     <div class="form-group">
