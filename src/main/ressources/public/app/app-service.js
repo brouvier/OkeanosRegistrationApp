@@ -1,43 +1,5 @@
 /* 
- * Gesion de la liste des adhérents
- */
-okeanosApp.service('sharedProperties', [function () {
-
-    var usersList = [{
-        "lastname": "Rouvier ",
-        "firstname": "Baptiste",
-        "telNumber": "0663154059",
-        "birthday": "1985-12-12T23:00:00.000Z",
-        "licenceNumber": "A-1985-13",
-        "licenceType": "Adulte",
-        "membershipType": "hockey",
-        "assurance": true,
-        "team": "Equipe 2"
-    }];
-
-    var currentEditedUser = {};
-
-    this.UpdateUsersList = function (newObj) {
-        usersList.push(angular.copy(newObj));
-    };
-    this.getUsersList = function () {
-        return usersList;
-    };
-    this.clearAll = function () {
-        usersList.length = 0;
-    };
-
-    this.setCurrentEditedUser = function (user) {
-        currentEditedUser = angular.copy(user);
-    };
-
-    this.getCurrentEditedUser = function () {
-        return currentEditedUser;
-    };
-}]);
-
-/* 
- * Gestion de l'utilisateur courant
+ * Contexte de l'utilisateur courant et de ses droits
  */
 okeanosApp.service('securityService', ['$location', function ($location) {
     console.log('Init service securityService');

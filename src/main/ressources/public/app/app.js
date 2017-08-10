@@ -38,11 +38,6 @@ okeanosApp.config(['$routeProvider', '$httpProvider',
                 controller: 'adherentInfoSaisonListCtrl',
                 authorized: true
             })
-            .when('/usersList', {
-                templateUrl: 'partials/usersList.html',
-                controller: 'listUsrCtrl',
-                authorized: true
-            })
             .when('/accountList', {
                 templateUrl: 'partials/accountList.html',
                 controller: 'accountListCtrl',
