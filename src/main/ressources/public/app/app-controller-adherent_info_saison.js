@@ -1,7 +1,7 @@
 /* 
  * Contrôleur de la liste des formations de plongée
  */
-okeanosAppControllers.controller('adherentInfoSaisonCtrl', function ($scope, $http, securityService, Subscription, SubscriptionType, FfessmLicence, AdherentInfoSaison, HockeyTeam, Insurance, DivingTraining) {
+okeanosAppControllers.controller('adherentInfoSaisonCtrl', function ($scope, $http, securityService, SubscriptionType, HockeyTeam, DivingTraining, AdherentInfoSaison) {
     securityService.checkIsLogin();
     $scope.modeDebug = modeDebug;
 
@@ -14,6 +14,10 @@ okeanosAppControllers.controller('adherentInfoSaisonCtrl', function ($scope, $ht
             $scope.currentSaison = response.data;
             console.log('currentSaison == ' + $scope.currentSaison.label);
 
+            if ($scope.currentSaison == null) {
+                console.log('ERROR - currentSaison is empty');
+                return;
+            }
 
             /* Listes filtrees par saison */
             $http.get(okeanoAppUrl + 'ffessm_licence/saison/' + $scope.currentSaison.id)

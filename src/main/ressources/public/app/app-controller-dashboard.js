@@ -1,25 +1,59 @@
 /* 
  * Contrôleur du dashboard
  */
-okeanosAppControllers.controller('dashboardCtrl', function ($scope, $http, securityService, AdherentInfo) {
+okeanosAppControllers.controller('dashboardCtrl', function ($scope, $http, securityService) {
     securityService.checkIsLogin();
     $scope.modeDebug = modeDebug;
 
-    /*
-        var adherent = AdherentInfo.get({
-            id: securityService.getSecurity().curentAccountId
+    $scope.adherentInfoPanel = "panel-red";
+    $scope.adherentInfoStatus = "Inconnu !!!";
+
+    $scope.membershipPanel = "panel-red";
+    $scope.membershipStatus = "Inconnu !!!";
+
+    $scope.documentPanel = "panel-red";
+    $scope.documentStatus = "Inconnu !!!";
+
+    $http.get(okeanoAppUrl + 'saison/currentSaison')
+        .then(function (response) {
+            var currentSaison = response.data;
+            console.log('currentSaison == ' + currentSaison.label);
+            var accountId = securityService.getSecurity().curentAccountId;
+
+            if (currentSaison == null) {
+                console.log('ERROR - currentSaison is empty');
+                return;
+            }
+            if (accountId == null) {
+                console.log('ERROR - curentAccountId is empty');
+                return;
+            }
+
+            /* Recherche des informations de l'adherent */
+            $http.get(okeanoAppUrl + 'dashboard/saison/' + currentSaison.id + '/account/' + accountId)
+                .then(function (response) {
+                    $scope.adherent = response.data;
+                });
         });
 
-        if (adherent.licence_number == "") {
-            $scope.adherentInfoPanel = "panel-red";
-            $scope.adherentInfoStatus = "Incomplètes";
-        } else {
-            $scope.adherentInfoPanel = "panel-primary";
-            $scope.adherentInfoStatus = "Complètes";
+    $scope.$watch("adherent", function (newValue, oldValue) {
+        if ($scope.adherent != null) {
 
-        }*/
+            if ($scope.adherent.info == null) {
+                $scope.adherentInfoPanel = "panel-red";
+                $scope.adherentInfoStatus = "A remplir";
+            } else {
+                $scope.adherentInfoPanel = "panel-primary";
+                $scope.adherentInfoStatus = "Complètes";
+            }
 
-
-    $scope.adherentInfoPanel = "panel-primary";
-    $scope.adherentInfoStatus = "Complètes";
+            if ($scope.adherent.infoSaison == null) {
+                $scope.membershipPanel = "panel-red";
+                $scope.membershipStatus = "A remplir";
+            } else {
+                $scope.membershipPanel = "panel-primary";
+                $scope.membershipStatus = "Complètes";
+            }
+        }
+    });
 });

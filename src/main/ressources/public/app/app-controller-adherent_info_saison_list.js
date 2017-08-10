@@ -12,7 +12,7 @@ okeanosAppControllers.controller('adherentInfoSaisonListCtrl', function ($scope,
 
     var getList = function (saisonId) {
         /* Recherche des informations des adhésion */
-        $http.get(okeanoAppUrl + '/adherent_info_saison/saison/' + saisonId)
+        $http.get(okeanoAppUrl + '/dashboard/saison/' + saisonId)
             .then(function (response) {
                 $scope.adherentList = response.data;
                 for (var i = 0; i < $scope.adherentList.length; i++) {

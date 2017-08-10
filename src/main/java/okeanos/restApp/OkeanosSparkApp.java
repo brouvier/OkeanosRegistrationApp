@@ -8,6 +8,7 @@ import static spark.Spark.secure;
 import okeanos.restApp.resources.AccountResource;
 import okeanos.restApp.resources.AdherentInfoResource;
 import okeanos.restApp.resources.AdherentInfoSaisonResource;
+import okeanos.restApp.resources.DashboardResource;
 import okeanos.restApp.resources.DivingTrainingResource;
 import okeanos.restApp.resources.FfessmLicenceResource;
 import okeanos.restApp.resources.HockeyTeamResource;
@@ -43,6 +44,7 @@ public class OkeanosSparkApp {
 		new AccountResource();
 		new AdherentInfoResource();
 		new AdherentInfoSaisonResource();
+		new DashboardResource();
 		new DivingTrainingResource();
 		new FfessmLicenceResource();
 		new HockeyTeamResource();
