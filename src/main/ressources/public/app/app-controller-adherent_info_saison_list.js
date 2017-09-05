@@ -34,4 +34,20 @@ okeanosAppControllers.controller('adherentInfoSaisonListCtrl', function ($scope,
             getList($scope.currentSaison.id);
         }
     });
+
+    $scope.getSickNoteUrl = function (infoSaison) {
+        if (infoSaison.id != null)
+            return okeanoAppUrl + "adherent_info_saison/" + infoSaison.id + "/sick_note";
+        else
+            return null;
+    };
+
+    $scope.getParentalAgreementUrl = function (infoSaison) {
+        if (infoSaison.id != null)
+            return okeanoAppUrl + "adherent_info_saison/" + infoSaison.id + "/parental_agreement";
+        else
+            return null;
+    };
+
+
 });

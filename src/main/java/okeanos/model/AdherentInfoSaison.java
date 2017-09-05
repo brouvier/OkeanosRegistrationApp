@@ -16,11 +16,14 @@ public class AdherentInfoSaison {
 	private Long fk_training_id;
 	// Hockey
 	private Long fk_team_id;
+	// Diving
+	private Long fk_sick_note_id;
+	private Long fk_parental_agreement_id;
 	private Date createdOn;
 
 	public AdherentInfoSaison(Long id, Long fk_account_id, Long fk_saison_id, Long fk_ffessm_licence_id,
 			Long fk_subscription_id, Long fk_insurance_id, Boolean picture_authorisation, Long fk_actual_training_id,
-			Long fk_training_id, Long fk_team_id, Date createdOn) {
+			Long fk_training_id, Long fk_team_id, Long fk_sick_note_id, Long fk_parental_agreement_id, Date createdOn) {
 		super();
 		this.id = id;
 		this.fk_account_id = fk_account_id;
@@ -32,6 +35,8 @@ public class AdherentInfoSaison {
 		this.fk_actual_training_id = fk_actual_training_id;
 		this.fk_training_id = fk_training_id;
 		this.fk_team_id = fk_team_id;
+		this.fk_sick_note_id = fk_sick_note_id;
+		this.fk_parental_agreement_id = fk_parental_agreement_id;
 		this.createdOn = createdOn;
 	}
 
@@ -113,6 +118,22 @@ public class AdherentInfoSaison {
 
 	public void setFk_team_id(Long fk_team_id) {
 		this.fk_team_id = fk_team_id;
+	}
+
+	public Long getFk_sick_note_id() {
+		return fk_sick_note_id;
+	}
+
+	public void setFk_sick_note_id(Long fk_sick_note_id) {
+		this.fk_sick_note_id = fk_sick_note_id;
+	}
+
+	public Long getFk_parental_agreement_id() {
+		return fk_parental_agreement_id;
+	}
+
+	public void setFk_parental_agreement_id(Long fk_parental_agreement_id) {
+		this.fk_parental_agreement_id = fk_parental_agreement_id;
 	}
 
 	public Date getCreatedOn() {

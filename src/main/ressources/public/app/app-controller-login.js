@@ -6,6 +6,7 @@ okeanosAppControllers.controller('loginCtrl', function ($scope, $location, $http
     $scope.modeDebug = modeDebug;
     $scope.security = securityService.getSecurity();
     $scope.alerte = "none";
+    $scope.login = {};
 
     $scope.login = function () {
         $scope.alerte = "none";

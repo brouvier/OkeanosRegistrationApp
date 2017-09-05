@@ -2,7 +2,7 @@
 
 var okeanosApp = angular.module('okeanosApp', [
     // Dépendances du "module"
-    'ngRoute', 'ngResource',
+    'ngRoute', 'ngResource', 'ng-file-model', 'ngFileUpload',
     'okeanosAppControllers'
 ]);
 
@@ -75,6 +75,7 @@ okeanosApp.config(['$routeProvider', '$httpProvider',
             })
             .when('/sickNote', {
                 templateUrl: 'partials/sickNoteUpload.html',
+                controller: 'sickNoteUploadCtrl',
                 authorized: true
             })
             .otherwise({

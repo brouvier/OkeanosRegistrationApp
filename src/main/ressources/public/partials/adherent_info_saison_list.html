@@ -21,6 +21,8 @@
                             <th>Licence</th>
                             <th>Adhésion</th>
                             <th>Assurance</th>
+                            <th>Certificat médical</th>
+                            <th>Accord parental</th>
                         </tr>
                         <tr ng-repeat="adherent in adherentList | filter:searchText" ng-click="gotoEditForm(user)">
                             <td>{{adherent.info.firstname}}</td>
@@ -31,6 +33,14 @@
                             <td>{{adherent.licence.label}}</td>
                             <td>{{adherent.subscription.label}}</td>
                             <td>{{adherent.insurance.label}}</td>
+                            <td>
+                                <a href="{{getSickNoteUrl(adherent.infoSaison)}}" target="_blank" ng-show="adherent.infoSaison.fk_sick_note_id">
+                                    <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span></a>
+                            </td>
+                            <td>
+                                <a href="{{getParentalAgreementUrl(adherent.infoSaison)}}" target="_blank" ng-show="adherent.infoSaison.fk_parental_agreement_id">
+                                    <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span></a>
+                            </td>
                         </tr>
                     </tbody>
                 </table>

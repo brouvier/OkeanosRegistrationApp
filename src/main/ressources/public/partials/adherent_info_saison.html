@@ -1,8 +1,9 @@
 <div class="row">
-    <div class="col-md-12">
-        <form ng-submit="save()" class="form-horizontal">
-            <h2 class="page-header">Fiche adhérent pour la saison en cours : {{currentSaison.label}}</h2>
+    <h2 class="page-header">Fiche adhérent pour la saison en cours : {{currentSaison.label}}</h2>
 
+    <form ng-submit="save()" class="form-horizontal">
+        <div class="col">
+            <h4 class="page-header">Mon adhésion</h4>
 
             <div class="form-group">
                 <label for="selectLicence" class="col-sm-3 control-label">Ma licence FFESSM :</label>
@@ -34,6 +35,16 @@
                     <div class="checkbox" ng-show="adherentInfoSaison.membershipType !== 'hockey'">
                         <select id="selectInsurance" class="form-control" ng-model="adherentInfoSaison.fk_insurance_id" ng-options="insurance.id as insurance.label + ' (' + insurance.price + '€)' for insurance in insuranceList">
                     </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="selectPrice" class="col-sm-3 control-label">MONTANT TOTAL : </label>
+                <div class="col-sm-9">
+                    <div class="input-group">
+                        <input id="inputName" type="text" class="form-control" ng-model="totalPrice" disabled />
+                        <span class="input-group-addon">€</span>
                     </div>
                 </div>
             </div>
@@ -82,13 +93,49 @@
                     <button type="submit" class="btn btn-primary">Tout mettre à jour</button>
                 </div>
             </div>
+        </div>
 
+    </form>
+</div>
+
+<div class="row" ng-show='docImportReady()'>
+    <div class="col-md-12">
+        <h3 class="page-header">Documents joints</h3>
+        <p>Les fichier doivent être au format PDF et leur taille ne doit pas dépasser 1Mo.</p>
+        <h4 class="page-header">Certificat médical</h4>
+        <p>Le certificat médical doit être valable pour toute la saison.</p>
+        <form role="form" method='post' enctype='multipart/form-data' action='{{sickNote.url}}'>
+            <div class="form-group">
+                <input type='file' name='uploaded_file' ng-file-model="sickNote.file" accept=".pdf" required>
+                <div class="alert alert-danger" role="alert" ng-show="sickNote.error">{{sickNote.error}}</div>
+                <button class="btn btn-primary" type="submit" ng-show="!sickNote.error">Importer le document</button>
+                <a href="{{sickNote.url}}" target="_blank">
+                    <button class="btn btn-success" type="button" ng-show="sickNoteExportReady()">Télécharger le document</button>
+                </a>
+            </div>
+        </form>
+        <h4 class="page-header">Accord parental</h4>
+        <p>Obligatoire pour les personnes mineurs.</p>
+        <form role="form" method='post' enctype='multipart/form-data' action='{{parentalAgreement.url}}'>
+            <div class="form-group">
+                <div class="alert alert-danger" role="alert" ng-show="parentalAgreement.error">{{parentalAgreement.error}}</div>
+                <div class="input-group">
+                    <input type='file' name='uploaded_file' ng-file-model="parentalAgreement.file" accept=".pdf" required>
+                    <button class="btn btn-primary" type="submit" ng-show="!parentalAgreement.error">Importer le document</button>
+                    <a href="{{parentalAgreement.url}}" target="_blank">
+                        <button class="btn btn-primary" type="button" ng-show="parentalAgreementExportReady()">Télécharger le document</button>
+                    </a>
+                </div>
+            </div>
         </form>
     </div>
 </div>
+
 <div class="row" ng-show="modeDebug">
     <div class="col-md-12">
         <h2 class="page-header">Debug</h2>
         <pre>adherentInfoSaison = {{adherentInfoSaison | json}}</pre>
+        <pre>sickNote = {{sickNote | json}}</pre>
+        <pre>parentalAgreement = {{parentalAgreement | json}}</pre>
     </div>
 </div>

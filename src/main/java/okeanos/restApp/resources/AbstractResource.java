@@ -14,7 +14,7 @@ import spark.Response;
 
 public abstract class AbstractResource {
 
-	private final Logger logger = LoggerFactory.getLogger(AbstractResource.class);
+	protected final Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	protected Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS").create();
 

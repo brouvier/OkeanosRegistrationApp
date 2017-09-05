@@ -13,9 +13,18 @@ create table if not exists account (
 	createdOn timestamp default current_timestamp()
 );
 
+create table if not exists adherent_document (
+	id IDENTITY,
+	file_type varchar(512),
+	content_disposition varchar(512),
+	data BINARY,
+	createdOn timestamp default current_timestamp()
+);
+
 create table if not exists adherent_info (
 	id IDENTITY,
 	fk_account_id bigint not null,
+	fk_photo_id bigint,
 	firstname varchar(512) not null,
 	lastname varchar(512) not null,
 	birsthday timestamp not null,
@@ -30,7 +39,8 @@ create table if not exists adherent_info (
 	emergency_contact varchar(512),
 	emergency_tel_number varchar(15),
 	createdOn timestamp default current_timestamp(),
-	FOREIGN KEY (fk_account_id) REFERENCES account(id)
+	FOREIGN KEY (fk_account_id) REFERENCES account(id),
+	FOREIGN KEY (fk_photo_id) REFERENCES adherent_document(id)
 );
 
 create table if not exists saison (
@@ -112,6 +122,9 @@ create table if not exists adherent_info_saison (
 	fk_training_id bigint,
 	-- Hockey
 	fk_team_id bigint,
+	-- Adherent document
+	fk_sick_note_id bigint,
+	fk_parental_agreement_id bigint,
 	createdOn timestamp default current_timestamp(),
 	FOREIGN KEY (fk_account_id) REFERENCES account(id),
 	FOREIGN KEY (fk_saison_id) REFERENCES saison(id),
@@ -120,8 +133,21 @@ create table if not exists adherent_info_saison (
 	FOREIGN KEY (fk_insurance_id) REFERENCES insurance(id),
 	FOREIGN KEY (fk_actual_training_id) REFERENCES diving_training(id),
 	FOREIGN KEY (fk_training_id) REFERENCES diving_training(id),
-	FOREIGN KEY (fk_team_id) REFERENCES hockey_team(id)
+	FOREIGN KEY (fk_team_id) REFERENCES hockey_team(id),
+	FOREIGN KEY (fk_sick_note_id) REFERENCES adherent_document(id),
+	FOREIGN KEY (fk_parental_agreement_id) REFERENCES adherent_document(id)
 );
 
 
 
+MERGE INTO saison (id, label, start_date, end_date) KEY(id) VALUES (1, '2017 - 2018', '2017-09-01', '2018-08-31');
+
+MERGE INTO ffessm_licence (id, label, fk_saison_id, price) KEY(id) VALUES (1, 'Enfant', 1, 11);
+MERGE INTO ffessm_licence (id, label, fk_saison_id, price) KEY(id) VALUES (2, 'Jeune', 1, 25);
+MERGE INTO ffessm_licence (id, label, fk_saison_id, price) KEY(id) VALUES (3, 'Adulte', 1, 40);
+
+MERGE INTO subscription (id, label, fk_saison_id, fk_subscription_type_id, price) KEY(id) VALUES (1, 'Plongeur', 1, 1, 150);
+MERGE INTO subscription (id, label, fk_saison_id, fk_subscription_type_id, price) KEY(id) VALUES (2, 'Hockeyeur', 1, 2, 130);
+
+MERGE INTO insurance (id, label, fk_saison_id, price) KEY(id) VALUES (1, 'Pisince 1', 1, 11);
+MERGE INTO insurance (id, label, fk_saison_id, price) KEY(id) VALUES (2, 'Piscine 2', 1, 25);

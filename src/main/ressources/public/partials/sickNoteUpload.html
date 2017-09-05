@@ -1,11 +1,61 @@
 <div class="row">
+
     <div class="col-md-12">
-        <h2 class="page-header">Certificat médical</h2>
+        <h1 class="page-header">Multipart methode</h1>
+    </div>
 
-        <form method="post" action="https://localhost:8080/api/v1/file?userid=1" enctype="multipart/form-data">
-            <input type="file">
-            <button class="btn btn-primary" type="submit">test</button>
+    <div class="col-md-6">
+        <h1 class="page-header">Upload file</h1>
+        <form role="form" method='post' enctype='multipart/form-data' action="https://localhost:8080/api/v1/file/multipart">
+            <input type='file' name='uploaded_file' ng-file-model="document.file" accept=".jpg, .png, .pdf|images/*" required>
+            <div class="alert alert-danger" role="alert" ng-show="document.error">{{document.error}}</div>
+            <button class="btn btn-primary" type="submit" ng-show="!document.error">Upload picture</button>
         </form>
+    </div>
 
+    <div class="col-md-6">
+        <h2 class="page-header">Download file</h2>
+        <a href="https://localhost:8080/api/v1/file/multipart" target="_blank"><button class="btn btn-succed">Download picture</button></a>
+        <!-- img src="https://localhost:8080/api/v1/file" alt="Smiley face" height="100" width="100" -->
+    </div>
+
+</div>
+
+
+<div class="row">
+
+    <div class="col-md-12">
+        <h1 class="page-header">ngFileUpload methode</h1>
+    </div>
+
+    <div class="col-md-6">
+        <h1 class="page-header">Upload file</h1>
+        <form name="form" role="form">
+            Single Image with validations
+            <input ngf-select ng-model="file" name="file" type="file" ngf-pattern="'image/*'" ngf-accept="'image/*'" ngf-max-size="1MB">
+            <i ng-show="!file">*required</i><br>
+            <i ng-show="form.file.$error.maxSize">File too large 
+          {{errorFile.size / 1000000|number:1}}MB: max 1M</i>
+            <img ng-show="file" ngf-thumbnail="file" ngf-size="{width: 75, height: 75, quality: 0.9}">
+            <button ng-click="file = null" ng-show="file">Remove</button>
+            <button type="submit" ng-click="ngFileUploadSubmit()" ng-show="file">Upload picture</button>
+        </form>
+    </div>
+
+    <div class="col-md-6">
+        <h2 class="page-header">Download file</h2>
+        <a href="https://localhost:8080/api/v1/file/multipart" target="_blank"><button class="btn btn-succed">Download picture</button></a>
+    </div>
+
+</div>
+
+
+
+
+<div class="row" ng-show="modeDebug">
+    <div class="col-md-12">
+        <h2 class="page-header">Debug</h2>
+        <pre>document = {{document | json}}</pre>
+        <pre>file = {{file | json}}</pre>
     </div>
 </div>
