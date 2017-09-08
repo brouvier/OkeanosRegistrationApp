@@ -6,6 +6,8 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 
+import org.apache.commons.codec.binary.Hex;
+
 import okeanos.dao.AccountDao;
 import okeanos.model.Account;
 
@@ -26,7 +28,7 @@ public class LoginControler {
 		}
 		String hashedPass = hash(account.getSalt() + password);
 
-		System.out.println("mail : " + mail + "\tpassword : " + password);
+		System.out.println("Login account for mail : " + mail + "\tpassword : " + password);
 		System.out.println("hashedPass : " + hashedPass);
 		System.out.println("savedPass  : " + account.getPassword());
 
@@ -55,19 +57,22 @@ public class LoginControler {
 		// Sauvegarde du pass salé
 		String hashedPass = hash(salt + password);
 
-		return AccountDao.newItem(mail, salt, hashedPass, true);
+		System.out.println("Create account for mail : " + mail + "\tpassword : " + password);
+		System.out.println("salt : " + salt);
+		System.out.println("hashedPass : " + hashedPass);
+
+		return AccountDao.newItem(mail, salt, hashedPass, false);
 	}
 
 	protected static String hash(String message) {
 		try {
+			// Conversion du message en tableau de byte
 			byte[] b = message.getBytes(StandardCharsets.UTF_8);
+			// Hachage du message
 			MessageDigest md = MessageDigest.getInstance("SHA-256");
 			byte[] h = md.digest(b);
-			String hash = new String(h);
-			System.out.println("Hash - message : " + message);
-			System.out.println("Hash - message byte : " + b);
-			System.out.println("Hash - hashed message byte : " + h);
-			System.out.println("Hash - hashed message : " + hash);
+			// Conversion du message haché en String
+			String hash = Hex.encodeHexString(h);
 			return hash;
 		} catch (NoSuchAlgorithmException e) {
 			e.printStackTrace();

@@ -13,6 +13,9 @@ create table if not exists account (
 	createdOn timestamp default current_timestamp()
 );
 
+-- OkeanosAdminPass:)
+MERGE INTO account (id, mail, salt, password, admin) KEY(id) VALUES (1, 'admin@okeanos', '477bf9a3475fe2a0ef9ccbc08e9a57f2be56e6ac1921c0cb12a207916e976acf', '55f31f83e00a6349c9606cfa9c4ccf84c8ce47ecd6a8b57b44ea9b9bcf2ed5c4', true);
+
 create table if not exists adherent_document (
 	id IDENTITY,
 	file_type varchar(512),
@@ -54,26 +57,26 @@ create table if not exists saison (
 create table if not exists ffessm_licence (
 	id IDENTITY,
 	fk_saison_id bigint not null,
-	label varchar(512),
-	price DOUBLE,
+	label varchar(512) not null,
+	price double not null,
 	createdOn timestamp default current_timestamp()
 );
 
 create table if not exists subscription_type (
 	id IDENTITY,
-	label varchar(56),
+	label varchar(56) not null,
 	createdOn timestamp default current_timestamp()
 );
 
-MERGE INTO subscription_type (id, label) KEY(id) VALUES (1, 'Plongée');
+MERGE INTO subscription_type (id, label) KEY(id) VALUES (1, 'PlongÃ©e');
 MERGE INTO subscription_type (id, label) KEY(id) VALUES (2, 'Hockey');
 
 create table if not exists subscription (
 	id IDENTITY,
 	fk_saison_id bigint not null,
 	fk_subscription_type_id bigint not null,
-	label varchar(512),
-	price DOUBLE,
+	label varchar(512) not null,
+	price double not null,
 	createdOn timestamp default current_timestamp(),
 	FOREIGN KEY (fk_saison_id) REFERENCES saison(id),
 	FOREIGN KEY (fk_subscription_type_id) REFERENCES subscription_type(id)
@@ -83,7 +86,7 @@ create table if not exists insurance (
 	id IDENTITY,
 	fk_saison_id bigint not null,
 	label varchar(512) not null,
-	price int not null,
+	price double not null,
 	createdOn timestamp default current_timestamp(),
 	FOREIGN KEY (fk_saison_id) REFERENCES saison(id)
 );
@@ -99,13 +102,13 @@ create table if not exists require_insurance (
 
 create table if not exists diving_training (
 	id IDENTITY,
-	label varchar(512),
+	label varchar(512) not null,
 	createdOn timestamp default current_timestamp()
 );
 
 create table if not exists hockey_team (
 	id IDENTITY,
-	label varchar(512),
+	label varchar(512) not null,
 	createdOn timestamp default current_timestamp()
 );
 

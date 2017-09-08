@@ -30,7 +30,6 @@ public class AdherentInfoSaisonResource extends AbstractResource {
 
 	protected String ressourcePath = AppProperties.API_CONTEXT + "/adherent_info_saison";
 	protected AppProperties properties = AppProperties.getProperties();
-	protected String frontPath = properties.frontRestAcces + ":" + properties.restHostPort + "/#/adherentInfoSaison";
 
 	public AdherentInfoSaisonResource() {
 		super.setupEndpoints();
@@ -145,8 +144,6 @@ public class AdherentInfoSaisonResource extends AbstractResource {
 			ais.setFk_sick_note_id(sickNote.getId());
 			AdherentInfoSaisonDao.save(ais);
 		}
-
-		response.redirect(frontPath);
 	}
 
 	private void saveParentalAgreement(Request request, Response response, AdherentInfoSaison ais)
@@ -160,8 +157,6 @@ public class AdherentInfoSaisonResource extends AbstractResource {
 			ais.setFk_parental_agreement_id(parentalAgreement.getId());
 			AdherentInfoSaisonDao.save(ais);
 		}
-
-		response.redirect(frontPath);
 	}
 
 	private AdherentDocument readAdherentDocument(Long id, Request request) throws IOException, ServletException {

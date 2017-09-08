@@ -36,7 +36,7 @@
                 <h3 class="modal-title">Ajout</h3>
             </div>
             <div class="modal-body">
-                <form ng-submit="saveItem()">
+                <form name="createForm" ng-submit="saveItem()">
                     <div class="form-group">
                         <label for="inputSaison">Saison</label>
                         <select id="inputSaison" class="form-control" ng-model="modalSaisonId" ng-options="saison.id as saison.label for saison in saisonList" required="required">
@@ -53,20 +53,17 @@
                     </div>
                     <div class="form-group">
                         <label for="inputPrice">Tarif</label>
-
                         <div id="inputPrice" class="input-group">
                             <span class="input-group-addon">€</span>
                             <input type="number" step="0.01" class="form-control" ng-model="modalPrice" required="required">
                         </div>
-
-                        <!--input id="inputPrice" type="text" class="form-control" ng-model="modalPrice" /-->
                     </div>
                 </form>
                 <pre> $scope.modalSaisonId = {{modalSaisonId}}</pre>
                 <pre> $scope.modalSubscriptionTypeId = {{modalSubscriptionTypeId}}</pre>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-success" data-dismiss="modal" ng-click="saveItem()">Ajouter</button>
+                <button type="button" class="btn btn-success" data-dismiss="modal" ng-click="saveItem()" ng-show="createForm.$valid">Ajouter</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="refreshList()">Cancel</button>
             </div>
         </div>
@@ -84,7 +81,7 @@
                 <h3 class="modal-title">Edition</h3>
             </div>
             <div class="modal-body">
-                <form ng-submit="saveItem()">
+                <form name="editForm" ng-submit="saveItem()">
                     <div class="form-group" ng-show="false">
                         <label for="inputId">Id</label>
                         <input id="inputId" type="text" class="form-control" placeholder="Id" ng-model="modalId" disabled/>
@@ -101,16 +98,19 @@
                     </div>
                     <div class="form-group">
                         <label for="inputLabel">Label</label>
-                        <input id="inputLabel" type="text" class="form-control" placeholder="Label" ng-model="modalLabel" />
+                        <input id="inputLabel" type="text" class="form-control" placeholder="Label" ng-model="modalLabel" required="required" />
                     </div>
                     <div class="form-group">
                         <label for="inputPrice">Tarif</label>
-                        <input id="inputPrice" type="number" step="0.01" class="form-control" placeholder="Label" ng-model="modalPrice" />
+                        <div id="inputPrice" class="input-group">
+                            <span class="input-group-addon">€</span>
+                            <input type="number" step="0.01" class="form-control" ng-model="modalPrice" required="required">
+                        </div>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-success" data-dismiss="modal" ng-click="saveItem()">Modifier</button>
+                <button type="button" class="btn btn-success" data-dismiss="modal" ng-click="saveItem()" ng-show="editForm.$valid">Modifier</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="refreshList()">Cancel</button>
             </div>
         </div>
