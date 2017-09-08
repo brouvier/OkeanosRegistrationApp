@@ -70,4 +70,10 @@ public class Subscription {
 		this.createdOn = createdOn;
 	}
 
+	@Override
+	public String toString() {
+		return "Subscription [id=" + id + ", fk_saison_id=" + fk_saison_id + ", fk_subscription_type_id="
+				+ fk_subscription_type_id + ", label=" + label + ", price=" + price + ", createdOn=" + createdOn + "]";
+	}
+
 }

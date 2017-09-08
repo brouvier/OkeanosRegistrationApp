@@ -1,5 +1,5 @@
 <div class="row">
-    <h2 class="page-header">Fiche adhérent pour la saison en cours : {{currentSaison.label}}</h2>
+    <h2 class="page-header">Formulaire d'adhésion - Saison {{currentSaison.label}}</h2>
 
     <form ng-submit="save()" class="form-horizontal">
         <div class="col">
@@ -36,6 +36,7 @@
                         <select id="selectInsurance" class="form-control" ng-model="adherentInfoSaison.fk_insurance_id" ng-options="insurance.id as insurance.label + ' (' + insurance.price + '€)' for insurance in insuranceList">
                     </select>
                     </div>
+                    <p>La licence est une assurance responsabilité civile pour les entraînements et les sorties. Certaines assurances vous couvrent pour les sports à risques, y compris la plongée. AXA, assureur officiel de la FFESSM, propose des contrats d’assurances individuels pour les licenciés (détails sur le site http://www.cabinet-lafont.com ou sur papier sur demande).</p>
                 </div>
             </div>
 
@@ -46,6 +47,7 @@
                         <input id="inputName" type="text" class="form-control" ng-model="totalPrice" disabled />
                         <span class="input-group-addon">€</span>
                     </div>
+                    <p>La cotisation est à régler par chèque à l’ordre d’Okeanos. Vous pouvez régler en plusieurs fois.</p>
                 </div>
             </div>
 
@@ -54,7 +56,9 @@
                 <div class="col-sm-9">
                     <div class="checkbox">
                         <label>
-                            <input type="checkbox" ng-model="adherentInfoSaison.picture_authorisation"> J'autorise le club à utilise des photos de moi à des fin de communication.
+                            <input type="checkbox" ng-model="adherentInfoSaison.picture_authorisation"> J'autorise le club Okeanos à prendre, afficher et diffuser, des
+photographies me représentant dans un lieu public ou privé, notamment par l’intermédiaire du site Internet du club
+Okéanos (http://www.okeanos-grenoble.fr) à utilise des photos de moi à des fin de communication.
                         </label>
                     </div>
                 </div>
@@ -98,36 +102,40 @@
     </form>
 </div>
 
-<div class="row" ng-show='docImportReady()'>
+<div class="row" ng-show='adherentInfoSaison.id'>
     <div class="col-md-12">
         <h3 class="page-header">Documents joints</h3>
         <p>Les fichier doivent être au format PDF et leur taille ne doit pas dépasser 1Mo.</p>
         <h4 class="page-header">Certificat médical</h4>
-        <p>Le certificat médical doit être valable pour toute la saison.</p>
-        <form role="form" method='post' enctype='multipart/form-data' action='{{sickNote.url}}'>
-            <div class="form-group">
-                <input type='file' name='uploaded_file' ng-file-model="sickNote.file" accept=".pdf" required>
-                <div class="alert alert-danger" role="alert" ng-show="sickNote.error">{{sickNote.error}}</div>
-                <button class="btn btn-primary" type="submit" ng-show="!sickNote.error">Importer le document</button>
-                <a href="{{sickNote.url}}" target="_blank">
-                    <button class="btn btn-success" type="button" ng-show="sickNoteExportReady()">Télécharger le document</button>
-                </a>
-            </div>
+        <p>Le certificat médical est obligatoire pour les entraînements piscine (plongée/hockey), et les sorties. Vous devez conserver l’original et nous fournir une copie. Le certificat médical doit également préciser que vous êtes apte à passer un niveau, à pratiquer la compétition (hockey) ou enseigner et encadrer la plongée. Selon la formation engagée ou l’âge, il doit être délivré par le médecin suivant :</p>
+        <ul>
+            <li>Plongée Explo : tous médecins</li>
+            <li>Préparation et passage niveau 1 : tous médecins</li>
+            <li>Préparation et passage autres niveaux : médecin du sport, médecin fédéral ou médecin hyperbare</li>
+            <li>Compétition : médecin du sport, médecin fédéral ou médecin hyperbare</li>
+            <li>Jeune plongeur 8-14 ans : médecin fédéral</li>
+            <li>Jeune plongeur +12 ans avec niveau 1 : tous médecins</li>
+            <li>Encadrant : médecin du sport, médecin fédéral ou médecin hyperbare</li>
+        </ul>
+        <form name="sickNoteForm" role="form">
+            <input class="btn" ngf-select ng-model="sickNoteFile" name="sickNoteFile" type="file" ngf-accept="'.pdf'" ngf-max-size="1MB">
+            <i ng-show="sickNoteForm.sickNoteFile.$error.maxSize">File too large {{errorFile.size / 1000000|number:1}}MB: max 1M</i>
+            <button class="btn btn-warning" ng-click="sickNoteFile = null" ng-show="sickNoteFile">Annuler</button>
+            <button class="btn btn-info" type="submit" ng-click="sickNoteSubmit()" ng-show="sickNoteFile">Importer le fichier</button>
         </form>
-        <h4 class="page-header">Accord parental</h4>
-        <p>Obligatoire pour les personnes mineurs.</p>
-        <form role="form" method='post' enctype='multipart/form-data' action='{{parentalAgreement.url}}'>
-            <div class="form-group">
-                <div class="alert alert-danger" role="alert" ng-show="parentalAgreement.error">{{parentalAgreement.error}}</div>
-                <div class="input-group">
-                    <input type='file' name='uploaded_file' ng-file-model="parentalAgreement.file" accept=".pdf" required>
-                    <button class="btn btn-primary" type="submit" ng-show="!parentalAgreement.error">Importer le document</button>
-                    <a href="{{parentalAgreement.url}}" target="_blank">
-                        <button class="btn btn-primary" type="button" ng-show="parentalAgreementExportReady()">Télécharger le document</button>
-                    </a>
-                </div>
-            </div>
+        <div class="alert alert-info" ng-show="adherentInfoSaison.fk_sick_note_id"><a href="{{sickNoteUrl}}" target="_blank">Télécharger le fichier éxistant</a></div>
+
+        <h4 class="page-header">Accord parental pour les mineurs</h4>
+        <p>Obligatoire pour les personnes mineurs. Elle doit reprendre le model suivant :</p>
+        <p>Je soussigné(e) ...................................................................., agissant en qualité de père/mère/tuteur, autorise le mineur ................................................, né le .../.../..... à pratiquer la plongée subaquatique ainsi que les activités connexes dans le cadre du club en toute connaissance des risques encourus. De plus, j’accepte que les responsables du club autorisent, en mon nom, une prise en charge médicalisée en cas de besoin.<br/> Je m’engage à vérifier qu’un encadrant est présent avant de laisser mon fils/ma fille à la piscine.<br/> Fait à ......................... le .../.../........ Signature</p>
+
+        <form name="parentalAgreementForm" role="form">
+            <input class="btn" ngf-select ng-model="parentalAgreementFile" name="parentalAgreementFile" type="file" ngf-accept="'.pdf'" ngf-max-size="1MB">
+            <i ng-show="parentalAgreementForm.parentalAgreementFile.$error.maxSize">File too large {{errorFile.size / 1000000|number:1}}MB: max 1M</i>
+            <button class="btn btn-warning" ng-click="parentalAgreementFile = null" ng-show="parentalAgreementFile">Annuler</button>
+            <button class="btn btn-info" type="submit" ng-click="parentalAgreementSubmit()" ng-show="parentalAgreementFile">Importer le fichier</button>
         </form>
+        <div class="alert alert-info" ng-show="adherentInfoSaison.fk_parental_agreement_id"><a href="{{parentalAgreementUrl}}" target="_blank">Télécharger le fichier éxistant</a></div>
     </div>
 </div>
 
@@ -135,7 +143,7 @@
     <div class="col-md-12">
         <h2 class="page-header">Debug</h2>
         <pre>adherentInfoSaison = {{adherentInfoSaison | json}}</pre>
-        <pre>sickNote = {{sickNote | json}}</pre>
-        <pre>parentalAgreement = {{parentalAgreement | json}}</pre>
+        <pre>sickNoteUrl = {{sickNoteUrl}}</pre>
+        <pre>parentalAgreementUrl = {{parentalAgreementUrl}}</pre>
     </div>
 </div>

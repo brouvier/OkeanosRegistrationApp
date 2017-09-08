@@ -56,7 +56,7 @@
 
                         <div id="inputPrice" class="input-group">
                             <span class="input-group-addon">€</span>
-                            <input type="number" class="form-control" ng-model="modalPrice" required="required">
+                            <input type="number" step="0.01" class="form-control" ng-model="modalPrice" required="required">
                         </div>
 
                         <!--input id="inputPrice" type="text" class="form-control" ng-model="modalPrice" /-->
@@ -105,7 +105,7 @@
                     </div>
                     <div class="form-group">
                         <label for="inputPrice">Tarif</label>
-                        <input id="inputPrice" type="text" class="form-control" placeholder="Label" ng-model="modalPrice" />
+                        <input id="inputPrice" type="number" step="0.01" class="form-control" placeholder="Label" ng-model="modalPrice" />
                     </div>
                 </form>
             </div>

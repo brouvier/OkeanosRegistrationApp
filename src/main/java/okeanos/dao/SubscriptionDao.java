@@ -39,8 +39,8 @@ public class SubscriptionDao {
 			return null;
 		}
 
-		if (item.getId() == null) { // Mode crÃ©ation
-			System.out.println("CrÃ©ation d'un item : " + item.getLabel());
+		if (item.getId() == null) { // Mode création
+			System.out.println("Création d'un item : " + item.getLabel());
 			String sql = "insert into subscription (fk_saison_id, fk_subscription_type_id, label, price) values (:fk_saison_id, :fk_subscription_type_id, :label, :price)";
 
 			try (Connection con = Sql2oDao.sql2o.open()) {
@@ -48,16 +48,19 @@ public class SubscriptionDao {
 						.addParameter("fk_subscription_type_id", item.getFk_subscription_type_id())
 						.addParameter("label", item.getLabel()).addParameter("price", item.getPrice()).executeUpdate()
 						.getKey();
-				System.out.println("ID gï¿½nï¿½rï¿½ : " + insertedId);
+				System.out.println("ID généré : " + insertedId);
 				return getItemById(insertedId);
 			}
 
 		} else { // Mode modification
-			System.out.println("Mise Ã  jour d'un item : " + item.getLabel());
+			System.out.println("Mise à  jour d'un item : " + item);
 			String sql = "update subscription set fk_saison_id = :fk_saison_id, fk_subscription_type_id = :fk_subscription_type_id, label = :label, price = :price where id = :id";
 
 			try (Connection con = Sql2oDao.sql2o.open()) {
 				con.createQuery(sql).bind(item).executeUpdate();
+				con.commit();
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
 			return getItemById(item.getId());
 

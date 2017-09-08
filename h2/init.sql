@@ -65,7 +65,7 @@ create table if not exists subscription_type (
 	createdOn timestamp default current_timestamp()
 );
 
-MERGE INTO subscription_type (id, label) KEY(id) VALUES (1, 'PlongÃ©e');
+MERGE INTO subscription_type (id, label) KEY(id) VALUES (1, 'Plongée');
 MERGE INTO subscription_type (id, label) KEY(id) VALUES (2, 'Hockey');
 
 create table if not exists subscription (
@@ -147,7 +147,7 @@ MERGE INTO ffessm_licence (id, label, fk_saison_id, price) KEY(id) VALUES (2, 'J
 MERGE INTO ffessm_licence (id, label, fk_saison_id, price) KEY(id) VALUES (3, 'Adulte', 1, 40);
 
 MERGE INTO subscription (id, label, fk_saison_id, fk_subscription_type_id, price) KEY(id) VALUES (1, 'Plongeur', 1, 1, 150);
-MERGE INTO subscription (id, label, fk_saison_id, fk_subscription_type_id, price) KEY(id) VALUES (2, 'Hockeyeur', 1, 2, 130);
+MERGE INTO subscription (id, label, fk_saison_id, fk_subscription_type_id, price) KEY(id) VALUES (2, 'Hockeyeur', 1, 2, 119);
 
 MERGE INTO insurance (id, label, fk_saison_id, price) KEY(id) VALUES (1, 'Pisince 1', 1, 11);
 MERGE INTO insurance (id, label, fk_saison_id, price) KEY(id) VALUES (2, 'Piscine 2', 1, 25);

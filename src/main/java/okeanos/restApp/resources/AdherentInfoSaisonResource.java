@@ -2,6 +2,7 @@ package okeanos.restApp.resources;
 
 import static spark.Spark.delete;
 import static spark.Spark.get;
+import static spark.Spark.halt;
 import static spark.Spark.post;
 
 import java.io.IOException;
@@ -166,13 +167,18 @@ public class AdherentInfoSaisonResource extends AbstractResource {
 	private AdherentDocument readAdherentDocument(Long id, Request request) throws IOException, ServletException {
 		request.attribute("org.eclipse.jetty.multipartConfig", new MultipartConfigElement("/temp"));
 
-		Part part = request.raw().getPart("uploaded_file");
-		InputStream is = request.raw().getPart("uploaded_file").getInputStream();
+		if (request.raw().getParts().size() > 0) {
+			Part part = request.raw().getParts().iterator().next();
+			InputStream is = part.getInputStream();
 
-		AdherentDocument doc = new AdherentDocument(id, part.getHeader("content-type"),
-				part.getHeader("content-disposition"), IOUtils.toByteArray(is), null);
+			AdherentDocument doc = new AdherentDocument(id, part.getHeader("content-type"),
+					part.getHeader("content-disposition"), IOUtils.toByteArray(is), null);
 
-		return AdherentDocumentDao.save(doc);
+			return AdherentDocumentDao.save(doc);
+		} else {
+			halt(405, "server error : request part is empty !");
+			return null;
+		}
 	}
 
 	private void writeAdherentDocument(Long id, Response response) throws IOException {
