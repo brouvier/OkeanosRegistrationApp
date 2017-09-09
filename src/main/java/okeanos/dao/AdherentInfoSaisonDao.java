@@ -10,8 +10,11 @@ public class AdherentInfoSaisonDao {
 
 	public static List<AdherentInfoSaison> getAllItems() {
 		String sql = "SELECT id, fk_account_id, fk_saison_id, fk_ffessm_licence_id, fk_subscription_id, "
-				+ "fk_insurance_id, picture_authorisation, fk_actual_training_id, fk_training_id, "
-				+ "fk_team_id, fk_sick_note_id, fk_parental_agreement_id, createdOn FROM adherent_info_saison";
+				+ "fk_insurance_id, picture_authorisation, nead_certificate, fk_actual_training_id, fk_training_id, "
+				+ "fk_team_id, fk_sick_note_id, fk_parental_agreement_id, validation_start, "
+				+ "validation_general_informations, validation_licence, validation_sick_note, "
+				+ "validation_parental_agreement, validation_payment_transmitted, validation_payment_cashed, "
+				+ "validation_comment, createdOn FROM adherent_info_saison";
 
 		try (Connection con = Sql2oDao.sql2o.open()) {
 			return con.createQuery(sql).executeAndFetch(AdherentInfoSaison.class);
@@ -20,8 +23,10 @@ public class AdherentInfoSaisonDao {
 
 	public static List<AdherentInfoSaison> getAllItemsForSaison(Long saisonId) {
 		String sql = "SELECT id, fk_account_id, fk_saison_id, fk_ffessm_licence_id, fk_subscription_id, "
-				+ "fk_insurance_id, picture_authorisation, fk_actual_training_id, fk_training_id, "
-				+ "fk_team_id, fk_sick_note_id, fk_parental_agreement_id, createdOn FROM adherent_info_saison WHERE fk_saison_id = :saisonId";
+				+ "fk_insurance_id, picture_authorisation, nead_certificate, fk_actual_training_id, fk_training_id, "
+				+ "fk_team_id, fk_sick_note_id, fk_parental_agreement_id, validation_start, validation_general_informations, "
+				+ "validation_licence, validation_sick_note, validation_parental_agreement, validation_payment_transmitted, "
+				+ "validation_payment_cashed, validation_comment, createdOn FROM adherent_info_saison WHERE fk_saison_id = :saisonId";
 
 		try (Connection con = Sql2oDao.sql2o.open()) {
 			return con.createQuery(sql).addParameter("saisonId", saisonId).executeAndFetch(AdherentInfoSaison.class);
@@ -30,8 +35,11 @@ public class AdherentInfoSaisonDao {
 
 	public static AdherentInfoSaison getItemById(Long id) {
 		String sql = "SELECT id, fk_account_id, fk_saison_id, fk_ffessm_licence_id, fk_subscription_id, "
-				+ "fk_insurance_id, picture_authorisation, fk_actual_training_id, fk_training_id, "
-				+ "fk_team_id, fk_sick_note_id, fk_parental_agreement_id, createdOn FROM adherent_info_saison WHERE id = :id";
+				+ "fk_insurance_id, picture_authorisation, nead_certificate, fk_actual_training_id, fk_training_id, "
+				+ "fk_team_id, fk_sick_note_id, fk_parental_agreement_id, validation_start, "
+				+ "validation_general_informations, validation_licence, validation_sick_note, "
+				+ "validation_parental_agreement, validation_payment_transmitted, validation_payment_cashed, "
+				+ "validation_comment, createdOn FROM adherent_info_saison WHERE id = :id";
 
 		try (Connection con = Sql2oDao.sql2o.open()) {
 			return con.createQuery(sql).addParameter("id", id).executeAndFetchFirst(AdherentInfoSaison.class);
@@ -58,32 +66,27 @@ public class AdherentInfoSaisonDao {
 		if (item.getId() == null) { // Mode création
 			System.out.println("Création d'un item");
 			String sql = "insert into adherent_info_saison (fk_account_id, fk_saison_id, fk_ffessm_licence_id, fk_subscription_id, "
-					+ "fk_insurance_id, picture_authorisation, fk_actual_training_id, fk_training_id, "
+					+ "fk_insurance_id, picture_authorisation, nead_certificate, fk_actual_training_id, fk_training_id, "
 					+ "fk_team_id) values (:fk_account_id, :fk_saison_id, :fk_ffessm_licence_id, :fk_subscription_id, "
-					+ ":fk_insurance_id, :picture_authorisation, :fk_actual_training_id, :fk_training_id, :fk_team_id)";
+					+ ":fk_insurance_id, :picture_authorisation, :nead_certificate, :fk_actual_training_id, :fk_training_id, :fk_team_id)";
 
 			try (Connection con = Sql2oDao.sql2o.open()) {
-				Long insertedId = (Long) con.createQuery(sql, true)
-						.addParameter("fk_account_id", item.getFk_account_id())
-						.addParameter("fk_saison_id", item.getFk_saison_id())
-						.addParameter("fk_ffessm_licence_id", item.getFk_ffessm_licence_id())
-						.addParameter("fk_subscription_id", item.getFk_subscription_id())
-						.addParameter("fk_insurance_id", item.getFk_insurance_id())
-						.addParameter("picture_authorisation", item.getPicture_authorisation())
-						.addParameter("fk_actual_training_id", item.getFk_actual_training_id())
-						.addParameter("fk_training_id", item.getFk_team_id())
-						.addParameter("fk_team_id", item.getFk_team_id()).executeUpdate().getKey();
+				Long insertedId = (Long) con.createQuery(sql, true).bind(item).executeUpdate().getKey();
 				System.out.println("ID généré : " + insertedId);
 				return getItemById(insertedId);
 			}
 
 		} else { // Mode modification
-			System.out.println("Mise à jour d'un item");
+			System.out.println("Mise à jour d'un item : " + item);
 			String sql = "update adherent_info_saison set fk_account_id = :fk_account_id, fk_saison_id = :fk_saison_id, "
 					+ "fk_ffessm_licence_id = :fk_ffessm_licence_id, fk_subscription_id = :fk_subscription_id, "
 					+ "fk_insurance_id = :fk_insurance_id, picture_authorisation = :picture_authorisation, "
 					+ "fk_actual_training_id = :fk_actual_training_id, fk_training_id = :fk_training_id, "
-					+ "fk_team_id = :fk_team_id, fk_sick_note_id = :fk_sick_note_id, fk_parental_agreement_id = :fk_parental_agreement_id where id = :id";
+					+ "fk_team_id = :fk_team_id, fk_sick_note_id = :fk_sick_note_id, fk_parental_agreement_id = :fk_parental_agreement_id, "
+					+ "validation_start = :validation_start, validation_general_informations = :validation_general_informations, "
+					+ "validation_licence = :validation_licence, validation_sick_note = :validation_sick_note, "
+					+ "validation_parental_agreement = :validation_parental_agreement, validation_payment_transmitted = :validation_payment_transmitted, "
+					+ "validation_payment_cashed = :validation_payment_cashed, validation_comment = :validation_comment where id = :id";
 
 			try (Connection con = Sql2oDao.sql2o.open()) {
 				con.createQuery(sql).bind(item).executeUpdate();

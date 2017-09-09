@@ -44,6 +44,16 @@ public class AdherentInfo {
 		this.createdOn = createdOn;
 	}
 
+	@Override
+	public String toString() {
+		return "AdherentInfo [id=" + id + ", fk_account_id=" + fk_account_id + ", firstname=" + firstname
+				+ ", lastname=" + lastname + ", birsthday=" + birsthday + ", birthplace=" + birthplace
+				+ ", licence_number=" + licence_number + ", adresse=" + adresse + ", zip_code=" + zip_code + ", city="
+				+ city + ", job=" + job + ", tel_number=" + tel_number + ", mobile_number=" + mobile_number
+				+ ", emergency_contact=" + emergency_contact + ", emergency_tel_number=" + emergency_tel_number
+				+ ", createdOn=" + createdOn + "]";
+	}
+
 	public Long getId() {
 		return id;
 	}

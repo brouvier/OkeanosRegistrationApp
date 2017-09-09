@@ -120,6 +120,7 @@ create table if not exists adherent_info_saison (
 	fk_subscription_id bigint not null,
 	fk_insurance_id bigint,
 	picture_authorisation boolean default false,
+	nead_certificate boolean default false,
 	-- Diving
 	fk_actual_training_id bigint,
 	fk_training_id bigint,
@@ -128,6 +129,15 @@ create table if not exists adherent_info_saison (
 	-- Adherent document
 	fk_sick_note_id bigint,
 	fk_parental_agreement_id bigint,
+	-- Validation process
+	validation_start boolean default false,
+	validation_general_informations boolean default false,
+	validation_licence boolean default false,
+	validation_sick_note boolean default false,
+	validation_parental_agreement boolean default false,
+	validation_payment_transmitted boolean default false,
+	validation_payment_cashed boolean default false,
+	validation_comment varchar(1024),
 	createdOn timestamp default current_timestamp(),
 	FOREIGN KEY (fk_account_id) REFERENCES account(id),
 	FOREIGN KEY (fk_saison_id) REFERENCES saison(id),

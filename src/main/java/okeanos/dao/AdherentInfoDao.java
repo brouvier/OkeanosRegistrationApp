@@ -53,24 +53,14 @@ public class AdherentInfoDao {
 		}
 
 		if (item.getId() == null) { // Mode création
-			logger.debug("Création d'un item");
+			logger.debug("Création d'un item : " + item);
 			String sql = "insert into adherent_info (fk_account_id, firstname, lastname, birsthday, birthplace, licence_number, adresse, "
 					+ "zip_code, city, job, tel_number, mobile_number, emergency_contact, emergency_tel_number) "
 					+ "values (:fk_account_id, :firstname, :lastname, :birsthday, :birthplace, :licence_number, :adresse, :zip_code, "
 					+ ":city, :job, :tel_number, :mobile_number, :emergency_contact, :emergency_tel_number)";
 
 			try (Connection con = Sql2oDao.sql2o.open()) {
-				Long insertedId = (Long) con.createQuery(sql, true)
-						.addParameter("fk_account_id", item.getFk_account_id())
-						.addParameter("firstname", item.getFirstname()).addParameter("lastname", item.getLastname())
-						.addParameter("birsthday", item.getBirsthday()).addParameter("birthplace", item.getBirthplace())
-						.addParameter("licence_number", item.getLicence_number())
-						.addParameter("adresse", item.getAdresse()).addParameter("zip_code", item.getZip_code())
-						.addParameter("city", item.getCity()).addParameter("job", item.getJob())
-						.addParameter("tel_number", item.getTel_number())
-						.addParameter("mobile_number", item.getMobile_number())
-						.addParameter("emergency_contact", item.getEmergency_contact())
-						.addParameter("emergency_tel_number", item.getEmergency_tel_number()).executeUpdate().getKey();
+				Long insertedId = (Long) con.createQuery(sql, true).bind(item).executeUpdate().getKey();
 				logger.debug("ID généré : {}", insertedId);
 				return getItemById(insertedId);
 			} catch (Exception e) {
@@ -80,7 +70,7 @@ public class AdherentInfoDao {
 			}
 
 		} else { // Mode modification
-			logger.debug("Mise à jour d'un item");
+			logger.debug("Mise à jour d'un item : " + item);
 			String sql = "update adherent_info set fk_account_id = :fk_account_id, firstname = :firstname, lastname = :lastname, "
 					+ "birsthday = :birsthday, birthplace = :birthplace, licence_number = :licence_number, adresse = :adresse, "
 					+ "zip_code = :zip_code, city = :city, job = :job, tel_number = :tel_number, mobile_number = :mobile_number, "
