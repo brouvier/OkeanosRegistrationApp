@@ -9,7 +9,7 @@ import okeanos.model.Saison;
 public class SaisonDao {
 
 	public static List<Saison> getAllItems() {
-		String sql = "SELECT id, label, start_date, end_date, createdOn FROM saison";
+		String sql = "SELECT id, label, start_date, end_date FROM saison";
 
 		try (Connection con = Sql2oDao.sql2o.open()) {
 			return con.createQuery(sql).executeAndFetch(Saison.class);
@@ -17,7 +17,7 @@ public class SaisonDao {
 	}
 
 	public static Saison getItemById(Long id) {
-		String sql = "SELECT id, label, start_date, end_date, createdOn FROM saison WHERE id = :id";
+		String sql = "SELECT id, label, start_date, end_date FROM saison WHERE id = :id";
 
 		try (Connection con = Sql2oDao.sql2o.open()) {
 			return con.createQuery(sql).addParameter("id", id).executeAndFetchFirst(Saison.class);
@@ -25,7 +25,7 @@ public class SaisonDao {
 	}
 
 	public static Saison getCurrentSaison() {
-		String sql = "SELECT id, label, start_date, end_date, createdOn FROM saison WHERE sysdate BETWEEN start_date AND end_date";
+		String sql = "SELECT id, label, start_date, end_date FROM saison WHERE sysdate BETWEEN start_date AND end_date";
 
 		try (Connection con = Sql2oDao.sql2o.open()) {
 			return con.createQuery(sql).executeAndFetchFirst(Saison.class);

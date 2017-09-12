@@ -1,6 +1,22 @@
 <div class="row">
     <h2 class="page-header">Formulaire d'adhésion - Saison {{currentSaison.label}}</h2>
 
+    <div class="alert alert-info" role="alert" ng-show='adherentInfoSaison.id && adherentInfoSaison.validation_start == false'>
+        En attente de validation par un administrateur...
+    </div>
+    <div class="alert alert-warning" role="alert" ng-show='adherentInfoSaison.validation_start == true && adherentInfoSaison.validation_general_informations == false'>
+        Validation par un administrateur en cours...
+    </div>
+    <div class="alert alert-warning" role="alert" ng-show='adherentInfoSaison.validation_general_informations == true && adherentInfoSaison.validation_payment_transmitted == false'>
+        Inscription validé, en attente de règlement ...
+    </div>
+    <div class="alert alert-warning" role="alert" ng-show='adherentInfoSaison.validation_payment_transmitted == true && adherentInfoSaison.validation_payment_cashed == false'>
+        Inscription en cours de règlement...
+    </div>
+    <div class="alert alert-success" role="alert" ng-show='adherentInfoSaison.validation_payment_cashed == true'>
+        Inscription terminée et réglée.
+    </div>
+
     <form ng-submit="save()" class="form-horizontal">
         <div class="col">
             <h4 class="page-header">Mon adhésion</h4>
@@ -10,8 +26,8 @@
                 <div class="col-sm-9">
                     <div class="radio-inline" ng-repeat="licence in licenceList">
                         <label>
-                            <input type="radio" ng-model="adherentInfoSaison.fk_ffessm_licence_id" value={{licence.id}}>
-                            {{licence.label}} ({{licence.price}}€)
+                            <input type="radio" ng-model="adherentInfoSaison.fk_ffessm_licence_id" value={{licence.id}} ng-disabled="adherentInfoSaison.validation_start==true">
+                            {{licence.label}} ({{licence.price | number:2}}€)
                         </label>
                     </div>
                 </div>
@@ -22,8 +38,8 @@
                 <div class="col-sm-9">
                     <div class="radio-inline" ng-repeat="subscription in subscriptionList">
                         <label>
-                            <input type="radio" ng-model="adherentInfoSaison.fk_subscription_id" value={{subscription.id}}>
-                            {{subscription.label}} ({{subscription.price}}€)
+                            <input type="radio" ng-model="adherentInfoSaison.fk_subscription_id" value={{subscription.id}} ng-disabled="adherentInfoSaison.validation_start==true">
+                            {{subscription.label}} ({{subscription.price | number:2}}€)
                         </label>
                     </div>
                     <p>La cotisation couvre l'encadrement piscine et le matériel de plongée en piscine tout au long de la saison. Attention, pour le coût des sorties n'est pas compris dans la cotisation.</p>
@@ -34,7 +50,7 @@
                 <label for="selectInsurance" class="col-sm-3 control-label">Assurance : </label>
                 <div class="col-sm-9">
                     <div class="checkbox" ng-show="adherentInfoSaison.membershipType !== 'hockey'">
-                        <select id="selectInsurance" class="form-control" ng-model="adherentInfoSaison.fk_insurance_id" ng-options="insurance.id as insurance.label + ' (' + insurance.price + '€)' for insurance in insuranceList">
+                        <select id="selectInsurance" class="form-control" ng-model="adherentInfoSaison.fk_insurance_id" ng-options="insurance.id as insurance.label + ' (' + insurance.price + '€)' for insurance in insuranceList" ng-disabled="adherentInfoSaison.validation_start==true">
                     </select>
                     </div>
                     <p>La licence est une assurance responsabilité civile pour les entraînements et les sorties. Certaines assurances vous couvrent pour les sports à risques, y compris la plongée. AXA, assureur officiel de la FFESSM, propose des contrats d’assurances individuels pour les licenciés (détails sur le site http://www.cabinet-lafont.com ou sur papier sur demande).</p>
@@ -45,10 +61,14 @@
                 <label for="selectPrice" class="col-sm-3 control-label">MONTANT TOTAL : </label>
                 <div class="col-sm-9">
                     <div class="input-group">
-                        <input id="inputName" type="text" class="form-control" ng-model="totalPrice" disabled />
+                        <input id="inputName" type="text" class="form-control" ng-value="totalPrice | number:2" disabled />
                         <span class="input-group-addon">€</span>
                     </div>
-                    <p>La cotisation est à régler par chèque à l’ordre d’Okeanos. Vous pouvez régler en plusieurs fois.</p>
+                    <p>La cotisation est à régler par chèque ou virement à l’ordre d’Okeanos. Vous pouvez régler en plusieurs fois.</p>
+                    <div class="alert alert-info" role="alert" ng-show='adherentInfoSaison.validation_general_informations == true && adherentInfoSaison.validation_payment_transmitted == false'>
+                        Les paiements par virement sont à faire sur le compte suivant :<br/>IBAN (International Bank Account Number) : FR76 1680 7001 2631 8517 8019 373<br/>BIC (Bank Identification Code) : CCBPFRPPGRE<br/>
+                        <strong>Les virements doivent impérativement porter le commentaire suivant :<br/>"Inscription - vos prénom et nom - votre type d'adhésion"</strong>
+                    </div>
                 </div>
             </div>
 
@@ -57,9 +77,7 @@
                 <div class="col-sm-9">
                     <div class="checkbox">
                         <label>
-                            <input type="checkbox" ng-model="adherentInfoSaison.picture_authorisation"> J'autorise le club Okeanos à prendre, afficher et diffuser, des
-photographies me représentant dans un lieu public ou privé, notamment par l’intermédiaire du site Internet du club
-Okéanos (http://www.okeanos-grenoble.fr) à utilise des photos de moi à des fin de communication.
+                            <input type="checkbox" ng-model="adherentInfoSaison.picture_authorisation" ng-disabled="adherentInfoSaison.validation_start==true"> J'autorise le club Okeanos à prendre, afficher et diffuser, des photographies me représentant dans un lieu public ou privé, notamment par l’intermédiaire du site Internet du club Okéanos (http://www.okeanos-grenoble.fr) à utilise des photos de moi à des fin de communication.
                         </label>
                     </div>
                 </div>
@@ -70,7 +88,7 @@ Okéanos (http://www.okeanos-grenoble.fr) à utilise des photos de moi à des fi
                 <div class="col-sm-9">
                     <div class="checkbox">
                         <label>
-                            <input type="checkbox" ng-model="adherentInfoSaison.nead_certificate"> Je souhaite que le club me fournisse une attestation d’adhésion.
+                            <input type="checkbox" ng-model="adherentInfoSaison.nead_certificate" ng-disabled="adherentInfoSaison.validation_start==true"> Je souhaite que le club me fournisse une attestation d’adhésion.
                         </label>
                     </div>
                 </div>
@@ -81,7 +99,7 @@ Okéanos (http://www.okeanos-grenoble.fr) à utilise des photos de moi à des fi
             <div class="form-group">
                 <label for="selectActualTraining" class="col-sm-3 control-label">Niveau actuel : </label>
                 <div class="col-sm-9">
-                    <select id="selectActualTraining" class="form-control" ng-model="adherentInfoSaison.fk_actual_training_id" ng-options="actualLevel.id as actualLevel.label for actualLevel in divingTrainingList">
+                    <select id="selectActualTraining" class="form-control" ng-model="adherentInfoSaison.fk_actual_training_id" ng-options="actualLevel.id as actualLevel.label for actualLevel in divingTrainingList" ng-disabled="adherentInfoSaison.validation_start==true">
                     </select>
                 </div>
             </div>
@@ -89,7 +107,7 @@ Okéanos (http://www.okeanos-grenoble.fr) à utilise des photos de moi à des fi
             <div class="form-group">
                 <label for="selectTraining" class="col-sm-3 control-label">Niveau Préparé : </label>
                 <div class="col-sm-9">
-                    <select id="selectTraining" class="form-control" ng-model="adherentInfoSaison.fk_training_id" ng-options="preparedLevel.id as preparedLevel.label for preparedLevel in divingTrainingList">
+                    <select id="selectTraining" class="form-control" ng-model="adherentInfoSaison.fk_training_id" ng-options="preparedLevel.id as preparedLevel.label for preparedLevel in divingTrainingList" ng-disabled="adherentInfoSaison.validation_start==true">
                     </select>
                 </div>
             </div>
@@ -104,7 +122,7 @@ Okéanos (http://www.okeanos-grenoble.fr) à utilise des photos de moi à des fi
                 </div>
             </div>
 
-            <div class="form-group">
+            <div class="form-group" ng-show="adherentInfoSaison.validation_start!=true">
                 <div class="col-sm-offset-3 col-sm-9">
                     <button type="submit" class="btn btn-primary">Tout mettre à jour</button>
                 </div>
@@ -136,7 +154,7 @@ Okéanos (http://www.okeanos-grenoble.fr) à utilise des photos de moi à des fi
             <button class="btn btn-warning" ng-click="sickNoteFile = null" ng-show="sickNoteFile">Annuler</button>
             <button class="btn btn-info" type="submit" ng-click="sickNoteSubmit()" ng-show="sickNoteFile">Importer le fichier</button>
         </form>
-        <div class="alert alert-info" ng-show="adherentInfoSaison.fk_sick_note_id"><a href="{{sickNoteUrl}}" target="_blank">Télécharger le fichier éxistant</a></div>
+        <div class="alert alert-info" ng-show="adherentInfoSaison.fk_sick_note_id"><a href="{{sickNoteUrl}}" target="_blank">Télécharger le fichier existant</a></div>
 
         <h4 class="page-header">Accord parental pour les mineurs</h4>
         <p>Obligatoire pour les personnes mineurs. Elle doit reprendre le model suivant :</p>
@@ -148,7 +166,7 @@ Okéanos (http://www.okeanos-grenoble.fr) à utilise des photos de moi à des fi
             <button class="btn btn-warning" ng-click="parentalAgreementFile = null" ng-show="parentalAgreementFile">Annuler</button>
             <button class="btn btn-info" type="submit" ng-click="parentalAgreementSubmit()" ng-show="parentalAgreementFile">Importer le fichier</button>
         </form>
-        <div class="alert alert-info" ng-show="adherentInfoSaison.fk_parental_agreement_id"><a href="{{parentalAgreementUrl}}" target="_blank">Télécharger le fichier éxistant</a></div>
+        <div class="alert alert-info" ng-show="adherentInfoSaison.fk_parental_agreement_id"><a href="{{parentalAgreementUrl}}" target="_blank">Télécharger le fichier existant</a></div>
     </div>
 </div>
 

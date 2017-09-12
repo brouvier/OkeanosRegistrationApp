@@ -7,7 +7,6 @@ import static spark.Spark.post;
 import okeanos.dao.SaisonDao;
 import okeanos.model.Saison;
 import okeanos.util.AppProperties;
-import okeanos.util.JsonUtil;
 
 public class SaisonResource extends AbstractResource {
 
@@ -21,7 +20,7 @@ public class SaisonResource extends AbstractResource {
 			if (!SecurityResource.isLogin(request)) {
 				throw new IllegalAccessException("Illegal Access");
 			}
-			return JsonUtil.toJson(SaisonDao.getAllItems());
+			return gson.toJson(SaisonDao.getAllItems());
 		});
 
 		get(ressourcePath + "/currentSaison", (request, response) -> {
@@ -29,7 +28,7 @@ public class SaisonResource extends AbstractResource {
 			if (!SecurityResource.isLogin(request)) {
 				throw new IllegalAccessException("Illegal Access");
 			}
-			return JsonUtil.toJson(SaisonDao.getCurrentSaison());
+			return gson.toJson(SaisonDao.getCurrentSaison());
 		});
 
 		get(ressourcePath + "/:id", (request, response) -> {
@@ -37,7 +36,7 @@ public class SaisonResource extends AbstractResource {
 			if (!SecurityResource.isLogin(request)) {
 				throw new IllegalAccessException("Illegal Access");
 			}
-			return JsonUtil.toJson(SaisonDao.getItemById(new Long(request.params(":id"))));
+			return gson.toJson(SaisonDao.getItemById(new Long(request.params(":id"))));
 		});
 
 		delete(ressourcePath + "/:id", (request, response) -> {
@@ -45,7 +44,7 @@ public class SaisonResource extends AbstractResource {
 			if (!SecurityResource.isAdmin(request)) {
 				throw new IllegalAccessException("Illegal Access");
 			}
-			return JsonUtil.toJson(SaisonDao.deleteItem(new Long(request.params(":id"))));
+			return gson.toJson(SaisonDao.deleteItem(new Long(request.params(":id"))));
 		});
 
 		post(ressourcePath, (request, response) -> {
@@ -53,7 +52,7 @@ public class SaisonResource extends AbstractResource {
 			if (!SecurityResource.isAdmin(request)) {
 				throw new IllegalAccessException("Illegal Access");
 			}
-			return JsonUtil.toJson(SaisonDao.save(gson.fromJson(request.body(), Saison.class)));
+			return gson.toJson(SaisonDao.save(gson.fromJson(request.body(), Saison.class)));
 		});
 	}
 

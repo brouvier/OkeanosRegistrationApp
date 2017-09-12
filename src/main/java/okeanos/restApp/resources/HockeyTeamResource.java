@@ -9,7 +9,6 @@ import com.google.gson.Gson;
 import okeanos.dao.HockeyTeamDao;
 import okeanos.model.HockeyTeam;
 import okeanos.util.AppProperties;
-import okeanos.util.JsonUtil;
 
 public class HockeyTeamResource extends AbstractResource {
 
@@ -23,7 +22,7 @@ public class HockeyTeamResource extends AbstractResource {
 			if (!SecurityResource.isLogin(request)) {
 				throw new IllegalAccessException("Illegal Access");
 			}
-			return JsonUtil.toJson(HockeyTeamDao.getAllItems());
+			return gson.toJson(HockeyTeamDao.getAllItems());
 		});
 
 		get(ressourcePath + "/:id", (request, response) -> {
@@ -31,7 +30,7 @@ public class HockeyTeamResource extends AbstractResource {
 			if (!SecurityResource.isLogin(request)) {
 				throw new IllegalAccessException("Illegal Access");
 			}
-			return JsonUtil.toJson(HockeyTeamDao.getItemById(new Long(request.params(":id"))));
+			return gson.toJson(HockeyTeamDao.getItemById(new Long(request.params(":id"))));
 		});
 
 		delete(ressourcePath + "/:id", (request, response) -> {
@@ -39,7 +38,7 @@ public class HockeyTeamResource extends AbstractResource {
 			if (!SecurityResource.isAdmin(request)) {
 				throw new IllegalAccessException("Illegal Access");
 			}
-			return JsonUtil.toJson(HockeyTeamDao.deleteItem(new Long(request.params(":id"))));
+			return gson.toJson(HockeyTeamDao.deleteItem(new Long(request.params(":id"))));
 		});
 
 		post(ressourcePath, (request, response) -> {
@@ -47,7 +46,7 @@ public class HockeyTeamResource extends AbstractResource {
 			if (!SecurityResource.isAdmin(request)) {
 				throw new IllegalAccessException("Illegal Access");
 			}
-			return JsonUtil.toJson(HockeyTeamDao.save(new Gson().fromJson(request.body(), HockeyTeam.class)));
+			return gson.toJson(HockeyTeamDao.save(new Gson().fromJson(request.body(), HockeyTeam.class)));
 		});
 	}
 

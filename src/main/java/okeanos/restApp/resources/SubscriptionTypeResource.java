@@ -9,7 +9,6 @@ import com.google.gson.Gson;
 import okeanos.dao.SubscriptionTypeDao;
 import okeanos.model.SubscriptionType;
 import okeanos.util.AppProperties;
-import okeanos.util.JsonUtil;
 
 public class SubscriptionTypeResource extends AbstractResource {
 
@@ -23,7 +22,7 @@ public class SubscriptionTypeResource extends AbstractResource {
 			if (!SecurityResource.isLogin(request)) {
 				throw new IllegalAccessException("Illegal Access");
 			}
-			return JsonUtil.toJson(SubscriptionTypeDao.getAllItems());
+			return gson.toJson(SubscriptionTypeDao.getAllItems());
 		});
 
 		get(ressourcePath + "/:id", (request, response) -> {
@@ -31,7 +30,7 @@ public class SubscriptionTypeResource extends AbstractResource {
 			if (!SecurityResource.isLogin(request)) {
 				throw new IllegalAccessException("Illegal Access");
 			}
-			return JsonUtil.toJson(SubscriptionTypeDao.getItemById(new Long(request.params(":id"))));
+			return gson.toJson(SubscriptionTypeDao.getItemById(new Long(request.params(":id"))));
 		});
 
 		delete(ressourcePath + "/:id", (request, response) -> {
@@ -39,7 +38,7 @@ public class SubscriptionTypeResource extends AbstractResource {
 			if (!SecurityResource.isAdmin(request)) {
 				throw new IllegalAccessException("Illegal Access");
 			}
-			return JsonUtil.toJson(SubscriptionTypeDao.deleteItem(new Long(request.params(":id"))));
+			return gson.toJson(SubscriptionTypeDao.deleteItem(new Long(request.params(":id"))));
 		});
 
 		post(ressourcePath, (request, response) -> {
@@ -47,8 +46,7 @@ public class SubscriptionTypeResource extends AbstractResource {
 			if (!SecurityResource.isAdmin(request)) {
 				throw new IllegalAccessException("Illegal Access");
 			}
-			return JsonUtil
-					.toJson(SubscriptionTypeDao.save(new Gson().fromJson(request.body(), SubscriptionType.class)));
+			return gson.toJson(SubscriptionTypeDao.save(new Gson().fromJson(request.body(), SubscriptionType.class)));
 		});
 	}
 

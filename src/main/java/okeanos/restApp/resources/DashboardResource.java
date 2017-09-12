@@ -16,7 +16,6 @@ import okeanos.model.FfessmLicence;
 import okeanos.model.Insurance;
 import okeanos.model.Subscription;
 import okeanos.util.AppProperties;
-import okeanos.util.JsonUtil;
 
 public class DashboardResource extends AbstractResource {
 
@@ -35,7 +34,7 @@ public class DashboardResource extends AbstractResource {
 					.getItemById(AdherentInfoSaisonDao.getIdBySaisonAndAccount(new Long(request.params(":saisonId")),
 							new Long(request.params(":account_id"))));
 
-			return JsonUtil.toJson(new Adherent(infoSaison));
+			return gson.toJson(new Adherent(infoSaison));
 		});
 
 		get(ressourcePath + "/saison/:saisonId", (request, response) -> {
@@ -51,7 +50,7 @@ public class DashboardResource extends AbstractResource {
 				res.add(new Adherent(infoSaison));
 			}
 
-			return JsonUtil.toJson(res);
+			return gson.toJson(res);
 		});
 
 	}

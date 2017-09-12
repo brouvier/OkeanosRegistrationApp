@@ -10,7 +10,7 @@ public class SubscriptionTypeDao {
 
 	public static List<SubscriptionType> getAllItems() {
 		System.out.println("Liste des items");
-		String sql = "SELECT id, label, createdOn FROM subscription_type";
+		String sql = "SELECT id, label FROM subscription_type";
 
 		try (Connection con = Sql2oDao.sql2o.open()) {
 			return con.createQuery(sql).executeAndFetch(SubscriptionType.class);
@@ -18,7 +18,7 @@ public class SubscriptionTypeDao {
 	}
 
 	public static SubscriptionType getItemById(Long id) {
-		String sql = "SELECT id, label, createdOn FROM subscription_type WHERE id = :id";
+		String sql = "SELECT id, label FROM subscription_type WHERE id = :id";
 
 		try (Connection con = Sql2oDao.sql2o.open()) {
 			return con.createQuery(sql).addParameter("id", id).executeAndFetchFirst(SubscriptionType.class);
@@ -39,7 +39,7 @@ public class SubscriptionTypeDao {
 			try (Connection con = Sql2oDao.sql2o.open()) {
 				Long insertedId = (Long) con.createQuery(sql, true).addParameter("label", item.getLabel())
 						.executeUpdate().getKey();
-				System.out.println("ID généré : " + insertedId);
+				System.out.println("ID gÃ©nÃ©rÃ© : " + insertedId);
 				return getItemById(insertedId);
 			}
 

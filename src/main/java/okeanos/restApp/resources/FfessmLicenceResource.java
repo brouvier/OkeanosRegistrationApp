@@ -9,7 +9,6 @@ import com.google.gson.Gson;
 import okeanos.dao.FfessmLicenceDao;
 import okeanos.model.FfessmLicence;
 import okeanos.util.AppProperties;
-import okeanos.util.JsonUtil;
 
 public class FfessmLicenceResource extends AbstractResource {
 
@@ -23,7 +22,7 @@ public class FfessmLicenceResource extends AbstractResource {
 			if (!SecurityResource.isLogin(request)) {
 				throw new IllegalAccessException("Illegal Access");
 			}
-			return JsonUtil.toJson(FfessmLicenceDao.getAllItems());
+			return gson.toJson(FfessmLicenceDao.getAllItems());
 		});
 
 		get(ressourcePath + "/saison/:saisonId", (request, response) -> {
@@ -31,7 +30,7 @@ public class FfessmLicenceResource extends AbstractResource {
 			if (!SecurityResource.isLogin(request)) {
 				throw new IllegalAccessException("Illegal Access");
 			}
-			return JsonUtil.toJson(FfessmLicenceDao.getAllItemsForSaison(new Long(request.params(":saisonId"))));
+			return gson.toJson(FfessmLicenceDao.getAllItemsForSaison(new Long(request.params(":saisonId"))));
 		});
 
 		get(ressourcePath + "/:id", (request, response) -> {
@@ -39,7 +38,7 @@ public class FfessmLicenceResource extends AbstractResource {
 			if (!SecurityResource.isLogin(request)) {
 				throw new IllegalAccessException("Illegal Access");
 			}
-			return JsonUtil.toJson(FfessmLicenceDao.getItemById(new Long(request.params(":id"))));
+			return gson.toJson(FfessmLicenceDao.getItemById(new Long(request.params(":id"))));
 		});
 
 		delete(ressourcePath + "/:id", (request, response) -> {
@@ -47,7 +46,7 @@ public class FfessmLicenceResource extends AbstractResource {
 			if (!SecurityResource.isAdmin(request)) {
 				throw new IllegalAccessException("Illegal Access");
 			}
-			return JsonUtil.toJson(FfessmLicenceDao.deleteItem(new Long(request.params(":id"))));
+			return gson.toJson(FfessmLicenceDao.deleteItem(new Long(request.params(":id"))));
 		});
 
 		post(ressourcePath, (request, response) -> {
@@ -55,7 +54,7 @@ public class FfessmLicenceResource extends AbstractResource {
 			if (!SecurityResource.isAdmin(request)) {
 				throw new IllegalAccessException("Illegal Access");
 			}
-			return JsonUtil.toJson(FfessmLicenceDao.save(new Gson().fromJson(request.body(), FfessmLicence.class)));
+			return gson.toJson(FfessmLicenceDao.save(new Gson().fromJson(request.body(), FfessmLicence.class)));
 		});
 	}
 

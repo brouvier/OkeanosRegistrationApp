@@ -49,10 +49,10 @@ okeanosAppControllers.controller('subscriptionCtrl', function ($scope, securityS
         subscription.label = $scope.modalLabel;
         subscription.price = $scope.modalPrice;
         console.log(subscription);
-        subscription.$save();
+        subscription.$save(function (data, putResponseHeaders) {
+            $scope.refreshList()
+        });
         console.log('Enregistrement terminé');
-
-        $scope.refreshList();
     };
 
     $scope.remove = function (subscription) {

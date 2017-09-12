@@ -38,10 +38,10 @@ okeanosAppControllers.controller('ffessmLicenceCtrl', function ($scope, security
         licence.label = $scope.modalLabel;
         licence.price = $scope.modalPrice;
         console.log(licence);
-        licence.$save();
+        licence.$save(function (data, putResponseHeaders) {
+            $scope.refreshList()
+        });
         console.log('Enregistrement terminé');
-
-        $scope.refreshList();
     };
 
     $scope.remove = function (licence) {

@@ -9,7 +9,6 @@ import com.google.gson.Gson;
 import okeanos.dao.DivingTrainingDao;
 import okeanos.model.DivingTraining;
 import okeanos.util.AppProperties;
-import okeanos.util.JsonUtil;
 
 public class DivingTrainingResource extends AbstractResource {
 
@@ -23,7 +22,7 @@ public class DivingTrainingResource extends AbstractResource {
 			if (!SecurityResource.isLogin(request)) {
 				throw new IllegalAccessException("Illegal Access");
 			}
-			return JsonUtil.toJson(DivingTrainingDao.getAllItems());
+			return gson.toJson(DivingTrainingDao.getAllItems());
 		});
 
 		get(ressourcePath + "/:id", (request, response) -> {
@@ -31,7 +30,7 @@ public class DivingTrainingResource extends AbstractResource {
 			if (!SecurityResource.isLogin(request)) {
 				throw new IllegalAccessException("Illegal Access");
 			}
-			return JsonUtil.toJson(DivingTrainingDao.getItemById(new Long(request.params(":id"))));
+			return gson.toJson(DivingTrainingDao.getItemById(new Long(request.params(":id"))));
 		});
 
 		delete(ressourcePath + "/:id", (request, response) -> {
@@ -39,7 +38,7 @@ public class DivingTrainingResource extends AbstractResource {
 			if (!SecurityResource.isAdmin(request)) {
 				throw new IllegalAccessException("Illegal Access");
 			}
-			return JsonUtil.toJson(DivingTrainingDao.deleteItem(new Long(request.params(":id"))));
+			return gson.toJson(DivingTrainingDao.deleteItem(new Long(request.params(":id"))));
 		});
 
 		post(ressourcePath, (request, response) -> {
@@ -47,7 +46,7 @@ public class DivingTrainingResource extends AbstractResource {
 			if (!SecurityResource.isAdmin(request)) {
 				throw new IllegalAccessException("Illegal Access");
 			}
-			return JsonUtil.toJson(DivingTrainingDao.save(new Gson().fromJson(request.body(), DivingTraining.class)));
+			return gson.toJson(DivingTrainingDao.save(new Gson().fromJson(request.body(), DivingTraining.class)));
 		});
 	}
 

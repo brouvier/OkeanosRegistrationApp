@@ -9,7 +9,6 @@ import com.google.gson.Gson;
 import okeanos.dao.InsuranceDao;
 import okeanos.model.Insurance;
 import okeanos.util.AppProperties;
-import okeanos.util.JsonUtil;
 
 public class InsuranceResource extends AbstractResource {
 
@@ -23,7 +22,7 @@ public class InsuranceResource extends AbstractResource {
 			if (!SecurityResource.isLogin(request)) {
 				throw new IllegalAccessException("Illegal Access");
 			}
-			return JsonUtil.toJson(InsuranceDao.getAllItems());
+			return gson.toJson(InsuranceDao.getAllItems());
 		});
 
 		get(ressourcePath + "/saison/:saisonId", (request, response) -> {
@@ -31,7 +30,7 @@ public class InsuranceResource extends AbstractResource {
 			if (!SecurityResource.isLogin(request)) {
 				throw new IllegalAccessException("Illegal Access");
 			}
-			return JsonUtil.toJson(InsuranceDao.getAllItemsForSaison(new Long(request.params(":saisonId"))));
+			return gson.toJson(InsuranceDao.getAllItemsForSaison(new Long(request.params(":saisonId"))));
 		});
 
 		get(ressourcePath + "/:id", (request, response) -> {
@@ -39,7 +38,7 @@ public class InsuranceResource extends AbstractResource {
 			if (!SecurityResource.isLogin(request)) {
 				throw new IllegalAccessException("Illegal Access");
 			}
-			return JsonUtil.toJson(InsuranceDao.getItemById(new Long(request.params(":id"))));
+			return gson.toJson(InsuranceDao.getItemById(new Long(request.params(":id"))));
 		});
 
 		delete(ressourcePath + "/:id", (request, response) -> {
@@ -47,7 +46,7 @@ public class InsuranceResource extends AbstractResource {
 			if (!SecurityResource.isAdmin(request)) {
 				throw new IllegalAccessException("Illegal Access");
 			}
-			return JsonUtil.toJson(InsuranceDao.deleteItem(new Long(request.params(":id"))));
+			return gson.toJson(InsuranceDao.deleteItem(new Long(request.params(":id"))));
 		});
 
 		post(ressourcePath, (request, response) -> {
@@ -55,7 +54,7 @@ public class InsuranceResource extends AbstractResource {
 			if (!SecurityResource.isAdmin(request)) {
 				throw new IllegalAccessException("Illegal Access");
 			}
-			return JsonUtil.toJson(InsuranceDao.save(new Gson().fromJson(request.body(), Insurance.class)));
+			return gson.toJson(InsuranceDao.save(new Gson().fromJson(request.body(), Insurance.class)));
 		});
 	}
 

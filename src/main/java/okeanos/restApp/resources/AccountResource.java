@@ -9,7 +9,6 @@ import com.google.gson.Gson;
 import okeanos.dao.AccountDao;
 import okeanos.model.Account;
 import okeanos.util.AppProperties;
-import okeanos.util.JsonUtil;
 
 public class AccountResource extends AbstractResource {
 
@@ -23,7 +22,7 @@ public class AccountResource extends AbstractResource {
 			if (!SecurityResource.isAdmin(request)) {
 				throw new IllegalAccessException("Illegal Access");
 			}
-			return JsonUtil.toJson(AccountDao.getAllItems(false));
+			return gson.toJson(AccountDao.getAllItems(false));
 		});
 
 		get(ressourcePath + "/:id", (request, response) -> {
@@ -37,7 +36,7 @@ public class AccountResource extends AbstractResource {
 			if (!SecurityResource.isAdmin(request)) {
 				throw new IllegalAccessException("Illegal Access");
 			}
-			return JsonUtil.toJson(AccountDao.deleteItem(new Long(request.params(":id"))));
+			return gson.toJson(AccountDao.deleteItem(new Long(request.params(":id"))));
 		});
 
 		post(ressourcePath, (request, response) -> {
@@ -45,7 +44,7 @@ public class AccountResource extends AbstractResource {
 			if (!SecurityResource.isAdmin(request)) {
 				throw new IllegalAccessException("Illegal Access");
 			}
-			return JsonUtil.toJson(AccountDao.updateItem(new Gson().fromJson(request.body(), Account.class)));
+			return gson.toJson(AccountDao.updateItem(new Gson().fromJson(request.body(), Account.class)));
 		});
 	}
 

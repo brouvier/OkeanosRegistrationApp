@@ -9,7 +9,7 @@ import okeanos.model.Subscription;
 public class SubscriptionDao {
 
 	public static List<Subscription> getAllItems() {
-		String sql = "SELECT id, fk_saison_id, fk_subscription_type_id, label, price, createdOn FROM subscription";
+		String sql = "SELECT id, fk_saison_id, fk_subscription_type_id, label, price FROM subscription";
 
 		try (Connection con = Sql2oDao.sql2o.open()) {
 			return con.createQuery(sql).executeAndFetch(Subscription.class);
@@ -17,7 +17,7 @@ public class SubscriptionDao {
 	}
 
 	public static List<Subscription> getAllItemsForSaison(Long saisonId) {
-		String sql = "SELECT id, fk_saison_id, fk_subscription_type_id, label, price, createdOn FROM subscription WHERE fk_saison_id = :saisonId";
+		String sql = "SELECT id, fk_saison_id, fk_subscription_type_id, label, price FROM subscription WHERE fk_saison_id = :saisonId";
 
 		try (Connection con = Sql2oDao.sql2o.open()) {
 			return con.createQuery(sql).addParameter("saisonId", saisonId).executeAndFetch(Subscription.class);
@@ -25,7 +25,7 @@ public class SubscriptionDao {
 	}
 
 	public static Subscription getItemById(Long id) {
-		String sql = "SELECT id, fk_saison_id, fk_subscription_type_id, label, price, createdOn FROM subscription WHERE id = :id";
+		String sql = "SELECT id, fk_saison_id, fk_subscription_type_id, label, price FROM subscription WHERE id = :id";
 
 		try (Connection con = Sql2oDao.sql2o.open()) {
 			return con.createQuery(sql).addParameter("id", id).executeAndFetchFirst(Subscription.class);
@@ -39,8 +39,8 @@ public class SubscriptionDao {
 			return null;
 		}
 
-		if (item.getId() == null) { // Mode création
-			System.out.println("Création d'un item : " + item.getLabel());
+		if (item.getId() == null) { // Mode crï¿½ation
+			System.out.println("Crï¿½ation d'un item : " + item.getLabel());
 			String sql = "insert into subscription (fk_saison_id, fk_subscription_type_id, label, price) values (:fk_saison_id, :fk_subscription_type_id, :label, :price)";
 
 			try (Connection con = Sql2oDao.sql2o.open()) {
@@ -48,12 +48,12 @@ public class SubscriptionDao {
 						.addParameter("fk_subscription_type_id", item.getFk_subscription_type_id())
 						.addParameter("label", item.getLabel()).addParameter("price", item.getPrice()).executeUpdate()
 						.getKey();
-				System.out.println("ID généré : " + insertedId);
+				System.out.println("ID gï¿½nï¿½rï¿½ : " + insertedId);
 				return getItemById(insertedId);
 			}
 
 		} else { // Mode modification
-			System.out.println("Mise à  jour d'un item : " + item);
+			System.out.println("Mise ï¿½ jour d'un item : " + item);
 			String sql = "update subscription set fk_saison_id = :fk_saison_id, fk_subscription_type_id = :fk_subscription_type_id, label = :label, price = :price where id = :id";
 
 			try (Connection con = Sql2oDao.sql2o.open()) {

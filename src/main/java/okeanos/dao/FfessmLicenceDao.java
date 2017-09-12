@@ -9,7 +9,7 @@ import okeanos.model.FfessmLicence;
 public class FfessmLicenceDao {
 
 	public static List<FfessmLicence> getAllItems() {
-		String sql = "SELECT id, fk_saison_id, label, price, createdOn FROM ffessm_licence";
+		String sql = "SELECT id, fk_saison_id, label, price FROM ffessm_licence";
 
 		try (Connection con = Sql2oDao.sql2o.open()) {
 			return con.createQuery(sql).executeAndFetch(FfessmLicence.class);
@@ -17,7 +17,7 @@ public class FfessmLicenceDao {
 	}
 
 	public static List<FfessmLicence> getAllItemsForSaison(Long saisonId) {
-		String sql = "SELECT id, fk_saison_id, label, price, createdOn FROM ffessm_licence WHERE fk_saison_id = :saisonId";
+		String sql = "SELECT id, fk_saison_id, label, price FROM ffessm_licence WHERE fk_saison_id = :saisonId";
 
 		try (Connection con = Sql2oDao.sql2o.open()) {
 			return con.createQuery(sql).addParameter("saisonId", saisonId).executeAndFetch(FfessmLicence.class);
@@ -25,7 +25,7 @@ public class FfessmLicenceDao {
 	}
 
 	public static FfessmLicence getItemById(Long id) {
-		String sql = "SELECT id, fk_saison_id, label, price, createdOn FROM ffessm_licence WHERE id = :id";
+		String sql = "SELECT id, fk_saison_id, label, price FROM ffessm_licence WHERE id = :id";
 
 		try (Connection con = Sql2oDao.sql2o.open()) {
 			return con.createQuery(sql).addParameter("id", id).executeAndFetchFirst(FfessmLicence.class);

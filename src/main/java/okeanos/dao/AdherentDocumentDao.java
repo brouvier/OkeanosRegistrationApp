@@ -9,7 +9,7 @@ import okeanos.model.AdherentDocument;
 public class AdherentDocumentDao {
 
 	public static List<AdherentDocument> getAllItems() {
-		String sql = "SELECT id, file_type, content_disposition, data, createdOn FROM adherent_document";
+		String sql = "SELECT id, file_type, content_disposition, data FROM adherent_document";
 
 		try (Connection con = Sql2oDao.sql2o.open()) {
 			return con.createQuery(sql).executeAndFetch(AdherentDocument.class);
@@ -17,7 +17,7 @@ public class AdherentDocumentDao {
 	}
 
 	public static AdherentDocument getItemById(Long id) {
-		String sql = "SELECT id, file_type, content_disposition, data, createdOn FROM adherent_document WHERE id = :id";
+		String sql = "SELECT id, file_type, content_disposition, data FROM adherent_document WHERE id = :id";
 
 		try (Connection con = Sql2oDao.sql2o.open()) {
 			return con.createQuery(sql).addParameter("id", id).executeAndFetchFirst(AdherentDocument.class);

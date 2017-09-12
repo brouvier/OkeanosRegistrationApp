@@ -14,7 +14,7 @@ public class AdherentInfoSaisonDao {
 				+ "fk_team_id, fk_sick_note_id, fk_parental_agreement_id, validation_start, "
 				+ "validation_general_informations, validation_licence, validation_sick_note, "
 				+ "validation_parental_agreement, validation_payment_transmitted, validation_payment_cashed, "
-				+ "validation_comment, createdOn FROM adherent_info_saison";
+				+ "validation_comment FROM adherent_info_saison";
 
 		try (Connection con = Sql2oDao.sql2o.open()) {
 			return con.createQuery(sql).executeAndFetch(AdherentInfoSaison.class);
@@ -26,7 +26,7 @@ public class AdherentInfoSaisonDao {
 				+ "fk_insurance_id, picture_authorisation, nead_certificate, fk_actual_training_id, fk_training_id, "
 				+ "fk_team_id, fk_sick_note_id, fk_parental_agreement_id, validation_start, validation_general_informations, "
 				+ "validation_licence, validation_sick_note, validation_parental_agreement, validation_payment_transmitted, "
-				+ "validation_payment_cashed, validation_comment, createdOn FROM adherent_info_saison WHERE fk_saison_id = :saisonId";
+				+ "validation_payment_cashed, validation_comment FROM adherent_info_saison WHERE fk_saison_id = :saisonId";
 
 		try (Connection con = Sql2oDao.sql2o.open()) {
 			return con.createQuery(sql).addParameter("saisonId", saisonId).executeAndFetch(AdherentInfoSaison.class);
@@ -39,7 +39,7 @@ public class AdherentInfoSaisonDao {
 				+ "fk_team_id, fk_sick_note_id, fk_parental_agreement_id, validation_start, "
 				+ "validation_general_informations, validation_licence, validation_sick_note, "
 				+ "validation_parental_agreement, validation_payment_transmitted, validation_payment_cashed, "
-				+ "validation_comment, createdOn FROM adherent_info_saison WHERE id = :id";
+				+ "validation_comment FROM adherent_info_saison WHERE id = :id";
 
 		try (Connection con = Sql2oDao.sql2o.open()) {
 			return con.createQuery(sql).addParameter("id", id).executeAndFetchFirst(AdherentInfoSaison.class);

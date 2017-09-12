@@ -14,7 +14,7 @@ public class AdherentInfoDao {
 
 	public static List<AdherentInfo> getAllItems() {
 		String sql = "SELECT id, fk_account_id, firstname, lastname, birsthday, birthplace, licence_number, adresse, "
-				+ "zip_code, city, job, tel_number, mobile_number, emergency_contact, emergency_tel_number, createdOn FROM adherent_info";
+				+ "zip_code, city, job, tel_number, mobile_number, emergency_contact, emergency_tel_number FROM adherent_info";
 
 		try (Connection con = Sql2oDao.sql2o.open()) {
 			return con.createQuery(sql).executeAndFetch(AdherentInfo.class);
@@ -23,7 +23,7 @@ public class AdherentInfoDao {
 
 	public static AdherentInfo getItemById(Long id) {
 		String sql = "SELECT id, fk_account_id, firstname, lastname, birsthday, birthplace, licence_number, adresse, "
-				+ "zip_code, city, job, tel_number, mobile_number, emergency_contact, emergency_tel_number, createdOn FROM adherent_info WHERE id = :id";
+				+ "zip_code, city, job, tel_number, mobile_number, emergency_contact, emergency_tel_number FROM adherent_info WHERE id = :id";
 
 		try (Connection con = Sql2oDao.sql2o.open()) {
 			return con.createQuery(sql).addParameter("id", id).executeAndFetchFirst(AdherentInfo.class);
@@ -32,7 +32,7 @@ public class AdherentInfoDao {
 
 	public static AdherentInfo getItemByAccountId(Long id) {
 		String sql = "SELECT id, fk_account_id, firstname, lastname, birsthday, birthplace, licence_number, adresse, "
-				+ "zip_code, city, job, tel_number, mobile_number, emergency_contact, emergency_tel_number, createdOn FROM adherent_info WHERE fk_account_id = :id";
+				+ "zip_code, city, job, tel_number, mobile_number, emergency_contact, emergency_tel_number FROM adherent_info WHERE fk_account_id = :id";
 
 		AdherentInfo ai = null;
 		try (Connection con = Sql2oDao.sql2o.open()) {
@@ -78,6 +78,9 @@ public class AdherentInfoDao {
 
 			try (Connection con = Sql2oDao.sql2o.open()) {
 				con.createQuery(sql).bind(item).executeUpdate();
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+				e.printStackTrace();
 			}
 			return getItemById(item.getId());
 

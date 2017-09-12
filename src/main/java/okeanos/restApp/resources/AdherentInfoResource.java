@@ -7,7 +7,6 @@ import static spark.Spark.post;
 import okeanos.dao.AdherentInfoDao;
 import okeanos.model.AdherentInfo;
 import okeanos.util.AppProperties;
-import okeanos.util.JsonUtil;
 
 public class AdherentInfoResource extends AbstractResource {
 
@@ -21,7 +20,7 @@ public class AdherentInfoResource extends AbstractResource {
 			if (!SecurityResource.isAdmin(request)) {
 				throw new IllegalAccessException("Illegal Access");
 			}
-			return JsonUtil.toJson(AdherentInfoDao.getAllItems());
+			return gson.toJson(AdherentInfoDao.getAllItems());
 		});
 
 		get(ressourcePath + "/:accountId", (request, response) -> {
@@ -38,16 +37,17 @@ public class AdherentInfoResource extends AbstractResource {
 			if (!SecurityResource.isAdmin(request)) {
 				throw new IllegalAccessException("Illegal Access");
 			}
-			return JsonUtil.toJson(AdherentInfoDao.deleteItem(new Long(request.params(":id"))));
+			return gson.toJson(AdherentInfoDao.deleteItem(new Long(request.params(":id"))));
 		});
 
 		post(ressourcePath, (request, response) -> {
 			setSecurity(request, response);
 			AdherentInfo info = gson.fromJson(request.body(), AdherentInfo.class);
+			System.out.println("Save request receve for : " + info);
 			if (!SecurityResource.isLoginAndCurrentAccount(request, info.getFk_account_id())) {
 				throw new IllegalAccessException("Illegal Access");
 			}
-			return JsonUtil.toJson(AdherentInfoDao.save(info));
+			return gson.toJson(AdherentInfoDao.save(info));
 		});
 	}
 

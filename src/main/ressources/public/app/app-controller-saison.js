@@ -1,7 +1,7 @@
 /* 
  * Contrôleur de la liste des saisons
  */
-okeanosAppControllers.controller('saisonListCtrl', function ($scope, securityService, Saison) {
+okeanosAppControllers.controller('saisonListCtrl', function ($scope, $filter, securityService, Saison) {
     securityService.checkIsLogin();
     $scope.modeDebug = modeDebug;
 
@@ -24,12 +24,13 @@ okeanosAppControllers.controller('saisonListCtrl', function ($scope, securitySer
         var saison = new Saison();
         saison.id = $scope.modalId;
         saison.label = $scope.modalLabel;
-        saison.start_date = new Date($scope.modalStartDate);
-        saison.end_date = $scope.modalEndDate;
-        saison.$save();
+        saison.start_date = $filter('date')($scope.modalStartDate, "yyyy-MM-dd"); // convert filed to string
+        saison.end_date = $filter('date')($scope.modalEndDate, "yyyy-MM-dd"); // convert filed to string
+        saison.$save(function (data, putResponseHeaders) {
+            // Refresh after save
+            $scope.refreshList()
+        });
         console.log('Enregistrement terminé');
-
-        $scope.refreshList();
     };
 
     $scope.remove = function (saison) {
@@ -58,7 +59,6 @@ okeanosAppControllers.controller('saisonListCtrl', function ($scope, securitySer
                 var saison = $scope.saisonList[i];
                 saison.start_date = new Date(saison.start_date); // convert filed to date
                 saison.end_date = new Date(saison.end_date); // convert filed to date
-                saison.createdOn = new Date(saison.createdOn); // convert filed to date
             }
         });
     };

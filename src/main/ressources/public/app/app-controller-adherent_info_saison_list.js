@@ -1,7 +1,7 @@
 /* 
  * Contrôleur de la liste des formations de plongée
  */
-okeanosAppControllers.controller('adherentInfoSaisonListCtrl', function ($scope, $http, securityService, Saison) {
+okeanosAppControllers.controller('adherentInfoSaisonListCtrl', function ($scope, $http, $filter, securityService, Saison, AdherentInfo, AdherentInfoSaison) {
     securityService.checkIsAdmin();
     $scope.modeDebug = modeDebug;
 
@@ -35,6 +35,7 @@ okeanosAppControllers.controller('adherentInfoSaisonListCtrl', function ($scope,
         }
     });
 
+    /* Gestion des fichiers joints */
     $scope.getSickNoteUrl = function (infoSaison) {
         if (infoSaison.id != null)
             return okeanoAppUrl + "adherent_info_saison/" + infoSaison.id + "/sick_note";
@@ -49,5 +50,38 @@ okeanosAppControllers.controller('adherentInfoSaisonListCtrl', function ($scope,
             return null;
     };
 
+
+    /* Gestion de la pop up de validation */
+    $scope.edit = function (accountId, infoSaisonId) {
+        AdherentInfo.get({
+            id: accountId
+        }, function (ai, getResponseHeaders) {
+            $scope.modalInfo = ai; // get row data
+            $scope.modalInfo.birsthday = new Date($scope.modalInfo.birsthday); // convert filed to date
+        });
+        AdherentInfoSaison.get({
+            id: infoSaisonId
+        }, function (ai, getResponseHeaders) {
+            $scope.modalInfoSaison = ai; // get row data
+            console.log($scope.modalInfoSaison);
+        });
+    };
+
+    $scope.saveItem = function () {
+        console.log('controle sécu : ' + securityService.checkIsAdmin());
+        if (securityService.checkIsAdmin() == false) {
+            console.log('Enregistrement non authorisé');
+            return false;
+        }
+        console.log('Enregistrement d une licence : ' + $scope.modalLabel);
+        var temp = {};
+        jQuery.extend(temp, $scope.modalInfo);
+        temp.birsthday = $filter('date')(temp.birsthday, "yyyy-MM-dd"); // convert filed to string
+        temp.$save();
+        $scope.modalInfoSaison.$save();
+        console.log('Enregistrement terminé');
+
+        getList($scope.currentSaison.id);
+    };
 
 });

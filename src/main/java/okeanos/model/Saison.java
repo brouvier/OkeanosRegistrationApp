@@ -19,6 +19,12 @@ public class Saison {
 		this.createdOn = createdOn;
 	}
 
+	@Override
+	public String toString() {
+		return "Saison [id=" + id + ", label=" + label + ", start_date=" + start_date + ", end_date=" + end_date
+				+ ", createdOn=" + createdOn + "]";
+	}
+
 	public Long getId() {
 		return id;
 	}

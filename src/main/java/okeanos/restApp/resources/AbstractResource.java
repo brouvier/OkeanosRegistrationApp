@@ -1,6 +1,5 @@
 package okeanos.restApp.resources;
 
-import static okeanos.util.JsonUtil.toJson;
 import static spark.Spark.exception;
 
 import org.slf4j.Logger;
@@ -16,14 +15,14 @@ public abstract class AbstractResource {
 
 	protected final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-	protected Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS").create();
+	protected Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
 
 	protected void setupEndpoints() {
 
 		exception(Exception.class, (e, request, response) -> {
 			logger.error("error during request ", e);
 			response.status(400);
-			response.body(toJson(new ResponseError(e)));
+			response.body(gson.toJson(new ResponseError(e)));
 		});
 
 	}

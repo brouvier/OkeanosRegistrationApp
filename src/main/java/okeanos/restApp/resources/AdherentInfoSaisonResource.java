@@ -22,7 +22,6 @@ import okeanos.dao.AdherentInfoSaisonDao;
 import okeanos.model.AdherentDocument;
 import okeanos.model.AdherentInfoSaison;
 import okeanos.util.AppProperties;
-import okeanos.util.JsonUtil;
 import spark.Request;
 import spark.Response;
 
@@ -46,7 +45,8 @@ public class AdherentInfoSaisonResource extends AbstractResource {
 			if (!SecurityResource.isLoginAndCurrentAccount(request, infoSaison.getFk_account_id())) {
 				throw new IllegalAccessException("Illegal Access");
 			}
-			return JsonUtil.toJson(infoSaison);
+			System.out.println("Get AdherentInfoSaison by id : " + infoSaison);
+			return gson.toJson(infoSaison);
 		});
 
 		get(ressourcePath + "/saison/:saison_id/account/:account_id", (request, response) -> {
@@ -55,7 +55,7 @@ public class AdherentInfoSaisonResource extends AbstractResource {
 			if (!SecurityResource.isLoginAndCurrentAccount(request, accountId)) {
 				throw new IllegalAccessException("Illegal Access");
 			}
-			return JsonUtil.toJson(
+			return gson.toJson(
 					AdherentInfoSaisonDao.getIdBySaisonAndAccount(new Long(request.params(":saison_id")), accountId));
 		});
 
@@ -64,7 +64,7 @@ public class AdherentInfoSaisonResource extends AbstractResource {
 			if (!SecurityResource.isAdmin(request)) {
 				throw new IllegalAccessException("Illegal Access");
 			}
-			return JsonUtil.toJson(AdherentInfoSaisonDao.deleteItem(new Long(request.params(":id"))));
+			return gson.toJson(AdherentInfoSaisonDao.deleteItem(new Long(request.params(":id"))));
 		});
 
 		post(ressourcePath, (request, response) -> {
@@ -73,7 +73,7 @@ public class AdherentInfoSaisonResource extends AbstractResource {
 			if (!SecurityResource.isLoginAndCurrentAccount(request, item.getFk_account_id())) {
 				throw new IllegalAccessException("Illegal Access");
 			}
-			return JsonUtil.toJson(AdherentInfoSaisonDao.save(item));
+			return gson.toJson(AdherentInfoSaisonDao.save(item));
 		});
 
 		post(ressourcePath + "/:id/sick_note", (request, response) -> {
@@ -92,7 +92,7 @@ public class AdherentInfoSaisonResource extends AbstractResource {
 
 			// Accès autorisé au propriétaire du document et aux admin
 			if (!SecurityResource.isAdmin(request)
-					|| !SecurityResource.isLoginAndCurrentAccount(request, item.getFk_account_id())) {
+					&& !SecurityResource.isLoginAndCurrentAccount(request, item.getFk_account_id())) {
 				throw new IllegalAccessException("Illegal Access");
 			}
 
@@ -120,7 +120,7 @@ public class AdherentInfoSaisonResource extends AbstractResource {
 
 			// Accès autorisé au propriétaire du document et aux admin
 			if (!SecurityResource.isAdmin(request)
-					|| !SecurityResource.isLoginAndCurrentAccount(request, item.getFk_account_id())) {
+					&& !SecurityResource.isLoginAndCurrentAccount(request, item.getFk_account_id())) {
 				throw new IllegalAccessException("Illegal Access");
 			}
 

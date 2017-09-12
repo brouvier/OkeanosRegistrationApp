@@ -38,10 +38,10 @@ okeanosAppControllers.controller('insuranceCtrl', function ($scope, securityServ
         insurance.label = $scope.modalLabel;
         insurance.price = $scope.modalPrice;
         console.log(insurance);
-        insurance.$save();
+        insurance.$save(function (data, putResponseHeaders) {
+            $scope.refreshList()
+        });
         console.log('Enregistrement terminé');
-
-        $scope.refreshList();
     };
 
     $scope.remove = function (insurance) {

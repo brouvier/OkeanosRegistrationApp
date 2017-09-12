@@ -13,7 +13,6 @@ create table if not exists account (
 	createdOn timestamp default current_timestamp()
 );
 
--- OkeanosAdminPass:)
 MERGE INTO account (id, mail, salt, password, admin) KEY(id) VALUES (1, 'admin@okeanos', '477bf9a3475fe2a0ef9ccbc08e9a57f2be56e6ac1921c0cb12a207916e976acf', '55f31f83e00a6349c9606cfa9c4ccf84c8ce47ecd6a8b57b44ea9b9bcf2ed5c4', true);
 
 create table if not exists adherent_document (
@@ -155,12 +154,12 @@ create table if not exists adherent_info_saison (
 
 MERGE INTO saison (id, label, start_date, end_date) KEY(id) VALUES (1, '2017 - 2018', '2017-09-01', '2018-08-31');
 
-MERGE INTO ffessm_licence (id, label, fk_saison_id, price) KEY(id) VALUES (1, 'Enfant', 1, 11);
-MERGE INTO ffessm_licence (id, label, fk_saison_id, price) KEY(id) VALUES (2, 'Jeune', 1, 25);
-MERGE INTO ffessm_licence (id, label, fk_saison_id, price) KEY(id) VALUES (3, 'Adulte', 1, 40);
+MERGE INTO ffessm_licence (id, label, fk_saison_id, price) KEY(id) VALUES (1, 'Enfant', 1, 10.9);
+MERGE INTO ffessm_licence (id, label, fk_saison_id, price) KEY(id) VALUES (2, 'Jeune', 1, 24.55);
+MERGE INTO ffessm_licence (id, label, fk_saison_id, price) KEY(id) VALUES (3, 'Adulte', 1, 38.8);
 
-MERGE INTO subscription (id, label, fk_saison_id, fk_subscription_type_id, price) KEY(id) VALUES (1, 'Plongeur', 1, 1, 150);
-MERGE INTO subscription (id, label, fk_saison_id, fk_subscription_type_id, price) KEY(id) VALUES (2, 'Hockeyeur', 1, 2, 119);
+MERGE INTO subscription (id, label, fk_saison_id, fk_subscription_type_id, price) KEY(id) VALUES (1, 'Plongeur', 1, 1, 111.2);
+MERGE INTO subscription (id, label, fk_saison_id, fk_subscription_type_id, price) KEY(id) VALUES (2, 'Hockeyeur', 1, 2, 81.2);
 
-MERGE INTO insurance (id, label, fk_saison_id, price) KEY(id) VALUES (1, 'Pisince 1', 1, 11);
+MERGE INTO insurance (id, label, fk_saison_id, price) KEY(id) VALUES (1, 'Piscine 1', 1, 11);
 MERGE INTO insurance (id, label, fk_saison_id, price) KEY(id) VALUES (2, 'Piscine 2', 1, 25);

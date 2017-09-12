@@ -9,7 +9,6 @@ import com.google.gson.Gson;
 import okeanos.dao.SubscriptionDao;
 import okeanos.model.Subscription;
 import okeanos.util.AppProperties;
-import okeanos.util.JsonUtil;
 
 public class SubscriptionResource extends AbstractResource {
 
@@ -23,7 +22,7 @@ public class SubscriptionResource extends AbstractResource {
 			if (!SecurityResource.isLogin(request)) {
 				throw new IllegalAccessException("Illegal Access");
 			}
-			return JsonUtil.toJson(SubscriptionDao.getAllItems());
+			return gson.toJson(SubscriptionDao.getAllItems());
 		});
 
 		get(ressourcePath + "/saison/:saisonId", (request, response) -> {
@@ -31,7 +30,7 @@ public class SubscriptionResource extends AbstractResource {
 			if (!SecurityResource.isLogin(request)) {
 				throw new IllegalAccessException("Illegal Access");
 			}
-			return JsonUtil.toJson(SubscriptionDao.getAllItemsForSaison(new Long(request.params(":saisonId"))));
+			return gson.toJson(SubscriptionDao.getAllItemsForSaison(new Long(request.params(":saisonId"))));
 		});
 
 		get(ressourcePath + "/:id", (request, response) -> {
@@ -39,7 +38,7 @@ public class SubscriptionResource extends AbstractResource {
 			if (!SecurityResource.isLogin(request)) {
 				throw new IllegalAccessException("Illegal Access");
 			}
-			return JsonUtil.toJson(SubscriptionDao.getItemById(new Long(request.params(":id"))));
+			return gson.toJson(SubscriptionDao.getItemById(new Long(request.params(":id"))));
 		});
 
 		delete(ressourcePath + "/:id", (request, response) -> {
@@ -47,7 +46,7 @@ public class SubscriptionResource extends AbstractResource {
 			if (!SecurityResource.isAdmin(request)) {
 				throw new IllegalAccessException("Illegal Access");
 			}
-			return JsonUtil.toJson(SubscriptionDao.deleteItem(new Long(request.params(":id"))));
+			return gson.toJson(SubscriptionDao.deleteItem(new Long(request.params(":id"))));
 		});
 
 		post(ressourcePath, (request, response) -> {
@@ -55,7 +54,7 @@ public class SubscriptionResource extends AbstractResource {
 			if (!SecurityResource.isAdmin(request)) {
 				throw new IllegalAccessException("Illegal Access");
 			}
-			return JsonUtil.toJson(SubscriptionDao.save(new Gson().fromJson(request.body(), Subscription.class)));
+			return gson.toJson(SubscriptionDao.save(new Gson().fromJson(request.body(), Subscription.class)));
 		});
 	}
 

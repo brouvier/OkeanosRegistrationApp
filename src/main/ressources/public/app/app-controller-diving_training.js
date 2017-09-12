@@ -23,10 +23,10 @@ okeanosAppControllers.controller('divingTrainingCtrl', function ($scope, securit
         var training = new DivingTraining();
         training.id = $scope.modalId;
         training.label = $scope.modalLabel;
-        training.$save();
+        training.$save(function (data, putResponseHeaders) {
+            $scope.refreshList()
+        });
         console.log('Enregistrement terminé');
-
-        $scope.refreshList();
     };
 
     $scope.remove = function (training) {

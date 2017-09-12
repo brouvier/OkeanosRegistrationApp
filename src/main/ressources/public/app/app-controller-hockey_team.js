@@ -23,10 +23,10 @@ okeanosAppControllers.controller('hockeyTeamCtrl', function ($scope, securitySer
         var team = new HockeyTeam();
         team.id = $scope.modalId;
         team.label = $scope.modalLabel;
-        team.$save();
+        team.$save(function (data, putResponseHeaders) {
+            $scope.refreshList()
+        });
         console.log('Enregistrement terminé');
-
-        $scope.refreshList();
     };
 
     $scope.remove = function (team) {
