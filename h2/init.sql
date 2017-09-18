@@ -154,9 +154,9 @@ create table if not exists adherent_info_saison (
 
 MERGE INTO saison (id, label, start_date, end_date) KEY(id) VALUES (1, '2017 - 2018', '2017-09-01', '2018-08-31');
 
-MERGE INTO ffessm_licence (id, label, fk_saison_id, price) KEY(id) VALUES (1, 'Enfant', 1, 10.9);
-MERGE INTO ffessm_licence (id, label, fk_saison_id, price) KEY(id) VALUES (2, 'Jeune', 1, 24.55);
-MERGE INTO ffessm_licence (id, label, fk_saison_id, price) KEY(id) VALUES (3, 'Adulte', 1, 38.8);
+MERGE INTO ffessm_licence (id, label, fk_saison_id, price) KEY(id) VALUES (1, 'Enfant <12ans', 1, 10.9);
+MERGE INTO ffessm_licence (id, label, fk_saison_id, price) KEY(id) VALUES (2, 'Jeune >12ans', 1, 24.55);
+MERGE INTO ffessm_licence (id, label, fk_saison_id, price) KEY(id) VALUES (3, 'Adulte >16ans', 1, 38.8);
 
 MERGE INTO subscription (id, label, fk_saison_id, fk_subscription_type_id, price) KEY(id) VALUES (1, 'Plongeur', 1, 1, 141.2);
 MERGE INTO subscription (id, label, fk_saison_id, fk_subscription_type_id, price) KEY(id) VALUES (2, 'Hockeyeur', 1, 2, 81.2);

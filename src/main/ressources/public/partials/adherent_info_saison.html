@@ -64,10 +64,11 @@
                         <input id="inputName" type="text" class="form-control" ng-value="totalPrice | number:2" disabled />
                         <span class="input-group-addon">€</span>
                     </div>
-                    <p>La cotisation est à régler par chèque ou virement à l’ordre d’Okeanos. Vous pouvez régler en plusieurs fois.</p>
-                    <div class="alert alert-info" role="alert" ng-show='adherentInfoSaison.validation_general_informations == true && adherentInfoSaison.validation_payment_transmitted == false'>
-                        Les paiements par virement sont à faire sur le compte suivant :<br/>IBAN (International Bank Account Number) : FR76 1680 7001 2631 8517 8019 373<br/>BIC (Bank Identification Code) : CCBPFRPPGRE<br/>
-                        <strong>Les virements doivent impérativement porter le commentaire suivant :<br/>"Inscription - vos prénom et nom - votre type d'adhésion"</strong>
+                    <div class="alert alert-info" role="alert">
+                        <p>La cotisation est à régler par virement sur le compte du club :</p>
+                        <p>IBAN (International Bank Account Number) : FR76 1680 7001 2631 8517 8019 373<br/>BIC (Bank Identification Code) : CCBPFRPPGRE</p>
+                        <p><strong>Les virements doivent impérativement porter le commentaire suivant :<br/>"Inscription - vos prénom et nom - votre type d'adhésion"</strong></p>
+                        <p><i>Si vous en faite la demande auprès du bureau, le payment de la cotisation peut être fait en plusieurs chèques à l’ordre d’Okeanos.</i></p>
                     </div>
                 </div>
             </div>
@@ -149,8 +150,9 @@
         </ul>
         <p>Modèle fourni par la fédération : <a href="http://www.okeanos-grenoble.fr/images/docs/Certificat_Medical.pdf" target="_blank">Télécharger</a><br/> Liste des médecin hyperbare : <a href="https://www.ffessmaura.fr/images/le-comite/medical/2017/Liste_des_medecins_federaux_consultants_du_Comite_AURA_au_13-02-2017.pdf" target="_blank">Télécharger</a></p>
         <form name="sickNoteForm" role="form">
-            <input class="btn" ngf-select ng-model="sickNoteFile" name="sickNoteFile" type="file" ngf-accept="'.pdf'" ngf-max-size="1MB">
+            <input class="btn" ngf-select ng-model="sickNoteFile" name="sickNoteFile" type="file" ngf-accept="'.pdf'" ngf-pattern="'.pdf'" ngf-max-size="1MB">
             <i ng-show="sickNoteForm.sickNoteFile.$error.maxSize">File too large {{errorFile.size / 1000000|number:1}}MB: max 1M</i>
+            <i ng-show="sickNoteForm.sickNoteFile.$error.pattern">Erreur de format de fichier</i>
             <button class="btn btn-warning" ng-click="sickNoteFile = null" ng-show="sickNoteFile">Annuler</button>
             <button class="btn btn-info" type="submit" ng-click="sickNoteSubmit()" ng-show="sickNoteFile">Importer le fichier</button>
         </form>
@@ -161,8 +163,9 @@
         <p>Je soussigné(e) ...................................................................., agissant en qualité de père/mère/tuteur, autorise le mineur ................................................, né le .../.../..... à pratiquer la plongée subaquatique ainsi que les activités connexes dans le cadre du club en toute connaissance des risques encourus. De plus, j’accepte que les responsables du club autorisent, en mon nom, une prise en charge médicalisée en cas de besoin.<br/> Je m’engage à vérifier qu’un encadrant est présent avant de laisser mon fils/ma fille à la piscine.<br/> Fait à ......................... le .../.../........ Signature</p>
 
         <form name="parentalAgreementForm" role="form">
-            <input class="btn" ngf-select ng-model="parentalAgreementFile" name="parentalAgreementFile" type="file" ngf-accept="'.pdf'" ngf-max-size="1MB">
+            <input class="btn" ngf-select ng-model="parentalAgreementFile" name="parentalAgreementFile" type="file" ngf-accept="'.pdf'" ngf-pattern="'.pdf'" ngf-max-size="1MB">
             <i ng-show="parentalAgreementForm.parentalAgreementFile.$error.maxSize">File too large {{errorFile.size / 1000000|number:1}}MB: max 1M</i>
+            <i ng-show="parentalAgreementForm.parentalAgreementFile.$error.pattern">Erreur de format de fichier</i>
             <button class="btn btn-warning" ng-click="parentalAgreementFile = null" ng-show="parentalAgreementFile">Annuler</button>
             <button class="btn btn-info" type="submit" ng-click="parentalAgreementSubmit()" ng-show="parentalAgreementFile">Importer le fichier</button>
         </form>
@@ -174,6 +177,7 @@
     <div class="col-md-12">
         <h2 class="page-header">Debug</h2>
         <pre>adherentInfoSaison = {{adherentInfoSaison | json}}</pre>
+        <pre>sickNoteForm.sickNoteFile = {{sickNoteForm.sickNoteFile | json}}</pre>
         <pre>sickNoteUrl = {{sickNoteUrl}}</pre>
         <pre>parentalAgreementUrl = {{parentalAgreementUrl}}</pre>
     </div>

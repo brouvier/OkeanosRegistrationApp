@@ -84,4 +84,14 @@ okeanosAppControllers.controller('adherentInfoSaisonListCtrl', function ($scope,
         getList($scope.currentSaison.id);
     };
 
+    /* Gestion des alters sur la liste */
+    $scope.adherentClass = function (adherent) {
+        if (adherent.infoSaison.validation_payment_cashed == true) {
+            return "";
+        };
+        if (adherent.infoSaison.validation_start == true) {
+            return "warning";
+        };
+        return "danger";
+    };
 });
