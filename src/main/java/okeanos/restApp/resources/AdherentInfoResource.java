@@ -26,7 +26,7 @@ public class AdherentInfoResource extends AbstractResource {
 		get(ressourcePath + "/:accountId", (request, response) -> {
 			setSecurity(request, response);
 			Long accountId = new Long(request.params(":accountId"));
-			if (!SecurityResource.isLoginAndCurrentAccount(request, accountId)) {
+			if (!SecurityResource.isAdmin(request) && !SecurityResource.isLoginAndCurrentAccount(request, accountId)) {
 				throw new IllegalAccessException("Illegal Access");
 			}
 			return gson.toJson(AdherentInfoDao.getItemByAccountId(accountId));
@@ -44,7 +44,8 @@ public class AdherentInfoResource extends AbstractResource {
 			setSecurity(request, response);
 			AdherentInfo info = gson.fromJson(request.body(), AdherentInfo.class);
 			System.out.println("Save request receve for : " + info);
-			if (!SecurityResource.isLoginAndCurrentAccount(request, info.getFk_account_id())) {
+			if (!SecurityResource.isAdmin(request)
+					&& !SecurityResource.isLoginAndCurrentAccount(request, info.getFk_account_id())) {
 				throw new IllegalAccessException("Illegal Access");
 			}
 			return gson.toJson(AdherentInfoDao.save(info));
