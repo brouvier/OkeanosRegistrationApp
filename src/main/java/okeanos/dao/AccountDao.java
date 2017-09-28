@@ -20,8 +20,12 @@ public class AccountDao {
 		}
 	}
 
-	public static Account getItemById(Long id) {
-		String sql = "SELECT id, mail, salt, password, admin FROM account WHERE id = :id";
+	public static Account getItemById(Long id, Boolean getPass) {
+		String sql = null;
+		if (getPass)
+			sql = "SELECT id, mail, salt, password, admin FROM account WHERE id = :id";
+		else
+			sql = "SELECT id, mail, admin FROM account WHERE id = :id";
 
 		try (Connection con = Sql2oDao.sql2o.open()) {
 			return con.createQuery(sql).addParameter("id", id).executeAndFetchFirst(Account.class);
@@ -42,7 +46,7 @@ public class AccountDao {
 		try (Connection con = Sql2oDao.sql2o.open()) {
 			Long insertedId = (Long) con.createQuery(sql, true).addParameter("mail", mail).addParameter("salt", salt)
 					.addParameter("password", password).addParameter("admin", admin).executeUpdate().getKey();
-			return getItemById(insertedId);
+			return getItemById(insertedId, false);
 		}
 	}
 

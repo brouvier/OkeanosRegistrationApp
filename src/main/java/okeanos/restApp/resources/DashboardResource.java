@@ -5,11 +5,13 @@ import static spark.Spark.get;
 import java.util.ArrayList;
 import java.util.List;
 
+import okeanos.dao.AccountDao;
 import okeanos.dao.AdherentInfoDao;
 import okeanos.dao.AdherentInfoSaisonDao;
 import okeanos.dao.FfessmLicenceDao;
 import okeanos.dao.InsuranceDao;
 import okeanos.dao.SubscriptionDao;
+import okeanos.model.Account;
 import okeanos.model.AdherentInfo;
 import okeanos.model.AdherentInfoSaison;
 import okeanos.model.FfessmLicence;
@@ -57,6 +59,7 @@ public class DashboardResource extends AbstractResource {
 
 	@SuppressWarnings("unused")
 	private class Adherent {
+		public final Account account;
 		public final AdherentInfo info;
 		public final AdherentInfoSaison infoSaison;
 		public Insurance insurance;
@@ -65,6 +68,7 @@ public class DashboardResource extends AbstractResource {
 
 		public Adherent(AdherentInfoSaison infoSaison) {
 			this.infoSaison = infoSaison;
+			this.account = AccountDao.getItemById(infoSaison.getFk_account_id(), false);
 			this.info = AdherentInfoDao.getItemByAccountId(infoSaison.getFk_account_id());
 			if (infoSaison.getFk_insurance_id() != null)
 				this.insurance = InsuranceDao.getItemById(infoSaison.getFk_insurance_id());

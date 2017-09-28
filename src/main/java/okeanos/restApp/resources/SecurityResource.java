@@ -40,7 +40,7 @@ public class SecurityResource extends AbstractResource {
 		if (!isLogin(request))
 			return false;
 
-		Account user = AccountDao.getItemById(sessionList.get(request.session().id()));
+		Account user = AccountDao.getItemById(sessionList.get(request.session().id()), false);
 
 		if (user == null)
 			return false;
