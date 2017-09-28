@@ -15,6 +15,7 @@ public class AppProperties {
 	// App
 	public static final String APPLICATION_NAME = "okeanos_rest";
 	public static final String APPLICATION_VERSION = "2.0.0";
+	public static final String APPLICATION_FULL_NAME = "Okeanos Registration App";
 
 	protected static final String PROPERTIES_FILE_NAME = "okeanos_rest.properties";
 
@@ -41,6 +42,10 @@ public class AppProperties {
 	public final String restHostPort;
 	public final String frontRestAcces;
 	public final String frontModeDebug;
+	public final String mailHostName;
+	public final String mailHostPort;
+	public final String mailHostLogin;
+	public final String mailHostPass;
 
 	public static AppProperties getProperties() {
 		if (appProperties == null) {
@@ -62,6 +67,11 @@ public class AppProperties {
 		restHostPort = prop.getProperty("restHostPort");
 		frontRestAcces = prop.getProperty("frontRestAcces");
 		frontModeDebug = prop.getProperty("frontModeDebug");
+
+		mailHostName = prop.getProperty("mailHostName");
+		mailHostPort = prop.getProperty("mailHostPort");
+		mailHostLogin = prop.getProperty("mailHostLogin");
+		mailHostPass = prop.getProperty("mailHostPass");
 
 	}
 
@@ -112,6 +122,11 @@ public class AppProperties {
 		prop.setProperty("restHostPort", "8080");
 		prop.setProperty("frontRestAcces", "https://localhost");
 		prop.setProperty("frontModeDebug", "true");
+
+		prop.setProperty("mailHostName", "ns0.ovh.net");
+		prop.setProperty("mailHostPort", "587");
+		prop.setProperty("mailHostLogin", "webmaster@okeanos-grenoble.fr");
+		prop.setProperty("mailHostPass", "**To replace**");
 
 		OutputStream output = null;
 

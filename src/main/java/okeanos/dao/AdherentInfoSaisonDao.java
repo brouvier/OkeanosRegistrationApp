@@ -58,7 +58,7 @@ public class AdherentInfoSaisonDao {
 
 	public static AdherentInfoSaison save(AdherentInfoSaison item) {
 
-		if (item == null || "".equals(item.getFk_account_id())) {
+		if (item == null || "".equals(item.getFk_account_id().toString())) {
 			System.out.println("Error : cannot save empty item !");
 			return null;
 		}

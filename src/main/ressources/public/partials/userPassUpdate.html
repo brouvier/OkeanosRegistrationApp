@@ -1,0 +1,36 @@
+<div class="row">
+    <div class="col-md-4 col-md-offset-4">
+        <div class="login-panel panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Mise à jour du mot de passe</h3>
+            </div>
+            <div class="panel-body">
+                <form role="form" ng-submit="updatePass()">
+                    <fieldset>
+                        <div class="form-group">
+                            <input type="email" class="form-control" placeholder="Email address" autofocus ng-model="login.email" required/>
+                        </div>
+                        <div class="form-group">
+                            <input type="password" class="form-control" placeholder="Password" ng-model="login.password" required/>
+                        </div>
+                        <div class="form-group">
+                            <input type="password" class="form-control" placeholder="Confirm password" ng-model="login.confirmPassword" required/>
+                        </div>
+                        <div class="form-group">
+                            <button class="btn btn-lg btn-primary btn-block" type="submit">Mise à jour du mot de passe</button>
+                        </div>
+                        <div class="alert {{alerte.level}}" role="alert" ng-show="alerte.message">{{alerte.message}}</div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row" ng-show="modeDebug">
+    <div class="col-md-12">
+        <h2 class="page-header">Debug</h2>
+        <pre>alerte = {{alerte | json}}</pre>
+        <pre>login = {{login | json}}</pre>
+        <pre>ticket = {{ticket}}</pre>
+    </div>
+</div>

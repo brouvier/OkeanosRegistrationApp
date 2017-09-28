@@ -51,7 +51,7 @@ public class LoginControler {
 		}
 
 		// Genertion d'une chaine unique pour le sel
-		String saltString = new BigInteger(130, new SecureRandom()).toString(32);
+		String saltString = getRandomString();
 		String salt = hash(saltString);
 
 		// Sauvegarde du pass salé
@@ -62,6 +62,29 @@ public class LoginControler {
 		System.out.println("hashedPass : " + hashedPass);
 
 		return AccountDao.newItem(mail, salt, hashedPass, false);
+	}
+
+	public static Account updatePassword(Account account, String password) throws IllegalArgumentException {
+		if (password == null || "".equals(password)) {
+			throw new IllegalArgumentException("password is empty");
+		}
+
+		// Genertion d'une chaine unique pour le sel
+		String salt = hash(getRandomString());
+
+		// Sauvegarde du pass salé
+		String hashedPass = hash(salt + password);
+
+		account.setSalt(salt);
+		account.setPassword(hashedPass);
+
+		System.out.println("Update account : " + account);
+
+		return AccountDao.updatePassword(account);
+	}
+
+	public static String getRandomString() {
+		return new BigInteger(130, new SecureRandom()).toString(32);
 	}
 
 	protected static String hash(String message) {

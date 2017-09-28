@@ -20,6 +20,11 @@ public class Account {
 		this.createdOn = createdOn;
 	}
 
+	@Override
+	public String toString() {
+		return "Account [id=" + id + ", mail=" + mail + ", admin=" + admin + ", createdOn=" + createdOn + "]";
+	}
+
 	public Long getId() {
 		return id;
 	}

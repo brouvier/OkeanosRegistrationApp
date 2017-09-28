@@ -1,0 +1,30 @@
+<div class="row">
+    <div class="col-md-4 col-md-offset-4">
+        <div class="login-panel panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Envoyer une demande de renouvellement de mot de passe</h3>
+            </div>
+            <div class="panel-body">
+                <form role="form" ng-submit="requestNewPass()">
+                    <fieldset>
+                        <div class="form-group">
+                            <input type="email" class="form-control" placeholder="Email address" autofocus ng-model="email" required/>
+                        </div>
+
+                        <div class="form-group">
+                            <button class="btn btn-lg btn-primary btn-block" type="submit">Envoyer</button>
+                        </div>
+
+                        <div class="alert {{alerte.level}}" ng-show="alerte.message" role="alert">{{alerte.message}}</div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row" ng-show="modeDebug">
+    <div class="col-md-12">
+        <h2 class="page-header">Debug</h2>
+        <pre>alerte = {{alerte | json}}</pre>
+    </div>
+</div>

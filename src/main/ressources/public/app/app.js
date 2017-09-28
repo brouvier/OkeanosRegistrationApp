@@ -73,6 +73,16 @@ okeanosApp.config(['$routeProvider', '$httpProvider',
                 controller: 'insuranceCtrl',
                 authorized: true
             })
+            .when('/passwordRequest', {
+                templateUrl: 'partials/userPassRequest.html',
+                controller: 'passwordCtrl',
+                authorized: true
+            })
+            .when('/passwordUpdate/:ticket', {
+                templateUrl: 'partials/userPassUpdate.html',
+                controller: 'passwordCtrl',
+                authorized: true
+            })
             .when('/sickNote', {
                 templateUrl: 'partials/sickNoteUpload.html',
                 controller: 'sickNoteUploadCtrl',
