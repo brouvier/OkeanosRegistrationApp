@@ -10,6 +10,7 @@
 *.tmp
 *.class
 target
+h2/okeanos.mv.db
 
 # pour les frondeurs
 *.py
