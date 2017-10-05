@@ -37,4 +37,23 @@ public abstract class AbstractResource {
 			response.header("curentAccountId", "");
 	}
 
+	/**
+	 * Class structurant un message de retour en forme d'alerte
+	 */
+	protected class MessageAlertBean {
+		public String level;
+		public String message;
+
+		/**
+		 * @param level
+		 *            Bootstrap level alert
+		 * @param message
+		 *            Message to display
+		 */
+		public MessageAlertBean(String level, String message) {
+			this.level = level;
+			this.message = message;
+		}
+	}
+
 }

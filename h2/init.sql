@@ -158,7 +158,7 @@ MERGE INTO ffessm_licence (id, label, fk_saison_id, price) KEY(id) VALUES (1, 'E
 MERGE INTO ffessm_licence (id, label, fk_saison_id, price) KEY(id) VALUES (2, 'Jeune >12ans', 1, 24.55);
 MERGE INTO ffessm_licence (id, label, fk_saison_id, price) KEY(id) VALUES (3, 'Adulte >16ans', 1, 38.8);
 
-MERGE INTO subscription (id, label, fk_saison_id, fk_subscription_type_id, price) KEY(id) VALUES (1, 'Plongeur', 1, 1, 141.2);
+MERGE INTO subscription (id, label, fk_saison_id, fk_subscription_type_id, price) KEY(id) VALUES (1, 'Plongeur', 1, 1, 146.2);
 MERGE INTO subscription (id, label, fk_saison_id, fk_subscription_type_id, price) KEY(id) VALUES (2, 'Hockeyeur', 1, 2, 81.2);
 
 MERGE INTO insurance (id, label, fk_saison_id, price) KEY(id) VALUES (1, 'Piscine 1', 1, 11);

@@ -216,14 +216,4 @@ public class SecurityResource extends AbstractResource {
 		public String password;
 	}
 
-	private class MessageAlertBean {
-		public String level;
-		public String message;
-
-		public MessageAlertBean(String level, String message) {
-			this.level = level;
-			this.message = message;
-		}
-	}
-
 }

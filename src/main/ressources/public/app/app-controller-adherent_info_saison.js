@@ -5,6 +5,15 @@ okeanosAppControllers.controller('adherentInfoSaisonCtrl', function ($scope, $ht
     securityService.checkIsLogin();
     $scope.modeDebug = modeDebug;
 
+    var initAlerte = function (l, m) {
+        $scope.alerte = {
+            level: l,
+            message: m
+        };
+    };
+
+    initAlerte('', '');
+
     $scope.subscriptionTypeList = SubscriptionType.query();
     $scope.hockeyTeamList = HockeyTeam.query();
     $scope.divingTrainingList = DivingTraining.query();
@@ -59,9 +68,14 @@ okeanosAppControllers.controller('adherentInfoSaisonCtrl', function ($scope, $ht
     loadData();
 
     $scope.save = function () {
+        initAlerte('', '');
         console.log('Enregistrement : ');
         console.log($scope.adherentInfoSaison);
-        $scope.adherentInfoSaison.$save();
+        $scope.adherentInfoSaison.$save(function () {
+            initAlerte('alert-info', 'Mise à jour terminée avec succès.');
+        }, function () {
+            initAlerte('alerte-danger', 'Erreur dans la mise à jour des informations.');
+        });
         console.log('Enregistrement terminé');
     };
 

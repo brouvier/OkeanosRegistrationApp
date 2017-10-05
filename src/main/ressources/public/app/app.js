@@ -2,7 +2,7 @@
 
 var okeanosApp = angular.module('okeanosApp', [
     // Dépendances du "module"
-    'ngRoute', 'ngResource', 'ng-file-model', 'ngFileUpload',
+    'ngRoute', 'ngResource', 'ngFileUpload',
     'okeanosAppControllers'
 ]);
 
