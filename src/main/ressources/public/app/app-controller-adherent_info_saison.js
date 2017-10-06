@@ -6,6 +6,7 @@ okeanosAppControllers.controller('adherentInfoSaisonCtrl', function ($scope, $ht
     $scope.modeDebug = modeDebug;
 
     var initAlerte = function (l, m) {
+        $scope.processRunning = false;
         $scope.alerte = {
             level: l,
             message: m
@@ -69,6 +70,7 @@ okeanosAppControllers.controller('adherentInfoSaisonCtrl', function ($scope, $ht
 
     $scope.save = function () {
         initAlerte('', '');
+        $scope.processRunning = true;
         console.log('Enregistrement : ');
         console.log($scope.adherentInfoSaison);
         $scope.adherentInfoSaison.$save(function () {

@@ -46,7 +46,7 @@ public class AdherentInfoSaisonResource extends AbstractResource {
 					&& !SecurityResource.isLoginAndCurrentAccount(request, infoSaison.getFk_account_id())) {
 				throw new IllegalAccessException("Illegal Access");
 			}
-			System.out.println("Get AdherentInfoSaison by id : " + infoSaison);
+			logger.info("Get AdherentInfoSaison by id : " + infoSaison);
 			return gson.toJson(infoSaison);
 		});
 

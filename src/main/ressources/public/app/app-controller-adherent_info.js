@@ -1,11 +1,12 @@
 /* 
  * Contrôleur des informations adhérent
  */
-okeanosAppControllers.controller('adherentInfoCtrl', function ($scope, $http, $filter, securityService, AdherentInfo) {
+okeanosAppControllers.controller('adherentInfoCtrl', function ($scope, $http, $filter, $timeout, securityService, AdherentInfo) {
     securityService.checkIsLogin();
     $scope.modeDebug = modeDebug;
 
     var initAlerte = function (l, m) {
+        $scope.processRunning = false;
         $scope.alerte = {
             level: l,
             message: m
@@ -25,6 +26,7 @@ okeanosAppControllers.controller('adherentInfoCtrl', function ($scope, $http, $f
 
     $scope.saveItem = function () {
         initAlerte('', '');
+        $scope.processRunning = true;
         console.log('Enregistrement des informations adherent : ' + $scope.adherent.firstname);
         var temp = {};
         jQuery.extend(temp, $scope.adherent);

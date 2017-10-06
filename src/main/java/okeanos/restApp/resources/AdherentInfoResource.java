@@ -43,7 +43,7 @@ public class AdherentInfoResource extends AbstractResource {
 		post(ressourcePath, (request, response) -> {
 			setSecurity(request, response);
 			AdherentInfo info = gson.fromJson(request.body(), AdherentInfo.class);
-			System.out.println("Save request receve for : " + info);
+			logger.info("Save request receve for : " + info);
 			if (!SecurityResource.isAdmin(request)
 					&& !SecurityResource.isLoginAndCurrentAccount(request, info.getFk_account_id())) {
 				throw new IllegalAccessException("Illegal Access");

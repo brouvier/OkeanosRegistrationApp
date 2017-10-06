@@ -48,35 +48,48 @@ public class DashboardResource extends AbstractResource {
 			Long saisonId = new Long(request.params(":saisonId"));
 
 			// Préparation des listes d'objet
-			HashMap<Long, Account> accounts = new HashMap<Long, Account>();
-			for (Account account : AccountDao.getAllItems(false)) {
-				accounts.put(account.getId(), account);
-			}
-
-			HashMap<Long, AdherentInfo> adherentInfos = new HashMap<Long, AdherentInfo>();
-			for (AdherentInfo adherentInfo : AdherentInfoDao.getAllItems()) {
-				adherentInfos.put(adherentInfo.getId(), adherentInfo);
-			}
-
-			HashMap<Long, Subscription> subscriptions = new HashMap<Long, Subscription>();
-			for (Subscription sub : SubscriptionDao.getAllItemsForSaison(saisonId)) {
-				subscriptions.put(sub.getId(), sub);
-			}
-
-			HashMap<Long, FfessmLicence> ffessmLicences = new HashMap<Long, FfessmLicence>();
-			for (FfessmLicence licence : FfessmLicenceDao.getAllItemsForSaison(saisonId)) {
-				ffessmLicences.put(licence.getId(), licence);
-			}
-
-			HashMap<Long, Insurance> insurances = new HashMap<Long, Insurance>();
-			for (Insurance insurance : InsuranceDao.getAllItemsForSaison(saisonId)) {
-				insurances.put(insurance.getId(), insurance);
-			}
+			// HashMap<Long, Account> accounts = new HashMap<Long, Account>();
+			// for (Account account : AccountDao.getAllItems(false)) {
+			// accounts.put(account.getId(), account);
+			// }
+			//
+			// HashMap<Long, AdherentInfo> adherentInfos = new HashMap<Long,
+			// AdherentInfo>();
+			// for (AdherentInfo adherentInfo : AdherentInfoDao.getAllItems()) {
+			// adherentInfos.put(adherentInfo.getId(), adherentInfo);
+			// }
+			//
+			// HashMap<Long, Subscription> subscriptions = new HashMap<Long,
+			// Subscription>();
+			// for (Subscription sub : SubscriptionDao.getAllItemsForSaison(saisonId)) {
+			// subscriptions.put(sub.getId(), sub);
+			// }
+			//
+			// HashMap<Long, FfessmLicence> ffessmLicences = new HashMap<Long,
+			// FfessmLicence>();
+			// for (FfessmLicence licence : FfessmLicenceDao.getAllItemsForSaison(saisonId))
+			// {
+			// ffessmLicences.put(licence.getId(), licence);
+			// }
+			//
+			// HashMap<Long, Insurance> insurances = new HashMap<Long, Insurance>();
+			// for (Insurance insurance : InsuranceDao.getAllItemsForSaison(saisonId)) {
+			// insurances.put(insurance.getId(), insurance);
+			// }
+			//
+			// System.out.println(accounts);
+			// System.out.println(adherentInfos);
+			// System.out.println(insurances);
+			// System.out.println(ffessmLicences);
+			// System.out.println(subscriptions);
 
 			// Construction de la liste des adhérents
 			ArrayList<Adherent> res = new ArrayList<Adherent>();
 			for (AdherentInfoSaison infoSaison : AdherentInfoSaisonDao.getAllItemsForSaison(saisonId)) {
-				res.add(new Adherent(infoSaison, accounts, adherentInfos, insurances, ffessmLicences, subscriptions));
+				res.add(new Adherent(infoSaison));
+				// res.add(new Adherent(infoSaison, accounts, adherentInfos, insurances,
+				// ffessmLicences, subscriptions));
+				// System.out.println(infoSaison);
 			}
 
 			return gson.toJson(res);

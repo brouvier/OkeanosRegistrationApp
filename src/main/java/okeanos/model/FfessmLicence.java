@@ -19,6 +19,12 @@ public class FfessmLicence {
 		this.createdOn = createdOn;
 	}
 
+	@Override
+	public String toString() {
+		return "FfessmLicence [id=" + id + ", fk_saison_id=" + fk_saison_id + ", label=" + label + ", price=" + price
+				+ ", createdOn=" + createdOn + "]";
+	}
+
 	public Long getId() {
 		return id;
 	}
