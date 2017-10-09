@@ -1,10 +1,14 @@
 # pour Baptiste
 *.classpath
 *.project
+.settings/*.prefs
 
 #pour Roro
 .idea
 *.iml
+
+#pour la base
+h2/*.db
 
 # pour les trucs serieux
 *.tmp

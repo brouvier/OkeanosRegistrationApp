@@ -52,39 +52,45 @@ public class AdherentInfoDao {
 			return null;
 		}
 
-		if (item.getId() == null) { // Mode création
-			logger.debug("Création d'un item : " + item);
-			String sql = "insert into adherent_info (fk_account_id, firstname, lastname, birsthday, birthplace, licence_number, adresse, "
-					+ "zip_code, city, job, tel_number, mobile_number, emergency_contact, emergency_tel_number) "
-					+ "values (:fk_account_id, :firstname, :lastname, :birsthday, :birthplace, :licence_number, :adresse, :zip_code, "
-					+ ":city, :job, :tel_number, :mobile_number, :emergency_contact, :emergency_tel_number)";
+		if (item.getId() == null) { // Pas d'ID envoyé par le front, on contrôle tout de même qu'il n'existe pas
+									// dans la base
+			AdherentInfo ai = AdherentInfoDao.getItemByAccountId(item.getFk_account_id());
+			if (ai == null) { // Mode création
+				logger.info("Création d'un item : " + item);
+				String sql = "insert into adherent_info (fk_account_id, firstname, lastname, birsthday, birthplace, licence_number, adresse, "
+						+ "zip_code, city, job, tel_number, mobile_number, emergency_contact, emergency_tel_number) "
+						+ "values (:fk_account_id, :firstname, :lastname, :birsthday, :birthplace, :licence_number, :adresse, :zip_code, "
+						+ ":city, :job, :tel_number, :mobile_number, :emergency_contact, :emergency_tel_number)";
 
-			try (Connection con = Sql2oDao.sql2o.open()) {
-				Long insertedId = (Long) con.createQuery(sql, true).bind(item).executeUpdate().getKey();
-				logger.debug("ID généré : {}", insertedId);
-				return getItemById(insertedId);
-			} catch (Exception e) {
-				System.out.println(e.getMessage());
-				e.printStackTrace();
-				return item;
+				try (Connection con = Sql2oDao.sql2o.open()) {
+					Long insertedId = (Long) con.createQuery(sql, true).bind(item).executeUpdate().getKey();
+					logger.debug("ID généré : {}", insertedId);
+					return getItemById(insertedId);
+				} catch (Exception e) {
+					logger.error(e.getMessage());
+					e.printStackTrace();
+					return item;
+				}
+			} else {
+				// L'objet était présent en base, on reprend son ID pour faire un update
+				item.setId(ai.getId());
 			}
-
-		} else { // Mode modification
-			logger.debug("Mise à jour d'un item : " + item);
-			String sql = "update adherent_info set fk_account_id = :fk_account_id, firstname = :firstname, lastname = :lastname, "
-					+ "birsthday = :birsthday, birthplace = :birthplace, licence_number = :licence_number, adresse = :adresse, "
-					+ "zip_code = :zip_code, city = :city, job = :job, tel_number = :tel_number, mobile_number = :mobile_number, "
-					+ "emergency_contact = :emergency_contact, emergency_tel_number = :emergency_tel_number where id = :id";
-
-			try (Connection con = Sql2oDao.sql2o.open()) {
-				con.createQuery(sql).bind(item).executeUpdate();
-			} catch (Exception e) {
-				System.out.println(e.getMessage());
-				e.printStackTrace();
-			}
-			return getItemById(item.getId());
-
 		}
+
+		// Mode modification
+		logger.info("Mise à jour d'un item : " + item);
+		String sql = "update adherent_info set fk_account_id = :fk_account_id, firstname = :firstname, lastname = :lastname, "
+				+ "birsthday = :birsthday, birthplace = :birthplace, licence_number = :licence_number, adresse = :adresse, "
+				+ "zip_code = :zip_code, city = :city, job = :job, tel_number = :tel_number, mobile_number = :mobile_number, "
+				+ "emergency_contact = :emergency_contact, emergency_tel_number = :emergency_tel_number where id = :id";
+
+		try (Connection con = Sql2oDao.sql2o.open()) {
+			con.createQuery(sql).bind(item).executeUpdate();
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+		}
+		return getItemById(item.getId());
 	}
 
 	public static Boolean deleteItem(Long id) {

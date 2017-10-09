@@ -17,7 +17,9 @@ public class PropertiesResource extends AbstractResource {
 			sb.append("var okeanoAppUrl = '").append(AppProperties.getProperties().frontRestAcces).append(":")
 					.append(AppProperties.getProperties().restHostPort).append(AppProperties.API_CONTEXT).append("';")
 					.append(System.getProperty("line.separator"));
-			sb.append("var modeDebug = ").append(AppProperties.getProperties().frontModeDebug).append(";");
+			sb.append("var modeDebug = ").append(AppProperties.getProperties().frontModeDebug).append(";")
+					.append(System.getProperty("line.separator"));
+			sb.append("var applicationVersion = '" + getClass().getPackage().getImplementationVersion() + "';");
 			return sb.toString();
 		});
 	}

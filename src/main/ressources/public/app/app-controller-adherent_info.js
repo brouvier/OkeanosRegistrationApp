@@ -1,9 +1,19 @@
 /* 
  * Contrôleur des informations adhérent
  */
-okeanosAppControllers.controller('adherentInfoCtrl', function ($scope, $http, $filter, securityService, AdherentInfo) {
+okeanosAppControllers.controller('adherentInfoCtrl', function ($scope, $http, $filter, $timeout, securityService, AdherentInfo) {
     securityService.checkIsLogin();
     $scope.modeDebug = modeDebug;
+
+    var initAlerte = function (l, m) {
+        $scope.processRunning = false;
+        $scope.alerte = {
+            level: l,
+            message: m
+        };
+    };
+
+    initAlerte('', '');
 
     AdherentInfo.get({
         id: securityService.getSecurity().curentAccountId
@@ -15,13 +25,19 @@ okeanosAppControllers.controller('adherentInfoCtrl', function ($scope, $http, $f
     });
 
     $scope.saveItem = function () {
+        initAlerte('', '');
+        $scope.processRunning = true;
         console.log('Enregistrement des informations adherent : ' + $scope.adherent.firstname);
         var temp = {};
         jQuery.extend(temp, $scope.adherent);
         console.log("temp.birsthday=" + temp.birsthday);
         temp.birsthday = $filter('date')(temp.birsthday, "yyyy-MM-dd"); // convert filed to string
         console.log("temp.birsthday=" + temp.birsthday);
-        temp.$save();
+        temp.$save(function () {
+            initAlerte('alert-info', 'Mise à jour terminée avec succès.');
+        }, function () {
+            initAlerte('alerte-danger', 'Erreur dans la mise à jour des informations.');
+        });
         console.log('Enregistrement terminé');
     };
 });
