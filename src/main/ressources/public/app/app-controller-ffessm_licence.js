@@ -51,9 +51,13 @@ okeanosAppControllers.controller('ffessmLicenceCtrl', function ($scope, security
         }
         console.log('Suppression de la licence : ' + licence.label);
         $scope.licenceList = [];
-        FfessmLicence.delete(licence);
-
-        $scope.refreshList();
+        FfessmLicence.delete(licence, function (data, responseHeaders) {
+            $scope.refreshList()
+        }, function (data, responseHeaders) {
+            console.log("Erreur");
+            console.log(responseHeaders);
+            console.log(data);
+        });
     };
 
     $scope.refreshList = function () {

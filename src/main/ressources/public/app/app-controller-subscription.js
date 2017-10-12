@@ -62,9 +62,13 @@ okeanosAppControllers.controller('subscriptionCtrl', function ($scope, securityS
         }
         console.log('Suppression du tarif d adhesion : ' + subscription.label);
         $scope.subscriptionList = [];
-        Subscription.delete(subscription);
-
-        $scope.refreshList();
+        Subscription.delete(subscription, function (data, responseHeaders) {
+            $scope.refreshList()
+        }, function (data, responseHeaders) {
+            console.log("Erreur");
+            console.log(responseHeaders);
+            console.log(data);
+        });
     };
 
     $scope.refreshList = function () {

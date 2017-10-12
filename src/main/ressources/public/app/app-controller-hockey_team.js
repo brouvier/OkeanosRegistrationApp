@@ -36,9 +36,13 @@ okeanosAppControllers.controller('hockeyTeamCtrl', function ($scope, securitySer
         }
         console.log('Suppression du compte : ' + team.label);
         $scope.teamList = [];
-        HockeyTeam.delete(team);
-
-        $scope.refreshList();
+        HockeyTeam.delete(team, function (data, responseHeaders) {
+            $scope.refreshList()
+        }, function (data, responseHeaders) {
+            console.log("Erreur");
+            console.log(responseHeaders);
+            console.log(data);
+        });
     };
 
     $scope.refreshList = function () {

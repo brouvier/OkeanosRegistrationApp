@@ -40,9 +40,13 @@ okeanosAppControllers.controller('saisonListCtrl', function ($scope, $filter, se
         }
         console.log('Suppression de la saison : ' + saison.label);
         $scope.saisonList = [];
-        Saison.delete(saison);
-
-        $scope.refreshList();
+        Saison.delete(saison, function (data, responseHeaders) {
+            $scope.refreshList()
+        }, function (data, responseHeaders) {
+            console.log("Erreur");
+            console.log(responseHeaders);
+            console.log(data);
+        });
     };
 
     $scope.refreshList = function () {

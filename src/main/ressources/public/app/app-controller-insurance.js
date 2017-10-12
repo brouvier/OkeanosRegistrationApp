@@ -51,9 +51,13 @@ okeanosAppControllers.controller('insuranceCtrl', function ($scope, securityServ
         }
         console.log('Suppression de la insurance : ' + insurance.label);
         $scope.insuranceList = [];
-        Insurance.delete(insurance);
-
-        $scope.refreshList();
+        Insurance.delete(insurance, function (data, responseHeaders) {
+            $scope.refreshList()
+        }, function (data, responseHeaders) {
+            console.log("Erreur");
+            console.log(responseHeaders);
+            console.log(data);
+        });
     };
 
     $scope.refreshList = function () {

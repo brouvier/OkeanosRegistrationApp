@@ -36,9 +36,15 @@ okeanosAppControllers.controller('divingTrainingCtrl', function ($scope, securit
         }
         console.log('Suppression du compte : ' + training.label);
         $scope.trainingList = [];
-        DivingTraining.delete(training);
-
-        $scope.refreshList();
+        DivingTraining.delete(training,
+            function (data, responseHeaders) {
+                $scope.refreshList()
+            },
+            function (data, responseHeaders) {
+                console.log("Erreur");
+                console.log(responseHeaders);
+                console.log(data);
+            });
     };
 
     $scope.refreshList = function () {
