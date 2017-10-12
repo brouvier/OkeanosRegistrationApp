@@ -55,7 +55,7 @@ public class AdherentInfoDao {
 		if (item.getId() == null) { // Pas d'ID envoyé par le front, on contrôle tout de même qu'il n'existe pas
 									// dans la base
 			AdherentInfo ai = AdherentInfoDao.getItemByAccountId(item.getFk_account_id());
-			if (ai == null) { // Mode création
+			if (ai.getId() == null) { // Mode création
 				logger.info("Création d'un item : " + item);
 				String sql = "insert into adherent_info (fk_account_id, firstname, lastname, birsthday, birthplace, licence_number, adresse, "
 						+ "zip_code, city, job, tel_number, mobile_number, emergency_contact, emergency_tel_number) "
