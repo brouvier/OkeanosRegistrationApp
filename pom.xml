@@ -74,7 +74,13 @@
 		    <groupId>org.apache.commons</groupId>
 		    <artifactId>commons-collections4</artifactId>
 		    <version>4.1</version>
-		</dependency>		
+		</dependency>
+		<dependency>
+		    <groupId>org.flywaydb</groupId>
+		    <artifactId>flyway-core</artifactId>
+		    <version>4.2.0</version>
+		</dependency>
+		
     </dependencies>
 
     <build>
@@ -113,6 +119,7 @@
                     </execution>
                 </executions>
             </plugin>
+            
         </plugins>
     </build>
 

@@ -1,9 +1,3 @@
--- drop schema if exists okeanos;
-
-create schema if not exists okeanos;
-
-use okeanos;
-
 create table if not exists account (
 	id IDENTITY,
 	mail varchar(512),
