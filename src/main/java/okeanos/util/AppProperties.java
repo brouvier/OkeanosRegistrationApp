@@ -30,6 +30,13 @@ public class AppProperties {
 	public final static String trustStorePath = null;
 	public final static String trustStorePassword = null;
 
+	public final static String DB_CONNECT_STRING = "jdbc:h2:file:./h2/okeanos;";
+	public final static String DB_CONNECT_OPTION = "INIT=create schema if not exists okeanos\\;use okeanos;TRACE_LEVEL_FILE=0;";
+
+	public final static String SYSTEM_USER_DIT = System.getProperty("user.dir");
+
+	public final static String DB_LOCATION = "filesystem:" + SYSTEM_USER_DIT + "/h2";
+
 	// Formater
 	public static final DateFormat DATE_FORMATEUR = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	public static final DateFormat DATE_FORMATEUR_MS = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
@@ -42,6 +49,8 @@ public class AppProperties {
 	public final String restHostPort;
 	public final String frontRestAcces;
 	public final String frontModeDebug;
+	public final String dbLogin;
+	public final String dbPassword;
 	public final String mailHostName;
 	public final String mailHostPort;
 	public final String mailHostLogin;
@@ -67,6 +76,9 @@ public class AppProperties {
 		restHostPort = prop.getProperty("restHostPort");
 		frontRestAcces = prop.getProperty("frontRestAcces");
 		frontModeDebug = prop.getProperty("frontModeDebug");
+
+		dbLogin = prop.getProperty("dbLogin");
+		dbPassword = prop.getProperty("dbPassword");
 
 		mailHostName = prop.getProperty("mailHostName");
 		mailHostPort = prop.getProperty("mailHostPort");
@@ -122,6 +134,9 @@ public class AppProperties {
 		prop.setProperty("restHostPort", "8080");
 		prop.setProperty("frontRestAcces", "https://localhost");
 		prop.setProperty("frontModeDebug", "true");
+
+		prop.setProperty("dbLogin", "**Database Login**");
+		prop.setProperty("dbPassword", "**Database Password**");
 
 		prop.setProperty("mailHostName", "ns0.ovh.net");
 		prop.setProperty("mailHostPort", "587");
