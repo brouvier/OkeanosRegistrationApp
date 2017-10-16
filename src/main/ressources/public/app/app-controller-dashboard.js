@@ -47,7 +47,7 @@ okeanosAppControllers.controller('dashboardCtrl', function ($scope, $http, secur
                 $scope.adherentInfoStatus = "Complètes";
             }
 
-            if ($scope.adherent.infoSaison.id == null) {
+            if (!$scope.adherent.infoSaison || $scope.adherent.infoSaison.id == null) {
                 $scope.membershipPanel = "panel-red";
                 $scope.membershipStatus = "A remplir";
             } else {
@@ -55,7 +55,7 @@ okeanosAppControllers.controller('dashboardCtrl', function ($scope, $http, secur
                 $scope.membershipStatus = "Complètes";
             }
 
-            if ($scope.adherent.infoSaison.fk_sick_note_id == null) {
+            if (!$scope.adherent.infoSaison || $scope.adherent.infoSaison.fk_sick_note_id == null) {
                 $scope.documentPanel = "panel-red";
                 $scope.documentStatus = "A remplir";
             } else {
