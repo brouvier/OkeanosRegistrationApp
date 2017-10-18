@@ -3,17 +3,15 @@
 
         <h2>Liste des adhérents</h2>
         <div class="form-group row">
-        <label class="col-sm-3 control-label">Chaîne de caractères à chercher</label>
+            <label class="col-sm-3 control-label">Chaîne de caractères à chercher</label>
             <div class="col-sm-3">
-                <input type="text" ng-model="searchText" class="form-control"/>
+                <input type="text" ng-model="searchText" class="form-control" />
             </div>
         </div>
         <div class="form-group row">
             <label class="col-sm-3 control-label">Saison</label>
             <div class="col-sm-3">
-                <select class="form-control" ng-model="currentSaison"
-                        ng-options="saison as saison.label for saison in saisonList"
-                        required="required">
+                <select class="form-control" ng-model="currentSaison" ng-options="saison as saison.label for saison in saisonList" required="required">
                 </select>
             </div>
         </div>
@@ -66,7 +64,7 @@
 </div>
 
 <div class="modal fade" id="editModal" role="dialog">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg">
 
         <!-- Modal content-->
         <div class="modal-content">
@@ -75,91 +73,91 @@
                 <h3 class="modal-title">Validation de l'adhésion</h3>
             </div>
             <div class="modal-body">
-                <form>
-                    <div class="form-group">
-                        <label for="inputName" class="control-label">Nom</label>
-                        <input id="inputName" type="text" class="form-control" ng-model="modalInfo.lastname" readonly/>
-                    </div>
+                <form class="container-fluid">
+                    <row>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="inputName" class="control-label">Nom</label>
+                                <input id="inputName" type="text" class="form-control" ng-model="modalInfo.lastname" readonly/>
+                            </div>
 
-                    <div class="form-group">
-                        <label for="inputFirstName" class="control-label">Prénom</label>
-                        <input id="inputFirstName" type="text" class="form-control" ng-model="modalInfo.firstname" readonly/>
-                    </div>
+                            <div class="form-group">
+                                <label for="inputFirstName" class="control-label">Prénom</label>
+                                <input id="inputFirstName" type="text" class="form-control" ng-model="modalInfo.firstname" readonly/>
+                            </div>
 
-                    <div class="form-group">
-                        <label for="inputBirthday" class="control-label">Date de naissance</label>
-                        <input id="inputBirthday" type="date" class="form-control" ng-model="modalInfo.birsthday" placeholder="yyyy-MM-dd" readonly/>
-                    </div>
-                    <div class="form-group">
-                        <label for="inputLicenceNumber" class="control-label">Numéro de licence</label>
-                        <input id="inputLicenceNumber" type="text" class="form-control" ng-model="modalInfo.licence_number" />
-                    </div>
-                    <div class="form-group">
-                        <label for="checkbox_start">Adhésion prise en compte</label>
-                        <div class="checkbox">
-                            <label><input id="checkbox_start" type="checkbox" ng-model="modalInfoSaison.validation_start">Démarage de la phase de validation de l'adhésion. Le formulaire d'adhésion ne sera plus modifiable.</label>
+                            <div class="form-group">
+                                <label for="inputBirthday" class="control-label">Date de naissance</label>
+                                <input id="inputBirthday" type="date" class="form-control" ng-model="modalInfo.birsthday" placeholder="yyyy-MM-dd" readonly/>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputLicenceNumber" class="control-label">Numéro de licence</label>
+                                <input id="inputLicenceNumber" type="text" class="form-control" ng-model="modalInfo.licence_number" />
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="checkbox_general_informations">Validation des informations</label>
-                        <div class="checkbox">
-                            <label><input id="checkbox_general_informations" type="checkbox" ng-model="modalInfoSaison.validation_general_informations">Les informations générales sont cohérentes.</label>
+
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="checkbox_start">Processus de validation</label>
+                                <div class="checkbox" data-toggle="tooltip" data-placement="bottom" title="Démarage de la phase de validation de l'adhésion. Le formulaire d'adhésion ne sera plus modifiable.">
+                                    <label><input id="checkbox_start" type="checkbox" ng-model="modalInfoSaison.validation_start">Adhésion prise en compte</label>
+                                </div>
+                                <div class="checkbox" data-toggle="tooltip" data-placement="bottom" title="Les informations générales sont cohérentes.">
+                                    <label><input id="checkbox_general_informations" type="checkbox" ng-model="modalInfoSaison.validation_general_informations">Validation des informations</label>
+                                </div>
+                                <div class="checkbox" data-toggle="tooltip" data-placement="bottom" title="La licence de l'adhérent a été commandée et son numéro est connu.">
+                                    <label><input id="checkbox_licence" type="checkbox" ng-model="modalInfoSaison.validation_licence">Licence FFESSM</label>
+                                </div>
+                                <div class="checkbox" data-toggle="tooltip" data-placement="bottom" title="Le certificat médical est correctement remplis et respecte les contraites de l'activité soihaitée.">
+                                    <label><input id="checkbox_sick_note" type="checkbox" ng-model="modalInfoSaison.validation_sick_note">Certificat médical</label>
+                                </div>
+                                <div class="checkbox" data-toggle="tooltip" data-placement="bottom" title="L'adhérent est majeur ou l'accord parental est correctement remplis.">
+                                    <label><input id="checkbox_parental_agreement" type="checkbox" ng-model="modalInfoSaison.validation_parental_agreement">Accord parental</label>
+                                </div>
+                                <div class="checkbox" data-toggle="tooltip" data-placement="bottom" title="L'adhérent a transmis son payment à un membre du bureau.">
+                                    <label><input id="checkbox_payment_transmitted" type="checkbox" ng-model="modalInfoSaison.validation_payment_transmitted">Adhésion payée</label>
+                                </div>
+                                <div class="checkbox" data-toggle="tooltip" data-placement="bottom" title="Le montant de l'adhésion a été encaissé par le club.">
+                                    <label><input id="checkbox_payment_cashed" type="checkbox" ng-model="modalInfoSaison.validation_payment_cashed">Adhésion encaissé</label>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="checkbox_licence">Licence FFESSM</label>
-                        <div class="checkbox">
-                            <label><input id="checkbox_licence" type="checkbox" ng-model="modalInfoSaison.validation_licence">La licence de l'adhérent a été commandée et son numéro est connu.</label>
+                    </row>
+                    <row>
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label for="validation_commentaire" class="col-sm-2 control-label">Commentaire</label>
+                                <textarea id="validation_commentaire" type="textarea" rows="3" class="form-control" ng-model="modalInfoSaison.validation_comment" style="resize:vertical;" />
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="checkbox_sick_note">Certificat médical</label>
-                        <div class="checkbox">
-                            <label><input id="checkbox_sick_note" type="checkbox" ng-model="modalInfoSaison.validation_sick_note">Le certificat médical est correctement remplis et respecte les contraites de l'activité soihaitée.</label>
+                    </row>
+                    <row ng-show="modeDebug">
+                        <div class="col-sm-12">
+                            <h2 class="page-header">Debug</h2>
+                            <row>
+                                <div class="col-md-6">
+                                    <pre>modalInfo = {{modalInfo | json}}</pre>
+                                </div>
+                                <div class="col-md-6">
+                                    <pre>modalInfoSaison = {{modalInfoSaison | json}}</pre>
+                                </div>
+                            </row>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="checkbox_parental_agreement">Accord parental</label>
-                        <div class="checkbox">
-                            <label><input id="checkbox_parental_agreement" type="checkbox" ng-model="modalInfoSaison.validation_parental_agreement">L'adhérent est majeur ou l'accord parental est correctement remplis.</label>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="checkbox_payment_transmitted">Adhésion payée</label>
-                        <div class="checkbox">
-                            <label><input id="checkbox_payment_transmitted" type="checkbox" ng-model="modalInfoSaison.validation_payment_transmitted">L'adhérent a transmis son payment à un membre du bureau.</label>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="checkbox_payment_cashed">Adhésion encaissé</label>
-                        <div class="checkbox">
-                            <label><input id="checkbox_payment_cashed" type="checkbox" ng-model="modalInfoSaison.validation_payment_cashed">Le montant de l'adhésion a été encaissé par le club.</label>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="validation_commentaire" class="col-sm-2 control-label">Commentaire</label>
-                        <input id="validation_commentaire" type="textarea" class="form-control" ng-model="modalInfoSaison.validation_comment" /></div>
+                    </row>
                 </form>
-                <div class="row" ng-show="modeDebug">
-                    <div>
-                        <h2 class="page-header">Debug</h2>
-                        <pre>modalInfo = {{modalInfo | json}}</pre>
-                        <pre>modalInfoSaison = {{modalInfoSaison | json}}</pre>
-                    </div>
-                </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-success" ng-click="saveItem()">Sauvegarder</button>
-                <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="refreshList()">Fermer</button>
+                <button type="button " class="btn btn-success " ng-click="saveItem() ">Sauvegarder</button>
+                <button type="button " class="btn btn-default " data-dismiss="modal " ng-click="refreshList() ">Fermer</button>
             </div>
         </div>
 
     </div>
 </div>
 
-<div class="row" ng-show="modeDebug">
-    <div class="col-md-12">
-        <h2 class="page-header">Debug</h2>
+<div class="row " ng-show="modeDebug ">
+    <div class="col-md-12 ">
+        <h2 class="page-header ">Debug</h2>
         <pre>currentSaison = {{currentSaison | json}}</pre>
         <pre>saisonList = {{saisonList | json}}</pre>
         <pre>adherentList = {{adherentList | json}}</pre>
