@@ -11,7 +11,10 @@
         <div class="form-group row">
             <label class="col-sm-3 control-label">Saison</label>
             <div class="col-sm-3">
-                <select class="form-control" ng-model="currentSaison" ng-options="saison as saison.label for saison in saisonList" required="required">
+                <select class="form-control" ng-model="currentSaison" required="required">
+                    <option ng-repeat="saison in saisonList" ng-selected="saison.label == currentSaison.label">
+                        {{saison.label}}
+                    </option>
                 </select>
             </div>
         </div>
