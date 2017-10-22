@@ -9,7 +9,7 @@ import okeanos.model.Insurance;
 public class InsuranceDao {
 
 	public static List<Insurance> getAllItems() {
-		String sql = "SELECT id, fk_saison_id, label, price FROM insurance";
+		String sql = "SELECT id, fk_saison_id, label, price FROM insurance ORDER BY label";
 
 		try (Connection con = Sql2oDao.sql2o.open()) {
 			return con.createQuery(sql).executeAndFetch(Insurance.class);
@@ -17,7 +17,7 @@ public class InsuranceDao {
 	}
 
 	public static List<Insurance> getAllItemsForSaison(Long saisonId) {
-		String sql = "SELECT id, fk_saison_id, label, price FROM insurance WHERE fk_saison_id = :saisonId";
+		String sql = "SELECT id, fk_saison_id, label, price FROM insurance WHERE fk_saison_id = :saisonId ORDER BY label";
 
 		try (Connection con = Sql2oDao.sql2o.open()) {
 			return con.createQuery(sql).addParameter("saisonId", saisonId).executeAndFetch(Insurance.class);

@@ -9,7 +9,7 @@ import okeanos.model.FfessmLicence;
 public class FfessmLicenceDao {
 
 	public static List<FfessmLicence> getAllItems() {
-		String sql = "SELECT id, fk_saison_id, label, price FROM ffessm_licence";
+		String sql = "SELECT id, fk_saison_id, label, price FROM ffessm_licence ORDER BY label";
 
 		try (Connection con = Sql2oDao.sql2o.open()) {
 			return con.createQuery(sql).executeAndFetch(FfessmLicence.class);
@@ -17,7 +17,7 @@ public class FfessmLicenceDao {
 	}
 
 	public static List<FfessmLicence> getAllItemsForSaison(Long saisonId) {
-		String sql = "SELECT id, fk_saison_id, label, price FROM ffessm_licence WHERE fk_saison_id = :saisonId";
+		String sql = "SELECT id, fk_saison_id, label, price FROM ffessm_licence WHERE fk_saison_id = :saisonId ORDER BY label";
 
 		try (Connection con = Sql2oDao.sql2o.open()) {
 			return con.createQuery(sql).addParameter("saisonId", saisonId).executeAndFetch(FfessmLicence.class);

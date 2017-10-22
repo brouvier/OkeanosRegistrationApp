@@ -11,7 +11,7 @@ public class AccountDao {
 	public static List<Account> getAllItems(Boolean getPass) {
 		String sql = null;
 		if (getPass)
-			sql = "SELECT id, mail, salt, password, admin FROM account";
+			sql = "SELECT id, mail, salt, password, admin FROM account ORDER BY mail";
 		else
 			sql = "SELECT id, mail, admin FROM account";
 

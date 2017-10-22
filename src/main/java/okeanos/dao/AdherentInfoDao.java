@@ -14,7 +14,7 @@ public class AdherentInfoDao {
 
 	public static List<AdherentInfo> getAllItems() {
 		String sql = "SELECT id, fk_account_id, firstname, lastname, birsthday, birthplace, licence_number, adresse, "
-				+ "zip_code, city, job, tel_number, mobile_number, emergency_contact, emergency_tel_number FROM adherent_info";
+				+ "zip_code, city, job, tel_number, mobile_number, emergency_contact, emergency_tel_number FROM adherent_info ORDER BY firstname";
 
 		try (Connection con = Sql2oDao.sql2o.open()) {
 			return con.createQuery(sql).executeAndFetch(AdherentInfo.class);

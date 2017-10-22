@@ -9,7 +9,7 @@ import okeanos.model.Saison;
 public class SaisonDao {
 
 	public static List<Saison> getAllItems() {
-		String sql = "SELECT id, label, start_date, end_date FROM saison";
+		String sql = "SELECT id, label, start_date, end_date FROM saison ORDER BY label";
 
 		try (Connection con = Sql2oDao.sql2o.open()) {
 			return con.createQuery(sql).executeAndFetch(Saison.class);
