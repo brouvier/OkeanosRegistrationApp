@@ -20,6 +20,7 @@ public class AdherentInfoSaison {
 	// Diving
 	private Long fk_sick_note_id;
 	private Long fk_parental_agreement_id;
+	private Long fk_certificate_licence_id;
 	// Validation process
 	private Boolean validation_start;
 	private Boolean validation_general_informations;
@@ -34,10 +35,10 @@ public class AdherentInfoSaison {
 	public AdherentInfoSaison(Long id, Long fk_account_id, Long fk_saison_id, Long fk_ffessm_licence_id,
 			Long fk_subscription_id, Long fk_insurance_id, Boolean picture_authorisation, Boolean nead_certificate,
 			Long fk_actual_training_id, Long fk_training_id, Long fk_team_id, Long fk_sick_note_id,
-			Long fk_parental_agreement_id, Boolean validation_start, Boolean validation_general_informations,
-			Boolean validation_licence, Boolean validation_sick_note, Boolean validation_parental_agreement,
-			Boolean validation_payment_transmitted, Boolean validation_payment_cashed, String validation_comment,
-			Date createdOn) {
+			Long fk_parental_agreement_id, Long fk_certificate_licence_id, Boolean validation_start,
+			Boolean validation_general_informations, Boolean validation_licence, Boolean validation_sick_note,
+			Boolean validation_parental_agreement, Boolean validation_payment_transmitted,
+			Boolean validation_payment_cashed, String validation_comment, Date createdOn) {
 		super();
 		this.id = id;
 		this.fk_account_id = fk_account_id;
@@ -52,6 +53,7 @@ public class AdherentInfoSaison {
 		this.fk_team_id = fk_team_id;
 		this.fk_sick_note_id = fk_sick_note_id;
 		this.fk_parental_agreement_id = fk_parental_agreement_id;
+		this.fk_certificate_licence_id = fk_certificate_licence_id;
 		this.validation_start = validation_start;
 		this.validation_general_informations = validation_general_informations;
 		this.validation_licence = validation_licence;
@@ -70,9 +72,10 @@ public class AdherentInfoSaison {
 				+ ", fk_insurance_id=" + fk_insurance_id + ", picture_authorisation=" + picture_authorisation
 				+ ", nead_certificate=" + nead_certificate + ", fk_actual_training_id=" + fk_actual_training_id
 				+ ", fk_training_id=" + fk_training_id + ", fk_team_id=" + fk_team_id + ", fk_sick_note_id="
-				+ fk_sick_note_id + ", fk_parental_agreement_id=" + fk_parental_agreement_id + ", validation_start="
-				+ validation_start + ", validation_general_informations=" + validation_general_informations
-				+ ", validation_licence=" + validation_licence + ", validation_sick_note=" + validation_sick_note
+				+ fk_sick_note_id + ", fk_parental_agreement_id=" + fk_parental_agreement_id
+				+ ", fk_certificate_licence_id=" + fk_certificate_licence_id + ", validation_start=" + validation_start
+				+ ", validation_general_informations=" + validation_general_informations + ", validation_licence="
+				+ validation_licence + ", validation_sick_note=" + validation_sick_note
 				+ ", validation_parental_agreement=" + validation_parental_agreement
 				+ ", validation_payment_transmitted=" + validation_payment_transmitted + ", validation_payment_cashed="
 				+ validation_payment_cashed + ", validation_comment=" + validation_comment + ", createdOn=" + createdOn
@@ -253,6 +256,14 @@ public class AdherentInfoSaison {
 
 	public void setValidation_comment(String validation_comment) {
 		this.validation_comment = validation_comment;
+	}
+
+	public Long getFk_certificate_licence_id() {
+		return fk_certificate_licence_id;
+	}
+
+	public void setFk_certificate_licence_id(Long fk_certificate_licence_id) {
+		this.fk_certificate_licence_id = fk_certificate_licence_id;
 	}
 
 }

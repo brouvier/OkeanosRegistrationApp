@@ -127,11 +127,43 @@ public class AdherentInfoSaisonResource extends AbstractResource {
 			}
 
 			// Si le doc existe on l'envoit
-			if (item.getFk_sick_note_id() != null) {
+			if (item.getFk_parental_agreement_id() != null) {
 				writeAdherentDocument(item.getFk_parental_agreement_id(), response);
 				return response.raw();
 			} else
 				return "Erreur - Aucun accord parental disponible.";
+		});
+
+		post(ressourcePath + "/:id/certificate_licence", (request, response) -> {
+			setSecurity(request, response);
+			AdherentInfoSaison item = AdherentInfoSaisonDao.getItemById(new Long(request.params(":id")));
+
+			// Accès autorisé au propriétaire du document et aux admin
+			if (!SecurityResource.isAdmin(request)
+					&& !SecurityResource.isLoginAndCurrentAccount(request, item.getFk_account_id())) {
+				throw new IllegalAccessException("Illegal Access");
+			}
+
+			saveCertificateLicence(request, response, item);
+			return true;
+		});
+
+		get(ressourcePath + "/:id/certificate_licence", (request, response) -> {
+			setSecurity(request, response);
+			AdherentInfoSaison item = AdherentInfoSaisonDao.getItemById(new Long(request.params(":id")));
+
+			// Accès autorisé au propriétaire du document et aux admin
+			if (!SecurityResource.isAdmin(request)
+					&& !SecurityResource.isLoginAndCurrentAccount(request, item.getFk_account_id())) {
+				throw new IllegalAccessException("Illegal Access");
+			}
+
+			// Si le doc existe on l'envoit
+			if (item.getFk_certificate_licence_id() != null) {
+				writeAdherentDocument(item.getFk_certificate_licence_id(), response);
+				return response.raw();
+			} else
+				return "Erreur - Aucun certificat de licence disponible.";
 		});
 	}
 
@@ -157,6 +189,19 @@ public class AdherentInfoSaisonResource extends AbstractResource {
 		// Mise à jour des infos adhérent
 		if (ais.getFk_parental_agreement_id() == null) {
 			ais.setFk_parental_agreement_id(parentalAgreement.getId());
+			AdherentInfoSaisonDao.save(ais);
+		}
+	}
+
+	private void saveCertificateLicence(Request request, Response response, AdherentInfoSaison ais)
+			throws IOException, ServletException {
+		// Mise à jour du document
+		AdherentDocument certificateLicence = readAdherentDocument(ais.getFk_parental_agreement_id(), request);
+		logger.info("certificateLicence : {}", certificateLicence);
+
+		// Mise à jour des infos adhérent
+		if (ais.getFk_certificate_licence_id() == null) {
+			ais.setFk_certificate_licence_id(certificateLicence.getId());
 			AdherentInfoSaisonDao.save(ais);
 		}
 	}

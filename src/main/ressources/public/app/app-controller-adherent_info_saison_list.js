@@ -1,7 +1,7 @@
 /* 
  * Contrôleur de la liste des formations de plongée
  */
-okeanosAppControllers.controller('adherentInfoSaisonListCtrl', function ($scope, $http, $filter, securityService, Saison, AdherentInfo, AdherentInfoSaison) {
+okeanosAppControllers.controller('adherentInfoSaisonListCtrl', function ($scope, $http, $filter, Upload, securityService, Saison, AdherentInfo, AdherentInfoSaison) {
     securityService.checkIsAdmin();
     $scope.modeDebug = modeDebug;
 
@@ -39,7 +39,9 @@ okeanosAppControllers.controller('adherentInfoSaisonListCtrl', function ($scope,
         }
     });
 
-    /* Gestion des fichiers joints */
+    /******************************
+     * Gestion des fichiers joints
+     *****************************/
     $scope.getSickNoteUrl = function (infoSaison) {
         if (infoSaison.id != null)
             return okeanoAppUrl + "adherent_info_saison/" + infoSaison.id + "/sick_note";
@@ -54,8 +56,16 @@ okeanosAppControllers.controller('adherentInfoSaisonListCtrl', function ($scope,
             return null;
     };
 
+    $scope.getCertificateLicenceUrl = function (infoSaison) {
+        if (infoSaison && infoSaison.id != null)
+            return okeanoAppUrl + "adherent_info_saison/" + infoSaison.id + "/certificate_licence";
+        else
+            return null;
+    };
 
-    /* Gestion de la pop up de validation */
+    /**************************************
+     * Gestion de la pop up de validation
+     *************************************/
     $scope.edit = function (accountId, infoSaisonId) {
         AdherentInfo.get({
             id: accountId
@@ -88,7 +98,7 @@ okeanosAppControllers.controller('adherentInfoSaisonListCtrl', function ($scope,
         getList($scope.currentSaisonId);
     };
 
-    /* Gestion des alters sur la liste */
+    /* Gestion des alerts sur la liste */
     $scope.adherentClass = function (adherent) {
         if (adherent.infoSaison.validation_payment_cashed == true) {
             return "";
@@ -97,5 +107,35 @@ okeanosAppControllers.controller('adherentInfoSaisonListCtrl', function ($scope,
             return "warning";
         };
         return "danger";
+    };
+
+    /*****************
+     * Import doc
+     *****************/
+    // upload on form submit
+    $scope.certificateLicenceSubmit = function () {
+        if ($scope.validationAdherentInfoSaisonForm.certificateLicenceFile.$valid && $scope.certificateLicenceFile) {
+            $scope.upload($scope.certificateLicenceFile, $scope.getCertificateLicenceUrl($scope.modalInfoSaison));
+            $scope.certificateLicenceFile = null;
+        }
+    };
+
+    // upload on file
+    $scope.upload = function (file, url) {
+        Upload.upload({
+            url: url,
+            data: {
+                file: file
+            }
+        }).then(function (resp) {
+            console.log('Success ' + resp.config.data.file.name + 'uploaded. Response: ' + resp.data);
+        }, function (resp) {
+            console.log('Error status: ' + resp.status);
+        }, function (evt) {
+            var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+            console.log('progress: ' + progressPercentage + '% ' + evt.config.data.file.name);
+        });
+
+        getList($scope.currentSaisonId);
     };
 });

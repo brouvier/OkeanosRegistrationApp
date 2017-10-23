@@ -15,7 +15,7 @@ public class AdherentInfoSaisonDao {
 	public static List<AdherentInfoSaison> getAllItems() {
 		String sql = "SELECT id, fk_account_id, fk_saison_id, fk_ffessm_licence_id, fk_subscription_id, "
 				+ "fk_insurance_id, picture_authorisation, nead_certificate, fk_actual_training_id, fk_training_id, "
-				+ "fk_team_id, fk_sick_note_id, fk_parental_agreement_id, validation_start, "
+				+ "fk_team_id, fk_sick_note_id, fk_parental_agreement_id, fk_certificate_licence_id, validation_start, "
 				+ "validation_general_informations, validation_licence, validation_sick_note, "
 				+ "validation_parental_agreement, validation_payment_transmitted, validation_payment_cashed, "
 				+ "validation_comment FROM adherent_info_saison";
@@ -28,7 +28,7 @@ public class AdherentInfoSaisonDao {
 	public static List<AdherentInfoSaison> getAllItemsForSaison(Long saisonId) {
 		String sql = "SELECT id, fk_account_id, fk_saison_id, fk_ffessm_licence_id, fk_subscription_id, "
 				+ "fk_insurance_id, picture_authorisation, nead_certificate, fk_actual_training_id, fk_training_id, "
-				+ "fk_team_id, fk_sick_note_id, fk_parental_agreement_id, validation_start, validation_general_informations, "
+				+ "fk_team_id, fk_sick_note_id, fk_parental_agreement_id, fk_certificate_licence_id, validation_start, validation_general_informations, "
 				+ "validation_licence, validation_sick_note, validation_parental_agreement, validation_payment_transmitted, "
 				+ "validation_payment_cashed, validation_comment FROM adherent_info_saison WHERE fk_saison_id = :saisonId ORDER BY id";
 
@@ -40,7 +40,7 @@ public class AdherentInfoSaisonDao {
 	public static AdherentInfoSaison getItemById(Long id) {
 		String sql = "SELECT id, fk_account_id, fk_saison_id, fk_ffessm_licence_id, fk_subscription_id, "
 				+ "fk_insurance_id, picture_authorisation, nead_certificate, fk_actual_training_id, fk_training_id, "
-				+ "fk_team_id, fk_sick_note_id, fk_parental_agreement_id, validation_start, "
+				+ "fk_team_id, fk_sick_note_id, fk_parental_agreement_id, fk_certificate_licence_id, validation_start, "
 				+ "validation_general_informations, validation_licence, validation_sick_note, "
 				+ "validation_parental_agreement, validation_payment_transmitted, validation_payment_cashed, "
 				+ "validation_comment FROM adherent_info_saison WHERE id = :id";
@@ -98,7 +98,7 @@ public class AdherentInfoSaisonDao {
 				+ "fk_ffessm_licence_id = :fk_ffessm_licence_id, fk_subscription_id = :fk_subscription_id, "
 				+ "fk_insurance_id = :fk_insurance_id, picture_authorisation = :picture_authorisation, "
 				+ "fk_actual_training_id = :fk_actual_training_id, fk_training_id = :fk_training_id, "
-				+ "fk_team_id = :fk_team_id, fk_sick_note_id = :fk_sick_note_id, fk_parental_agreement_id = :fk_parental_agreement_id, "
+				+ "fk_team_id = :fk_team_id, fk_sick_note_id = :fk_sick_note_id, fk_parental_agreement_id = :fk_parental_agreement_id, fk_certificate_licence_id = :fk_certificate_licence_id, "
 				+ "validation_start = :validation_start, validation_general_informations = :validation_general_informations, "
 				+ "validation_licence = :validation_licence, validation_sick_note = :validation_sick_note, "
 				+ "validation_parental_agreement = :validation_parental_agreement, validation_payment_transmitted = :validation_payment_transmitted, "

@@ -28,6 +28,7 @@
                         <th>Adhésion</th>
                         <th>Assurance</th>
                         <th>Certificat médical</th>
+                        <th>Certificat de licence</th>
                         <th>Accord parental</th>
                         <th>Contacter par mail</th>
                         <th>Editer</th>
@@ -41,11 +42,15 @@
                         <td>{{adherent.licence.label}}</td>
                         <td>{{adherent.subscription.label}}</td>
                         <td>{{adherent.insurance.label}}</td>
-                        <td>
+                        <td class="text-center">
                             <a href="{{getSickNoteUrl(adherent.infoSaison)}}" target="_blank" ng-show="adherent.infoSaison.fk_sick_note_id">
                                 <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span></a><span class="glyphicon glyphicon-ok" aria-hidden="true" style="color:forestgreen" ng-show='adherent.infoSaison.validation_sick_note == true'></span>
                         </td>
-                        <td>
+                        <td class="text-center">
+                            <a href="{{getCertificateLicenceUrl(adherent.infoSaison)}}" target="_blank" ng-show="adherent.infoSaison.fk_certificate_licence_id">
+                                <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span><span class="glyphicon glyphicon-ok" aria-hidden="true" style="color:forestgreen"></span></a>
+                        </td>
+                        <td class="text-center">
                             <a href="{{getParentalAgreementUrl(adherent.infoSaison)}}" target="_blank" ng-show="adherent.infoSaison.fk_parental_agreement_id">
                                 <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span></a><span class="glyphicon glyphicon-ok" aria-hidden="true" style="color:forestgreen" ng-show='adherent.infoSaison.validation_parental_agreement == true'></span>
                         </td>
@@ -73,7 +78,7 @@
                 <h3 class="modal-title">Validation de l'adhésion</h3>
             </div>
             <div class="modal-body">
-                <form class="container-fluid">
+                <form class="container-fluid" name="validationAdherentInfoSaisonForm" role="form">
                     <row>
                         <div class="col-sm-6">
                             <div class="form-group">
@@ -142,6 +147,14 @@
                     </row>
                     <row>
                         <div class="col-sm-12">
+                            <div class="form-group">
+                                <input class="btn" ngf-select ng-model="certificateLicenceFile" name="certificateLicenceFile" type="file" ngf-accept="'.pdf'" ngf-pattern="'.pdf'" ngf-max-size="1MB">
+                                <i ng-show="validationAdherentInfoSaisonForm.certificateLicenceFile.$error.maxSize">File too large {{errorFile.size / 1000000|number:1}}MB: max 1M</i>
+                                <i ng-show="validationAdherentInfoSaisonForm.certificateLicenceFile.$error.pattern">Erreur de format de fichier</i>
+                                <button class="btn btn-warning" ng-click="certificateLicenceFile = null" ng-show="certificateLicenceFile">Annuler</button>
+                                <button class="btn btn-info" type="submit" ng-click="certificateLicenceSubmit()" ng-show="certificateLicenceFile">Importer le fichier</button>
+                                <div class="alert alert-info" ng-show="modalInfoSaison.fk_certificate_licence_id"><a href="{{getCertificateLicenceUrl(modalInfoSaison)}}" target="_blank">Télécharger le fichier existant</a></div>
+                            </div>
                             <div class="form-group">
                                 <label for="validation_commentaire" class="col-sm-2 control-label">Commentaire</label>
                                 <textarea id="validation_commentaire" type="textarea" rows="3" class="form-control" ng-model="modalInfoSaison.validation_comment" style="resize:vertical;" />
