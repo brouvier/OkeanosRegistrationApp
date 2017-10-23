@@ -87,16 +87,33 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="inputBirthday" class="control-label">Date de naissance</label>
-                                <input id="inputBirthday" type="date" class="form-control" ng-model="modalInfo.birsthday" placeholder="yyyy-MM-dd" readonly/>
+                                <label for="inputAddress" class="control-label">Adresse</label>
+                                <input id="inputAddress" type="text" class="form-control" ng-model="modalInfo.adresse" readonly/>
                             </div>
+
                             <div class="form-group">
-                                <label for="inputLicenceNumber" class="control-label">Numéro de licence</label>
-                                <input id="inputLicenceNumber" type="text" class="form-control" ng-model="modalInfo.licence_number" />
+                                <label for="inputPostalCode" class="control-label">Code postal</label>
+                                <input id="inputPostalCode" type="tel" class="form-control" ng-model="modalInfo.zip_code" readonly/>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="inputCity" class="control-label">Ville</label>
+                                <input id="inputCity" type="text" class="form-control" ng-model="modalInfo.city" readonly/>
                             </div>
                         </div>
 
                         <div class="col-sm-6">
+
+                            <div class="form-group">
+                                <label for="inputBirthday" class="control-label">Date de naissance</label>
+                                <input id="inputBirthday" type="date" class="form-control" ng-model="modalInfo.birsthday" placeholder="yyyy-MM-dd" readonly/>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="inputLicenceNumber" class="control-label">Numéro de licence</label>
+                                <input id="inputLicenceNumber" type="text" class="form-control" ng-model="modalInfo.licence_number" />
+                            </div>
+
                             <div class="form-group">
                                 <label for="checkbox_start">Processus de validation</label>
                                 <div class="checkbox" data-toggle="tooltip" data-placement="bottom" title="Démarage de la phase de validation de l'adhésion. Le formulaire d'adhésion ne sera plus modifiable.">
@@ -147,8 +164,8 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button " class="btn btn-success " ng-click="saveItem() ">Sauvegarder</button>
-                <button type="button " class="btn btn-default " data-dismiss="modal" ng-click="refreshList() ">Fermer</button>
+                <button type="button " class="btn btn-success " data-dismiss="modal" ng-click="saveItem()">Sauvegarder</button>
+                <button type="button " class="btn btn-default " data-dismiss="modal" ng-click="refreshList()">Fermer</button>
             </div>
         </div>
 
