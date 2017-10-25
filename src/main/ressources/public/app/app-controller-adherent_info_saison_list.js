@@ -67,18 +67,27 @@ okeanosAppControllers.controller('adherentInfoSaisonListCtrl', function ($scope,
      * Gestion de la pop up de validation
      *************************************/
     $scope.edit = function (accountId, infoSaisonId) {
-        AdherentInfo.get({
-            id: accountId
-        }, function (ai, getResponseHeaders) {
-            $scope.modalInfo = ai; // get row data
-            $scope.modalInfo.birsthday = new Date($scope.modalInfo.birsthday); // convert filed to date
-        });
-        AdherentInfoSaison.get({
-            id: infoSaisonId
-        }, function (ai, getResponseHeaders) {
-            $scope.modalInfoSaison = ai; // get row data
-            console.log($scope.modalInfoSaison);
-        });
+        console.log('Edit : accountId = [' + accountId + '], infoSaisonId = [' + infoSaisonId + ']');
+        if (accountId !== undefined) {
+            AdherentInfo.get({
+                id: accountId
+            }, function (ai, getResponseHeaders) {
+                $scope.modalInfo = ai; // get row data
+                $scope.modalInfo.birsthday = new Date($scope.modalInfo.birsthday); // convert filed to date
+            });
+        } else {
+            $scope.modalInfo = null;
+        };
+        if (infoSaisonId !== undefined) {
+            AdherentInfoSaison.get({
+                id: infoSaisonId
+            }, function (ais, getResponseHeaders) {
+                $scope.modalInfoSaison = ais; // get row data
+                console.log($scope.modalInfoSaison);
+            });
+        } else {
+            $scope.modalInfoSaison = null;
+        };
     };
 
     $scope.saveItem = function () {
@@ -89,10 +98,14 @@ okeanosAppControllers.controller('adherentInfoSaisonListCtrl', function ($scope,
         }
         console.log('Enregistrement d une licence : ' + $scope.modalLabel);
         var temp = {};
-        jQuery.extend(temp, $scope.modalInfo);
-        temp.birsthday = $filter('date')(temp.birsthday, "yyyy-MM-dd"); // convert filed to string
-        temp.$save();
-        $scope.modalInfoSaison.$save();
+        if ($scope.modalInfo !== null) {
+            jQuery.extend(temp, $scope.modalInfo);
+            temp.birsthday = $filter('date')(temp.birsthday, "yyyy-MM-dd"); // convert filed to string
+            temp.$save();
+        }
+        if ($scope.modalInfoSaison !== null) {
+            $scope.modalInfoSaison.$save();
+        }
         console.log('Enregistrement terminé');
 
         getList($scope.currentSaisonId);
