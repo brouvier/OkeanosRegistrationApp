@@ -10,9 +10,9 @@ okeanosAppControllers.controller('adherentInfoSaisonListCtrl', function ($scope,
             $scope.saisonList = response.data;
         });
 
-    var getList = function (saisonId) {
+    $scope.refreshList = function () {
         /* Recherche des informations des adhésion */
-        $http.get(okeanoAppUrl + '/dashboard/saison/' + saisonId)
+        $http.get(okeanoAppUrl + '/dashboard/saison/' + $scope.currentSaisonId)
             .then(function (response) {
                 $scope.adherentList = response.data;
                 for (var i = 0; i < $scope.adherentList.length; i++) {
@@ -20,7 +20,8 @@ okeanosAppControllers.controller('adherentInfoSaisonListCtrl', function ($scope,
                     if (adherent.infoadherent && adherent.infoadherent.info && adherent.info.birsthday) {
                         adherent.info.birsthday = new Date(adherent.info.birsthday); // convert filed to date
                     }
-                }
+                };
+                console.log('Liste des adhérents mise à jour');
             });
     };
 
@@ -35,7 +36,7 @@ okeanosAppControllers.controller('adherentInfoSaisonListCtrl', function ($scope,
         console.log('currentSaisonId == ' + $scope.currentSaisonId);
         if ($scope.currentSaisonId != null) {
             console.log('currentSaisonId have change !');
-            getList($scope.currentSaisonId);
+            $scope.refreshList();
         }
     });
 
@@ -108,7 +109,7 @@ okeanosAppControllers.controller('adherentInfoSaisonListCtrl', function ($scope,
         }
         console.log('Enregistrement terminé');
 
-        getList($scope.currentSaisonId);
+        $scope.refreshList();
     };
 
     /* Gestion des alerts sur la liste */
@@ -149,6 +150,6 @@ okeanosAppControllers.controller('adherentInfoSaisonListCtrl', function ($scope,
             console.log('progress: ' + progressPercentage + '% ' + evt.config.data.file.name);
         });
 
-        getList($scope.currentSaisonId);
+        $scope.refreshList();
     };
 });
