@@ -76,6 +76,7 @@ public class HockeyTeamResource extends AbstractResource {
 		get(ressourcePath + "/binder_team/:teamId/saison/:saisonId", (request, response) -> {
 			setSecurity(request, response);
 
+			// Acces restreint aux administrateurs
 			if (!SecurityResource.isAdmin(request)) {
 				throw new IllegalAccessException("Illegal Access");
 			}
@@ -83,6 +84,7 @@ public class HockeyTeamResource extends AbstractResource {
 			HockeyTeam team = HockeyTeamDao.getItemById(new Long(request.params(":teamId")));
 			Saison saison = SaisonDao.getItemById(new Long(request.params(":saisonId")));
 
+			// Contrôle de la validité des paramètres
 			if (team.getId() == null || saison.getId() == null) {
 				throw new IllegalStateException("Missing Parameter");
 			}
