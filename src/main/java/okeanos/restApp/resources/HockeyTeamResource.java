@@ -89,7 +89,7 @@ public class HockeyTeamResource extends AbstractResource {
 				throw new IllegalStateException("Missing Parameter");
 			}
 
-			return sendPDFFile(response, mergePDFFile(team.getId(), saison.getId()));
+			return sendPDFFile(response, createBinderPDF(team.getId(), saison.getId()));
 		});
 	}
 
@@ -101,7 +101,7 @@ public class HockeyTeamResource extends AbstractResource {
 	 *            Identifiant de l'équipe dont les documents doivent être extraient
 	 * @return Le PDF mergé sous la forme d'un tableau de byte
 	 */
-	protected byte[] mergePDFFile(Long teamId, Long saisonId) throws IOException, IllegalStateException {
+	protected byte[] createBinderPDF(Long teamId, Long saisonId) throws IOException, IllegalStateException {
 		byte[] bytes = null;
 
 		try (ByteArrayOutputStream outputStream = new ByteArrayOutputStream();) {
@@ -110,26 +110,23 @@ public class HockeyTeamResource extends AbstractResource {
 
 			List<AdherentInfoSaison> teamMember = AdherentInfoSaisonDao.getAllItemsForSaison(saisonId, teamId);
 			logger.warn("Nb adherents : {}", teamMember.size());
+			logger.warn("Liste des adherents : {}", teamMember);
 
 			if (teamMember == null || teamMember.size() == 0) {
 				throw new IllegalStateException("Missing Parameter");
 			}
 
-			for (AdherentInfoSaison item : AdherentInfoSaisonDao.getAllItems()) {
+			for (AdherentInfoSaison item : teamMember) {
 				// logger.warn("Adherent id {}, Doc id {}", item.getId(),
 				// item.getFk_sick_note_id());
+				if (item.getFk_certificate_licence_id() != null) {
+					mergeDoc(merger, AdherentDocumentDao.getItemById(item.getFk_certificate_licence_id()));
+				}
 				if (item.getFk_sick_note_id() != null) {
-					AdherentDocument doc = AdherentDocumentDao.getItemById(item.getFk_sick_note_id());
-					// logger.warn("Doc {}", doc);
-
-					if ("application/pdf".equals(doc.getFile_type())) {
-						try (InputStream inputStream = new ByteArrayInputStream(doc.getData());) {
-							PdfDocument srcDoc1 = new PdfDocument(new PdfReader(inputStream));
-							merger.merge(srcDoc1, 1, srcDoc1.getNumberOfPages());
-							srcDoc1.close();
-						}
-
-					}
+					mergeDoc(merger, AdherentDocumentDao.getItemById(item.getFk_sick_note_id()));
+				}
+				if (item.getFk_parental_agreement_id() != null) {
+					mergeDoc(merger, AdherentDocumentDao.getItemById(item.getFk_parental_agreement_id()));
 				}
 			}
 
@@ -138,6 +135,17 @@ public class HockeyTeamResource extends AbstractResource {
 			bytes = outputStream.toByteArray();
 		}
 		return bytes;
+	}
+
+	protected void mergeDoc(PdfMerger merger, AdherentDocument doc) throws IOException {
+		if ("application/pdf".equals(doc.getFile_type())) {
+			try (InputStream inputStream = new ByteArrayInputStream(doc.getData());) {
+				PdfDocument srcDoc1 = new PdfDocument(new PdfReader(inputStream));
+				merger.merge(srcDoc1, 1, srcDoc1.getNumberOfPages());
+				srcDoc1.close();
+			}
+
+		}
 	}
 
 	/**

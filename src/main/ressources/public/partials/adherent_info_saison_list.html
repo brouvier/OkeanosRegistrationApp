@@ -108,18 +108,24 @@
                                 <label for="inputCity" class="control-label">Ville</label>
                                 <input id="inputCity" type="text" class="form-control" ng-model="modalInfo.city" readonly/>
                             </div>
-                        </div>
-
-                        <div class="col-sm-6">
 
                             <div class="form-group">
                                 <label for="inputBirthday" class="control-label">Date de naissance</label>
                                 <input id="inputBirthday" type="date" class="form-control" ng-model="modalInfo.birsthday" placeholder="yyyy-MM-dd" readonly/>
                             </div>
+                        </div>
+
+                        <div class="col-sm-6">
 
                             <div class="form-group">
                                 <label for="inputLicenceNumber" class="control-label">Numéro de licence</label>
                                 <input id="inputLicenceNumber" type="text" class="form-control" ng-model="modalInfo.licence_number" />
+                            </div>
+
+
+                            <div class="form-group">
+                                <label for="selectTeam" class="control-label">Hockey - Equipe : </label>
+                                <select id="selectTeam" class="form-control" ng-model="modalInfoSaison.fk_team_id" ng-options="team.id as team.label for team in hockeyTeamList"></select>
                             </div>
 
                             <div class="form-group">
@@ -151,7 +157,8 @@
                     <row>
                         <div class="col-sm-12">
                             <div class="form-group">
-                                <input class="btn" ngf-select ng-model="certificateLicenceFile" name="certificateLicenceFile" type="file" ngf-accept="'.pdf'" ngf-pattern="'.pdf'" ngf-max-size="1MB">
+                                <label for="certificateLicenceFile" class="control-label">Attestation de licence FFESSM : </label>
+                                <input class="btn" ngf-select id="certificateLicenceFile" ng-model="certificateLicenceFile" name="certificateLicenceFile" type="file" ngf-accept="'.pdf'" ngf-pattern="'.pdf'" ngf-max-size="1MB">
                                 <i ng-show="validationAdherentInfoSaisonForm.certificateLicenceFile.$error.maxSize">File too large {{errorFile.size / 1000000|number:1}}MB: max 1M</i>
                                 <i ng-show="validationAdherentInfoSaisonForm.certificateLicenceFile.$error.pattern">Erreur de format de fichier</i>
                                 <button class="btn btn-warning" ng-click="certificateLicenceFile = null" ng-show="certificateLicenceFile">Annuler</button>

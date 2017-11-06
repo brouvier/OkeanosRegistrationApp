@@ -1,9 +1,11 @@
 /* 
  * Contrôleur de la liste des formations de plongée
  */
-okeanosAppControllers.controller('adherentInfoSaisonListCtrl', function ($scope, $http, $filter, Upload, securityService, Saison, AdherentInfo, AdherentInfoSaison) {
+okeanosAppControllers.controller('adherentInfoSaisonListCtrl', function ($scope, $http, $filter, Upload, securityService, Saison, AdherentInfo, AdherentInfoSaison, HockeyTeam) {
     securityService.checkIsAdmin();
     $scope.modeDebug = modeDebug;
+
+    $scope.hockeyTeamList = HockeyTeam.query();
 
     $http.get(okeanoAppUrl + '/saison')
         .then(function (response) {

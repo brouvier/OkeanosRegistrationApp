@@ -88,6 +88,11 @@ okeanosApp.config(['$routeProvider', '$httpProvider',
                 controller: 'sickNoteUploadCtrl',
                 authorized: true
             })
+            .when('/teamBinder', {
+                templateUrl: 'partials/hockey_team_binder.html',
+                controller: 'hockeyTeamBinderCtrl',
+                authorized: true
+            })
             .otherwise({
                 redirectTo: '/dashboard'
             });

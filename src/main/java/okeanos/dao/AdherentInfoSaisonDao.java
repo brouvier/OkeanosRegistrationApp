@@ -33,6 +33,9 @@ public class AdherentInfoSaisonDao {
 		String teamClause = "";
 		if (teamId != null) {
 			teamClause = " AND fk_team_id = :teamId ";
+		} else {
+			teamId = new Long(0);
+			teamClause = " AND 0 = :teamId ";
 		}
 
 		String sql = "SELECT id, fk_account_id, fk_saison_id, fk_ffessm_licence_id, fk_subscription_id, "
@@ -42,6 +45,7 @@ public class AdherentInfoSaisonDao {
 				+ "validation_payment_cashed, validation_comment FROM adherent_info_saison "
 				+ "WHERE fk_saison_id = :saisonId " + teamClause + "ORDER BY id";
 
+		logger.warn("teamId = {}", teamId);
 		try (Connection con = Sql2oDao.sql2o.open()) {
 			return con.createQuery(sql).addParameter("saisonId", saisonId).addParameter("teamId", teamId)
 					.executeAndFetch(AdherentInfoSaison.class);
