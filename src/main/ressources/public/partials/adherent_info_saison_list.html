@@ -24,8 +24,6 @@
                     <tr>
                         <th>Prénom</th>
                         <th>Nom</th>
-                        <th>Numéro de téléphone</th>
-                        <th>Date de naissance</th>
                         <th>Numéro de licence</th>
                         <th>Licence</th>
                         <th>Adhésion</th>
@@ -39,8 +37,6 @@
                     <tr ng-repeat="adherent in adherentList | filter:searchText" ng-click="gotoEditForm(user)" class="{{adherentClass(adherent)}}">
                         <td>{{adherent.info.firstname}}</td>
                         <td>{{adherent.info.lastname}}</td>
-                        <td>{{adherent.info.tel_number}}</td>
-                        <td>{{adherent.info.birsthday | date:'dd/MM/yyyy'}}</td>
                         <td>{{adherent.info.licence_number}}</td>
                         <td>{{adherent.licence.label}}</td>
                         <td>{{adherent.subscription.label}}</td>
@@ -110,12 +106,17 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="inputBirthday" class="control-label">Date de naissance</label>
-                                <input id="inputBirthday" type="date" class="form-control" ng-model="modalInfo.birsthday" placeholder="yyyy-MM-dd" readonly/>
+                                <label for="inputTel" class="control-label">Téléphone</label>
+                                <input id="inputTel" type="text" class="form-control" ng-model="modalInfo.tel_number" readonly/>
                             </div>
                         </div>
 
                         <div class="col-sm-6">
+
+                            <div class="form-group">
+                                <label for="inputBirthday" class="control-label">Date de naissance</label>
+                                <input id="inputBirthday" type="date" class="form-control" ng-model="modalInfo.birsthday" placeholder="yyyy-MM-dd" readonly/>
+                            </div>
 
                             <div class="form-group">
                                 <label for="inputLicenceNumber" class="control-label">Numéro de licence</label>
