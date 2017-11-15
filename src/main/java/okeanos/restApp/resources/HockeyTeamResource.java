@@ -10,12 +10,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
-import javax.servlet.ServletOutputStream;
-import javax.servlet.http.HttpServletResponse;
-
-import org.apache.commons.io.IOUtils;
-import org.eclipse.jetty.io.EofException;
-
 import com.google.gson.Gson;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfReader;
@@ -31,7 +25,6 @@ import okeanos.model.AdherentInfoSaison;
 import okeanos.model.HockeyTeam;
 import okeanos.model.Saison;
 import okeanos.util.AppProperties;
-import spark.Response;
 
 public class HockeyTeamResource extends AbstractResource {
 
@@ -89,7 +82,7 @@ public class HockeyTeamResource extends AbstractResource {
 				throw new IllegalStateException("Missing Parameter");
 			}
 
-			return sendPDFFile(response, createBinderPDF(team.getId(), saison.getId()));
+			return PdfFileResponse(response, createBinderPDF(team.getId(), saison.getId()), "ClasseurEquipe");
 		});
 	}
 
@@ -110,7 +103,7 @@ public class HockeyTeamResource extends AbstractResource {
 
 			List<AdherentInfoSaison> teamMember = AdherentInfoSaisonDao.getAllItemsForSaison(saisonId, teamId);
 			logger.warn("Nb adherents : {}", teamMember.size());
-			logger.warn("Liste des adherents : {}", teamMember);
+			// logger.warn("Liste des adherents : {}", teamMember);
 
 			if (teamMember == null || teamMember.size() == 0) {
 				throw new IllegalStateException("Missing Parameter");
@@ -146,27 +139,6 @@ public class HockeyTeamResource extends AbstractResource {
 			}
 
 		}
-	}
-
-	/**
-	 * Formatage d'un PDF pour l'envoyer dans la réponse du serveur
-	 * 
-	 * @param bytes
-	 *            Le fichier PDF sous forme de tableau de Byte
-	 */
-	protected HttpServletResponse sendPDFFile(Response response, byte[] bytes) throws IOException {
-		response.type("application/pdf");
-		response.header("Content-Disposition", "filename=\"ClasseurEquipe.pdf\"");
-		response.raw().setContentLengthLong(bytes.length);
-
-		// Construction du flux de réponse
-		try (ServletOutputStream out = response.raw().getOutputStream();
-				ByteArrayInputStream in = new ByteArrayInputStream(bytes);) {
-			IOUtils.copyLarge(in, out);
-		} catch (EofException eofe) { // no problem
-		}
-
-		return response.raw();
 	}
 
 }

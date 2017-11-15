@@ -4,6 +4,7 @@
 okeanosAppControllers.controller('dashboardCtrl', function ($scope, $http, securityService) {
     securityService.checkIsLogin();
     $scope.modeDebug = modeDebug;
+    $scope.okeanoAppUrl = okeanoAppUrl;
 
     $scope.adherentInfoPanel = "panel-red";
     $scope.adherentInfoStatus = "Inconnu !!!";

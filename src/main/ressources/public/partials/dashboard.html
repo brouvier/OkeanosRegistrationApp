@@ -65,16 +65,25 @@
                     </div>
                 </div>
             </div>
-            <a href="#/adherentInfoSaison">
-                <div class="panel-footer">
+            <div class="panel-body" ng_show="adherent.infoSaison.validation_payment_cashed">
+                <a href="{{okeanoAppUrl}}/adherent_info_saison/{{adherent.infoSaison.id}}/attestation" target="_blank">
+                    <span class="pull-left">Attestation d'adhésion</span>
+                    <span class="pull-right"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span></span>
+                </a>
+            </div>
+            <div class="panel-footer">
+                <a href="#/adherentInfoSaison">
                     <span class="pull-left">Mettre à jour</span>
                     <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
                     <div class="clearfix"></div>
-                </div>
-            </a>
+                </a>
+            </div>
         </div>
     </div>
 </div>
+
+
+
 <div class="row" ng-show="modeDebug">
     <div class="col-md-12">
         <h2 class="page-header">Debug</h2>

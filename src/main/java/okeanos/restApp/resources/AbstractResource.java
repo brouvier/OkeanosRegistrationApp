@@ -2,6 +2,14 @@ package okeanos.restApp.resources;
 
 import static spark.Spark.exception;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.io.IOUtils;
+import org.eclipse.jetty.io.EofException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -54,6 +62,29 @@ public abstract class AbstractResource {
 			this.level = level;
 			this.message = message;
 		}
+	}
+
+	/**
+	 * Formatage d'un PDF pour l'envoyer dans la réponse du serveur
+	 * 
+	 * @param bytes
+	 *            Le fichier PDF sous forme de tableau de Byte
+	 * @param pdfName
+	 *            Le nom que prendra le fichier (sans extension)
+	 */
+	protected HttpServletResponse PdfFileResponse(Response response, byte[] bytes, String pdfName) throws IOException {
+		response.type("application/pdf");
+		response.header("Content-Disposition", "filename=\"" + pdfName + ".pdf\"");
+		response.raw().setContentLengthLong(bytes.length);
+
+		// Construction du flux de réponse
+		try (ServletOutputStream out = response.raw().getOutputStream();
+				ByteArrayInputStream in = new ByteArrayInputStream(bytes);) {
+			IOUtils.copyLarge(in, out);
+		} catch (EofException eofe) { // no problem
+		}
+
+		return response.raw();
 	}
 
 }

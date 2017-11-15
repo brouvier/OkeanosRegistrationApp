@@ -17,6 +17,7 @@ import org.apache.commons.io.IOUtils;
 
 import com.google.gson.Gson;
 
+import okeanos.controler.CertificateControler;
 import okeanos.dao.AdherentDocumentDao;
 import okeanos.dao.AdherentInfoSaisonDao;
 import okeanos.model.AdherentDocument;
@@ -164,6 +165,24 @@ public class AdherentInfoSaisonResource extends AbstractResource {
 				return response.raw();
 			} else
 				return "Erreur - Aucun certificat de licence disponible.";
+		});
+
+		get(ressourcePath + "/:id/attestation", (request, response) -> {
+			setSecurity(request, response);
+			AdherentInfoSaison item = AdherentInfoSaisonDao.getItemById(new Long(request.params(":id")));
+
+			// Accès autorisé au propriétaire du document et aux admin
+			if (!SecurityResource.isAdmin(request)
+					&& !SecurityResource.isLoginAndCurrentAccount(request, item.getFk_account_id())) {
+				throw new IllegalAccessException("Illegal Access");
+			}
+
+			// Accès autorisé une fois le paiment de la cotisation reçue
+			if (!item.getValidation_payment_cashed()) {
+				throw new IllegalAccessException("Illegal Access");
+			}
+
+			return PdfFileResponse(response, CertificateControler.generateCertificate(item), "Attestation");
 		});
 	}
 
