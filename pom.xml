@@ -31,14 +31,9 @@
             <version>2.5.5</version>
         </dependency>
         <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-simple</artifactId>
-            <version>1.7.5</version>
-        </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-simple</artifactId>
-            <version>1.6.1</version>
+			<groupId>org.slf4j</groupId>
+	        <artifactId>slf4j-log4j12</artifactId>
+	        <version>1.7.5</version>
         </dependency>
         <dependency>
             <groupId>com.google.code.gson</groupId>
@@ -107,6 +102,12 @@
 	        <groupId>com.itextpdf</groupId>
 	        <artifactId>pdfa</artifactId>
 	        <version>7.0.4</version>
+	    </dependency>
+	    <!-- itext - only needed for XML/PDF conversion -->
+	    <dependency>
+	        <groupId>com.itextpdf</groupId>
+	        <artifactId>html2pdf</artifactId>
+	        <version>1.0.2</version>
 	    </dependency>
 		
     </dependencies>
