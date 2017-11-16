@@ -72,8 +72,11 @@ public class DashboardResource extends AbstractResource {
 
 			// Construction de la liste des adhérents
 			ArrayList<Adherent> res = new ArrayList<Adherent>();
+			Integer i = 1;
 			for (AdherentInfoSaison infoSaison : AdherentInfoSaisonDao.getAllItemsForSaison(saisonId)) {
-				res.add(new Adherent(infoSaison, accounts, adherentInfos, insurances, ffessmLicences, subscriptions));
+				res.add(new Adherent(i, infoSaison, accounts, adherentInfos, insurances, ffessmLicences,
+						subscriptions));
+				i++;
 			}
 
 			return gson.toJson(res);
@@ -83,6 +86,7 @@ public class DashboardResource extends AbstractResource {
 
 	@SuppressWarnings("unused")
 	private class Adherent {
+		public Integer adherentNumber;
 		public Account account;
 		public AdherentInfo info;
 		public final AdherentInfoSaison infoSaison;
@@ -105,10 +109,11 @@ public class DashboardResource extends AbstractResource {
 				this.subscription = SubscriptionDao.getItemById(infoSaison.getFk_subscription_id());
 		}
 
-		public Adherent(AdherentInfoSaison infoSaison, HashMap<Long, Account> accounts,
+		public Adherent(Integer i, AdherentInfoSaison infoSaison, HashMap<Long, Account> accounts,
 				HashMap<Long, AdherentInfo> adherentInfos, HashMap<Long, Insurance> insurances,
 				HashMap<Long, FfessmLicence> ffessmLicences, HashMap<Long, Subscription> subscriptions) {
 
+			this.adherentNumber = i;
 			this.infoSaison = infoSaison;
 			this.account = accounts.get(infoSaison.getFk_account_id());
 			this.info = adherentInfos.get(infoSaison.getFk_account_id());

@@ -22,6 +22,7 @@
             <table class="table table-striped table-bordered table-hover">
                 <tbody>
                     <tr>
+                        <th>#</th>
                         <th>Prénom</th>
                         <th>Nom</th>
                         <th>Numéro de licence</th>
@@ -35,6 +36,7 @@
                         <th>Editer</th>
                     </tr>
                     <tr ng-repeat="adherent in adherentList | filter:searchText" ng-click="gotoEditForm(user)" class="{{adherentClass(adherent)}}">
+                        <td>{{adherent.adherentNumber}}</td>
                         <td>{{adherent.info.firstname}}</td>
                         <td>{{adherent.info.lastname}}</td>
                         <td>{{adherent.info.licence_number}}</td>
