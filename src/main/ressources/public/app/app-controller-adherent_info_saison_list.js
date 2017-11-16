@@ -5,6 +5,8 @@ okeanosAppControllers.controller('adherentInfoSaisonListCtrl', function ($scope,
     securityService.checkIsAdmin();
     $scope.modeDebug = modeDebug;
 
+    $scope.modeVisu = 'validation';
+
     $scope.hockeyTeamList = HockeyTeam.query();
 
     $http.get(okeanoAppUrl + '/saison')
