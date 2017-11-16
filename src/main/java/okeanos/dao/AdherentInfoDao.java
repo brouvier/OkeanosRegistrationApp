@@ -87,7 +87,7 @@ public class AdherentInfoDao {
 		try (Connection con = Sql2oDao.sql2o.open()) {
 			con.createQuery(sql).bind(item).executeUpdate();
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
+			logger.error(e.getMessage());
 			e.printStackTrace();
 		}
 		return getItemById(item.getId());

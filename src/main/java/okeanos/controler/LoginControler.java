@@ -7,11 +7,14 @@ import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 
 import org.apache.commons.codec.binary.Hex;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import okeanos.dao.AccountDao;
 import okeanos.model.Account;
 
 public class LoginControler {
+	private static Logger logger = LoggerFactory.getLogger(LoginControler.class);
 
 	public static Account loginAcount(String mail, String password) throws IllegalArgumentException {
 
@@ -28,9 +31,9 @@ public class LoginControler {
 		}
 		String hashedPass = hash(account.getSalt() + password);
 
-		System.out.println("Login account for mail : " + mail + "\tpassword : " + password);
-		System.out.println("hashedPass : " + hashedPass);
-		System.out.println("savedPass  : " + account.getPassword());
+		logger.debug("Login account for mail : " + mail + "\tpassword : " + password);
+		logger.debug("hashedPass : " + hashedPass);
+		logger.debug("savedPass  : " + account.getPassword());
 
 		if (!account.getPassword().equals(hashedPass)) {
 			throw new IllegalArgumentException("wrong password");
@@ -57,9 +60,9 @@ public class LoginControler {
 		// Sauvegarde du pass salé
 		String hashedPass = hash(salt + password);
 
-		System.out.println("Create account for mail : " + mail + "\tpassword : " + password);
-		System.out.println("salt : " + salt);
-		System.out.println("hashedPass : " + hashedPass);
+		logger.debug("Create account for mail : " + mail + "\tpassword : " + password);
+		logger.debug("salt : " + salt);
+		logger.debug("hashedPass : " + hashedPass);
 
 		return AccountDao.newItem(mail, salt, hashedPass, false);
 	}
@@ -78,7 +81,7 @@ public class LoginControler {
 		account.setSalt(salt);
 		account.setPassword(hashedPass);
 
-		System.out.println("Update account : " + account);
+		logger.debug("Update account : " + account);
 
 		return AccountDao.updatePassword(account);
 	}

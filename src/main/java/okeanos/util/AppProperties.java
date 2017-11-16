@@ -10,7 +10,11 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Properties;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class AppProperties {
+	private static Logger logger = LoggerFactory.getLogger(AppProperties.class);
 
 	// App
 	public static final String APPLICATION_NAME = "okeanos_rest";
@@ -108,7 +112,7 @@ public class AppProperties {
 			prop.load(input);
 
 		} catch (final FileNotFoundException io) {
-			System.out.println("Fichier de properties manquant ...");
+			logger.warn("Fichier de properties manquant ...");
 			prop = generateEmptyPropertieFile();
 		} catch (final IOException io) {
 			io.printStackTrace();

@@ -2,11 +2,14 @@ package okeanos.dao;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.sql2o.Connection;
 
 import okeanos.model.FfessmLicence;
 
 public class FfessmLicenceDao {
+	private static Logger logger = LoggerFactory.getLogger(FfessmLicenceDao.class);
 
 	public static List<FfessmLicence> getAllItems() {
 		String sql = "SELECT id, fk_saison_id, label, price FROM ffessm_licence ORDER BY label";
@@ -35,29 +38,29 @@ public class FfessmLicenceDao {
 	public static FfessmLicence save(FfessmLicence item) {
 
 		if (item == null || "".equals(item.getLabel())) {
-			System.out.println("Error : cannot save empty item !");
+			logger.error("Error : cannot save empty item !");
 			return item;
 		}
 
 		if (item.getId() == null) { // Mode création
-			System.out.println("Création d'un item : " + item.getLabel());
+			logger.info("Création d'un item : " + item.getLabel());
 			String sql = "insert into ffessm_licence (fk_saison_id, label, price) values (:fk_saison_id, :label, :price)";
 
 			try (Connection con = Sql2oDao.sql2o.open()) {
 				Long insertedId = (Long) con.createQuery(sql, true).addParameter("fk_saison_id", item.getFk_saison_id())
 						.addParameter("label", item.getLabel()).addParameter("price", item.getPrice()).executeUpdate()
 						.getKey();
-				System.out.println("ID généré : " + insertedId);
+				logger.debug("ID généré : " + insertedId);
 				return getItemById(insertedId);
 			} catch (Exception e) {
 				// TODO: handle exception
-				System.out.println(e.getMessage());
+				logger.error(e.getMessage());
 				e.printStackTrace();
 				return item;
 			}
 
 		} else { // Mode modification
-			System.out.println("Mise à jour d'un item : " + item.getLabel());
+			logger.info("Mise à jour d'un item : " + item.getLabel());
 			String sql = "update ffessm_licence set fk_saison_id = :fk_saison_id, label = :label, price = :price where id = :id";
 
 			try (Connection con = Sql2oDao.sql2o.open()) {
@@ -69,7 +72,7 @@ public class FfessmLicenceDao {
 	}
 
 	public static Boolean deleteItem(Long id) {
-		System.out.println("Suppression d'un item : " + id);
+		logger.info("Suppression d'un item : " + id);
 		String sql = "delete from ffessm_licence where id = :id";
 
 		try (Connection con = Sql2oDao.sql2o.open()) {

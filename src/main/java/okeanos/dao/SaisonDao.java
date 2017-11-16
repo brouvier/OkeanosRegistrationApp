@@ -2,11 +2,14 @@ package okeanos.dao;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.sql2o.Connection;
 
 import okeanos.model.Saison;
 
 public class SaisonDao {
+	private static Logger logger = LoggerFactory.getLogger(SaisonDao.class);
 
 	public static List<Saison> getAllItems() {
 		String sql = "SELECT id, label, start_date, end_date FROM saison ORDER BY label";
@@ -35,24 +38,24 @@ public class SaisonDao {
 	public static Saison save(Saison item) {
 
 		if (item == null || "".equals(item.getLabel())) {
-			System.out.println("Error : cannot save empty item !");
+			logger.error("Error : cannot save empty item !");
 			return null;
 		}
 
 		if (item.getId() == null) { // Mode création
-			System.out.println("Création d'un item : " + item.getLabel());
+			logger.info("Création d'un item : " + item.getLabel());
 			String sql = "insert into saison (label, start_date, end_date) values (:label, :start_date, :end_date)";
 
 			try (Connection con = Sql2oDao.sql2o.open()) {
 				Long insertedId = (Long) con.createQuery(sql, true).addParameter("label", item.getLabel())
 						.addParameter("start_date", item.getStart_date()).addParameter("end_date", item.getEnd_date())
 						.executeUpdate().getKey();
-				System.out.println("ID g�n�r� : " + insertedId);
+				logger.debug("ID généré : " + insertedId);
 				return getItemById(insertedId);
 			}
 
 		} else { // Mode modification
-			System.out.println("Mise à jour d'un item : " + item.getLabel());
+			logger.info("Mise à jour d'un item : " + item.getLabel());
 			String sql = "update saison set label = :label, start_date = :start_date, end_date = :end_date where id = :id";
 
 			try (Connection con = Sql2oDao.sql2o.open()) {
@@ -64,7 +67,7 @@ public class SaisonDao {
 	}
 
 	public static Boolean deleteItem(Long id) {
-		System.out.println("Suppression d'un item : " + id);
+		logger.info("Suppression d'un item : " + id);
 		String sql = "delete from saison where id = :id";
 
 		try (Connection con = Sql2oDao.sql2o.open()) {

@@ -2,11 +2,14 @@ package okeanos.dao;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.sql2o.Connection;
 
 import okeanos.model.HockeyTeam;
 
 public class HockeyTeamDao {
+	private static Logger logger = LoggerFactory.getLogger(HockeyTeamDao.class);
 
 	public static List<HockeyTeam> getAllItems() {
 		String sql = "SELECT id, label FROM hockey_team ORDER BY label";
@@ -36,23 +39,23 @@ public class HockeyTeamDao {
 	public static HockeyTeam save(HockeyTeam item) {
 
 		if (item == null || "".equals(item.getLabel())) {
-			System.out.println("Error : cannot save empty item !");
+			logger.error("Error : cannot save empty item !");
 			return null;
 		}
 
 		if (item.getId() == null) { // Mode création
-			System.out.println("Création d'un item : " + item.getLabel());
+			logger.info("Création d'un item : " + item.getLabel());
 			String sql = "insert into hockey_team (label) values (:label)";
 
 			try (Connection con = Sql2oDao.sql2o.open()) {
 				Long insertedId = (Long) con.createQuery(sql, true).addParameter("label", item.getLabel())
 						.executeUpdate().getKey();
-				System.out.println("ID g�n�r� : " + insertedId);
+				logger.debug("ID généré : " + insertedId);
 				return getItemById(insertedId);
 			}
 
 		} else { // Mode modification
-			System.out.println("Mise à jour d'un item : " + item.getLabel());
+			logger.info("Mise à jour d'un item : " + item.getLabel());
 			String sql = "update hockey_team set label = :label where id = :id";
 
 			try (Connection con = Sql2oDao.sql2o.open()) {
@@ -64,7 +67,7 @@ public class HockeyTeamDao {
 	}
 
 	public static Boolean deleteItem(Long id) {
-		System.out.println("Suppression d'un item : " + id);
+		logger.info("Suppression d'un item : " + id);
 		String sql = "delete from hockey_team where id = :id";
 
 		try (Connection con = Sql2oDao.sql2o.open()) {

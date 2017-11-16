@@ -64,7 +64,7 @@ public class SecurityResource extends AbstractResource {
 		post(ressourcePath + "/signup", (request, response) -> {
 
 			AccountBean bean = gson.fromJson(request.body(), AccountBean.class);
-			System.out.println("signup request receve : " + bean.mail);
+			logger.info("signup request receve : " + bean.mail);
 
 			try {
 				Account user = LoginControler.createAccount(bean.mail, bean.password);
@@ -82,7 +82,7 @@ public class SecurityResource extends AbstractResource {
 		post(ressourcePath + "/login", (request, response) -> {
 
 			AccountBean bean = gson.fromJson(request.body(), AccountBean.class);
-			System.out.println("login request receve : " + bean.mail);
+			logger.info("login request receve : " + bean.mail);
 			try {
 				Account user = LoginControler.loginAcount(bean.mail, bean.password);
 				registerSession(request, response, user);

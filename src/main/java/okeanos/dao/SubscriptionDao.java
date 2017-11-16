@@ -2,11 +2,14 @@ package okeanos.dao;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.sql2o.Connection;
 
 import okeanos.model.Subscription;
 
 public class SubscriptionDao {
+	private static Logger logger = LoggerFactory.getLogger(SubscriptionDao.class);
 
 	public static List<Subscription> getAllItems() {
 		String sql = "SELECT id, fk_saison_id, fk_subscription_type_id, label, price FROM subscription";
@@ -35,12 +38,12 @@ public class SubscriptionDao {
 	public static Subscription save(Subscription item) {
 
 		if (item == null || "".equals(item.getLabel())) {
-			System.out.println("Error : cannot save empty item !");
+			logger.error("Error : cannot save empty item !");
 			return null;
 		}
 
-		if (item.getId() == null) { // Mode cr�ation
-			System.out.println("Cr�ation d'un item : " + item.getLabel());
+		if (item.getId() == null) { // Mode création
+			logger.info("Création d'un item : " + item.getLabel());
 			String sql = "insert into subscription (fk_saison_id, fk_subscription_type_id, label, price) values (:fk_saison_id, :fk_subscription_type_id, :label, :price)";
 
 			try (Connection con = Sql2oDao.sql2o.open()) {
@@ -48,12 +51,12 @@ public class SubscriptionDao {
 						.addParameter("fk_subscription_type_id", item.getFk_subscription_type_id())
 						.addParameter("label", item.getLabel()).addParameter("price", item.getPrice()).executeUpdate()
 						.getKey();
-				System.out.println("ID g�n�r� : " + insertedId);
+				logger.debug("ID généré : " + insertedId);
 				return getItemById(insertedId);
 			}
 
 		} else { // Mode modification
-			System.out.println("Mise � jour d'un item : " + item);
+			logger.info("Mise à jour d'un item : " + item);
 			String sql = "update subscription set fk_saison_id = :fk_saison_id, fk_subscription_type_id = :fk_subscription_type_id, label = :label, price = :price where id = :id";
 
 			try (Connection con = Sql2oDao.sql2o.open()) {
@@ -68,7 +71,7 @@ public class SubscriptionDao {
 	}
 
 	public static Boolean deleteItem(Long id) {
-		System.out.println("Suppression d'un item : " + id);
+		logger.info("Suppression d'un item : " + id);
 		String sql = "delete from subscription where id = :id";
 
 		try (Connection con = Sql2oDao.sql2o.open()) {
