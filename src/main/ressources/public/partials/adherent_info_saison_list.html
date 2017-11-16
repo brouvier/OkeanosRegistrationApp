@@ -17,9 +17,14 @@
             <div class="col-sm-3">
                 <button type="button" class="btn btn-info" ng-click="refreshList()"><span class="glyphicon glyphicon-refresh" aria-hidden="true"></span> Rafraichir la liste</button>
             </div>
+            <div class="col-sm-3">
+                <a class="btn btn-info" title="Export Table" ng-click='csv.generate()' ng-href="{{ csv.link() }}" download="ListeAdherents.csv">
+                    <span class="glyphicon glyphicon-save-file" aria-hidden="true"></span> Exporter
+                </a>
+            </div>
         </div>
         <div class="table-responsive">
-            <table class="table table-striped table-bordered table-hover">
+            <table class="table table-striped table-bordered table-hover" export-csv="csv" separator=";" export-csv-ignore="ignore">
                 <tbody>
                     <tr>
                         <th>#</th>
@@ -29,11 +34,11 @@
                         <th>Licence</th>
                         <th>Adhésion</th>
                         <th>Assurance</th>
-                        <th>Certificat médical</th>
-                        <th>Certificat de licence</th>
-                        <th>Accord parental</th>
-                        <th>Contacter par mail</th>
-                        <th>Editer</th>
+                        <th class="ignore">Certificat médical</th>
+                        <th class="ignore">Certificat de licence</th>
+                        <th class="ignore">Accord parental</th>
+                        <th class="ignore">Contacter par mail</th>
+                        <th class="ignore">Editer</th>
                     </tr>
                     <tr ng-repeat="adherent in adherentList | filter:searchText" ng-click="gotoEditForm(user)" class="{{adherentClass(adherent)}}">
                         <td>{{adherent.adherentNumber}}</td>
