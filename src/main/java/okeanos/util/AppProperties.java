@@ -37,10 +37,9 @@ public class AppProperties {
 
 	public final static String DB_LOCATION = "filesystem:" + SYSTEM_USER_DIT + "/h2";
 
-	public final static String TEMPLATE_PATH = SYSTEM_USER_DIT + "/template/";
-	public final static String TEMPLATE_FILE = TEMPLATE_PATH + "certificate_template.html";
-	public final static String TEMPLATE_LOGO = TEMPLATE_PATH + "OkeanosLogo.png";
-	public final static String TEMPLATE_SIGN = TEMPLATE_PATH + "OkeanosSignature.png";
+	public final static String TEMPLATE_FILE = SYSTEM_USER_DIT + "/template/certificate_template.html";
+	public final static String TEMPLATE_LOGO = "./template/OkeanosLogo.png";
+	public final static String TEMPLATE_SIGN = "./template/OkeanosSignature.png";
 
 	// Formater
 	public static final DateFormat DATE_FORMATEUR = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");

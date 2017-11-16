@@ -4,6 +4,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.Charset;
 import java.util.Date;
 
 import org.apache.commons.io.IOUtils;
@@ -106,7 +107,7 @@ public class CertificateControler {
 
 		try {
 			InputStream in = new FileInputStream(AppProperties.TEMPLATE_FILE);
-			template = IOUtils.toString(in);
+			template = IOUtils.toString(in, Charset.forName("UTF-8"));
 			IOUtils.closeQuietly(in);
 		} catch (Exception e) {
 			e.printStackTrace();
