@@ -15,6 +15,22 @@ okeanosAppControllers.controller('dashboardCtrl', function ($scope, $http, secur
     $scope.documentPanel = "panel-red";
     $scope.documentStatus = "Inconnu !!!";
 
+    $scope.totalCost = 0;
+
+    var getTotalCost = function () {
+        var cost = 0;
+        if ($scope.adherent.insurance) {
+            cost = $scope.adherent.insurance.price;
+        }
+        if ($scope.adherent.licence) {
+            cost = cost + $scope.adherent.licence.price;
+        }
+        if ($scope.adherent.subscription) {
+            cost = cost + $scope.adherent.subscription.price;
+        }
+        $scope.totalCost = cost;
+    };
+
     $http.get(okeanoAppUrl + 'saison/currentSaison')
         .then(function (response) {
             var currentSaison = response.data;
@@ -63,6 +79,8 @@ okeanosAppControllers.controller('dashboardCtrl', function ($scope, $http, secur
                 $scope.documentPanel = "panel-primary";
                 $scope.documentStatus = "Complètes";
             }
+
+            getTotalCost();
         }
     });
 });

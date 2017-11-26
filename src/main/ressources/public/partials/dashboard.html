@@ -2,7 +2,7 @@
     <span class="fa fa-dashboard" aria-hidden="true"></span>Table de bord</h1>
 
 <div class="row">
-    <div class="col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-4">
+    <div class="col-md-6">
         <div class="panel {{adherentInfoPanel}}">
             <div class="panel-heading">
                 <div class="row">
@@ -15,19 +15,37 @@
                     </div>
                 </div>
             </div>
-            <a href="#/adherentInfo">
-                <div class="panel-footer">
+            <div class="panel-body" ng_show="adherent.info">
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <label for="inputMail" class="col-sm-2 control-label">Compte</label>
+                        <div class="col-sm-10"><input type="email" class="form-control" id="inputMail" ng-model="adherent.account.mail" disabled></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputFirstname" class="col-sm-2 control-label">Prénom</label>
+                        <div class="col-sm-10"><input type="text" class="form-control" id="inputFirstname" ng-model="adherent.info.firstname" disabled></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputLastName" class="col-sm-2 control-label">Nom</label>
+                        <div class="col-sm-10"><input type="text" class="form-control" id="inputLastName" ng-model="adherent.info.lastname" disabled></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputLicenceNumber" class="col-sm-2 control-label">Licence</label>
+                        <div class="col-sm-10"><input type="text" class="form-control" id="inputLicenceNumber" ng-model="adherent.info.licence_number" disabled></div>
+                    </div>
+                </form>
+            </div>
+            <div class="panel-footer">
+                <a href="#/adherentInfo">
                     <span class="pull-left">Mettre à jour</span>
                     <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
                     <div class="clearfix"></div>
-                </div>
             </a>
+            </div>
         </div>
     </div>
-</div>
 
-<div class="row">
-    <div class="col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-4">
+    <div class="col-md-6">
         <div class="panel {{membershipPanel}}">
             <div class="panel-heading">
                 <div class="row">
@@ -40,13 +58,38 @@
                     </div>
                 </div>
             </div>
-            <a href="#/adherentInfoSaison">
-                <div class="panel-footer">
+            <div class="panel-body" ng_show="adherent.infoSaison">
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <label for="inputLicence" class="col-sm-3 control-label">Licence</label>
+                        <div class="col-sm-9"><input type="text" class="form-control" id="inputLicence" ng-model="adherent.licence.label" disabled></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputSubscription" class="col-sm-3 control-label">Adhésion</label>
+                        <div class="col-sm-9"><input type="text" class="form-control" id="inputSubscription" ng-model="adherent.subscription.label" disabled></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputInsurance" class="col-sm-3 control-label">Assurance</label>
+                        <div class="col-sm-9"><input type="text" class="form-control" id="inputInsurance" ng-model="adherent.insurance.label" disabled></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputSubscriptionCost" class="col-sm-3 control-label">Total</label>
+                        <div class="col-sm-9" ng_show="adherent">
+                            <div id="inputPrice" class="input-group">
+                                <input type="text" class="form-control" id="inputSubscriptionCost" ng-model="totalCost" disabled>
+                                <span class="input-group-addon">€</span>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="panel-footer">
+                <a href="#/adherentInfoSaison">
                     <span class="pull-left">Mettre à jour</span>
                     <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
                     <div class="clearfix"></div>
-                </div>
             </a>
+            </div>
         </div>
     </div>
 </div>
@@ -65,11 +108,27 @@
                     </div>
                 </div>
             </div>
-            <div class="panel-body" ng_show="adherent.infoSaison.validation_payment_cashed">
-                <a href="{{okeanoAppUrl}}/adherent_info_saison/{{adherent.infoSaison.id}}/attestation" target="_blank">
-                    <span class="pull-left">Attestation d'adhésion</span>
-                    <span class="pull-right"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span></span>
-                </a>
+            <div class="panel-body">
+                <ul>
+                    <li ng_show="adherent.infoSaison.fk_sick_note_id">
+                        <a href="{{okeanoAppUrl}}/adherent_info_saison/{{adherent.infoSaison.id}}/sick_note" target="_blank">
+                            <span class="pull-left">Certificat médical</span>
+                            <span class="pull-right"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span></span>
+                        </a>
+                    </li>
+                    <li ng_show="adherent.infoSaison.fk_parental_agreement_id">
+                        <a href="{{okeanoAppUrl}}/adherent_info_saison/{{adherent.infoSaison.id}}/parental_agreement" target="_blank">
+                            <span class="pull-left">Accord parental</span>
+                            <span class="pull-right"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span></span>
+                        </a>
+                    </li>
+                    <li ng_show="adherent.infoSaison.validation_payment_cashed">
+                        <a href="{{okeanoAppUrl}}/adherent_info_saison/{{adherent.infoSaison.id}}/attestation" target="_blank">
+                            <span class="pull-left">Attestation d'adhésion</span>
+                            <span class="pull-right"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span></span>
+                        </a>
+                    </li>
+                </ul>
             </div>
             <div class="panel-footer">
                 <a href="#/adherentInfoSaison">
