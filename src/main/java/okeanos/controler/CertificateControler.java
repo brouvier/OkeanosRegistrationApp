@@ -29,7 +29,6 @@ import okeanos.model.AdherentInfo;
 import okeanos.model.AdherentInfoSaison;
 import okeanos.model.Certificate;
 import okeanos.model.FfessmLicence;
-import okeanos.model.Insurance;
 import okeanos.model.Saison;
 import okeanos.model.Subscription;
 import okeanos.util.AppProperties;
@@ -79,8 +78,7 @@ public class CertificateControler {
 
 	protected static Certificate newCertificat(AdherentInfoSaison infoSaison) {
 		if (infoSaison.getId() == null || infoSaison.getFk_account_id() == null || infoSaison.getFk_saison_id() == null
-				|| infoSaison.getFk_subscription_id() == null || infoSaison.getFk_ffessm_licence_id() == null
-				|| infoSaison.getFk_insurance_id() == null) {
+				|| infoSaison.getFk_subscription_id() == null || infoSaison.getFk_ffessm_licence_id() == null) {
 			logger.error("Arguments manquants in [" + infoSaison + "]");
 			throw new IllegalStateException("Arguments manquants !");
 		}
@@ -89,10 +87,12 @@ public class CertificateControler {
 		Saison saison = SaisonDao.getItemById(infoSaison.getFk_saison_id());
 		Subscription subscription = SubscriptionDao.getItemById(infoSaison.getFk_subscription_id());
 		FfessmLicence licence = FfessmLicenceDao.getItemById(infoSaison.getFk_ffessm_licence_id());
-		Insurance insurance = InsuranceDao.getItemById(infoSaison.getFk_insurance_id());
+		Double insurancePrice = infoSaison.getFk_insurance_id() != null
+				? InsuranceDao.getItemById(infoSaison.getFk_insurance_id()).getPrice()
+				: 0;
 
 		String name = adherent.getFirstname() + " " + adherent.getLastname();
-		Double price = subscription.getPrice() + licence.getPrice() + insurance.getPrice();
+		Double price = subscription.getPrice() + licence.getPrice() + insurancePrice;
 		String date = infoSaison.getCreatedOn() != null
 				? AppProperties.DATE_FORMATEUR_DAY.format(infoSaison.getCreatedOn())
 				: AppProperties.DATE_FORMATEUR_DAY.format(new Date());
