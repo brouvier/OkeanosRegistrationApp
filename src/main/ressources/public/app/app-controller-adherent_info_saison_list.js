@@ -1,11 +1,9 @@
 /* 
  * Contrôleur de la liste des formations de plongée
  */
-okeanosAppControllers.controller('adherentInfoSaisonListCtrl', function ($scope, $http, $filter, Upload, securityService, Saison, AdherentInfo, AdherentInfoSaison, HockeyTeam) {
+okeanosAppControllers.controller('adherentInfoSaisonListCtrl', function ($scope, $http, $filter, Upload, securityService, filterService, Saison, AdherentInfo, AdherentInfoSaison, HockeyTeam) {
     securityService.checkIsAdmin();
     $scope.modeDebug = modeDebug;
-
-    $scope.modeVisu = 'validation';
 
     $scope.hockeyTeamList = HockeyTeam.query();
 
@@ -38,7 +36,7 @@ okeanosAppControllers.controller('adherentInfoSaisonListCtrl', function ($scope,
 
     $scope.$watch("currentSaisonId", function (newValue, oldValue) {
         console.log('currentSaisonId == ' + $scope.currentSaisonId);
-        if ($scope.currentSaisonId != null) {
+        if ($scope.currentSaisonId != null && newValue != oldValue) {
             console.log('currentSaisonId have change !');
             $scope.refreshList();
         }
@@ -156,4 +154,33 @@ okeanosAppControllers.controller('adherentInfoSaisonListCtrl', function ($scope,
 
         $scope.refreshList();
     };
+
+    /*****************
+     * Gestion des filtres
+     *****************/
+
+    $scope.modeVisu = filterService.modeVisu;
+    $scope.modeFiltre = filterService.modeFiltre;
+
+    $scope.adhesionFilter = function (adherent) {
+        if ($scope.modeFiltre === 'notValid') {
+            return !adherent.infoSaison.validation_payment_cashed;
+        }
+        if ($scope.modeFiltre === 'valid') {
+            return adherent.infoSaison.validation_payment_cashed;
+        }
+        return true;
+    };
+
+    $scope.$watch("modeVisu", function (newValue, oldValue) {
+        if ($scope.modeVisu != null && newValue != oldValue) {
+            filterService.modeVisu = $scope.modeVisu;
+        }
+    });
+    $scope.$watch("modeFiltre", function (newValue, oldValue) {
+        if ($scope.modeFiltre != null && newValue != oldValue) {
+            filterService.modeFiltre = $scope.modeFiltre;
+        }
+    });
+
 });

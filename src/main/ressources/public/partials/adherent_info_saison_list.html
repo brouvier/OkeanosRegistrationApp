@@ -2,38 +2,63 @@
     <div class="col-md-12">
 
         <h2>Liste des adhérents</h2>
-        <div class="form-group row">
-            <label class="col-sm-3 control-label">Chaîne de caractères à chercher</label>
-            <div class="col-sm-3">
-                <input type="text" ng-model="searchText" class="form-control" />
-            </div>
-        </div>
-        <div class="form-group row">
-            <label for="selectSaison" class="col-sm-3 control-label">Saison</label>
-            <div class="col-sm-3">
-                <select id="selectSaison" class="form-control" ng-model="currentSaisonId" ng-options="saison.id as saison.label for saison in saisonList" required="required">
+
+        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseZone" aria-expanded="false" aria-controls="collapseZone">
+            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+        </button>
+
+        <div class="collapse" id="collapseZone">
+            <div class="well">
+                <div class="form-group row">
+                    <label class="col-sm-3 control-label">Chaîne de caractères à chercher</label>
+                    <div class="col-sm-3">
+                        <input type="text" ng-model="searchText" class="form-control" />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="selectSaison" class="col-sm-3 control-label">Saison</label>
+                    <div class="col-sm-3">
+                        <select id="selectSaison" class="form-control" ng-model="currentSaisonId" ng-options="saison.id as saison.label for saison in saisonList" required="required">
                 </select>
-            </div>
-            <div class="col-sm-3">
-                <button type="button" class="btn btn-info" ng-click="refreshList()"><span class="glyphicon glyphicon-refresh" aria-hidden="true"></span> Rafraichir la liste</button>
-            </div>
-            <div class="col-sm-3">
-                <a class="btn btn-info" title="Export Table" ng-click='csv.generate()' ng-href="{{ csv.link() }}" download="ListeAdherents.csv">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="selectModeVisu" class="col-sm-3 control-label">Mode d'affichage :</label>
+                    <div class="col-sm-9">
+                        <label class="radio-inline">
+                    <input type="radio" name="radioModeVisu" ng-model="modeVisu" value="validation">Validation des adhésions
+                </label>
+                        <label class="radio-inline">
+                    <input type="radio" name="radioModeVisu" ng-model="modeVisu" value="contact">Contacts des adhésions
+                </label>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="selectModeFiltre" class="col-sm-3 control-label">Mode de filtre :</label>
+                    <div class="col-sm-9">
+                        <label class="radio-inline">
+                    <input type="radio" name="radioModeFiltre" ng-model="modeFiltre" value="all">Tous
+                </label>
+                        <label class="radio-inline">
+                    <input type="radio" name="radioModeFiltre" ng-model="modeFiltre" value="notValid">Adhésion en cours
+                </label>
+                        <label class="radio-inline">
+                    <input type="radio" name="radioModeFiltre" ng-model="modeFiltre" value="valid">Adhésion valdiée
+                </label>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-3 control-label">Actions :</label>
+                    <div class="col-sm-6">
+                        <button type="button" class="btn btn-info" ng-click="refreshList()"><span class="glyphicon glyphicon-refresh" aria-hidden="true"></span> Rafraichir la liste</button>
+                        <a class="btn btn-info" title="Export Table" ng-click='csv.generate()' ng-href="{{ csv.link() }}" download="ListeAdherents.csv">
                     <span class="glyphicon glyphicon-save-file" aria-hidden="true"></span> Exporter
                 </a>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="form-group row">
-            <label for="selectLicence" class="col-sm-3 control-label">Mode d'affichage :</label>
-            <div class="col-sm-9">
-                <label class="radio-inline">
-                    <input type="radio" name="radionModeVisu" ng-model="modeVisu" value="validation">Validation des adhésions
-                </label>
-                <label class="radio-inline">
-                    <input type="radio" name="radionModeVisu" ng-model="modeVisu" value="contact">Contacts des adhésions
-                </label>
-            </div>
-        </div>
+
         <div class="table-responsive">
             <table class="table table-striped table-bordered table-hover" export-csv="csv" separator=";" export-csv-ignore="ignore">
                 <tbody>
@@ -53,7 +78,7 @@
                         <th class="ignore">Contacter par mail</th>
                         <th class="ignore" ng-show='modeVisu == "validation"'>Editer</th>
                     </tr>
-                    <tr ng-repeat="adherent in adherentList | filter:searchText" ng-click="gotoEditForm(user)" class="{{adherentClass(adherent)}}">
+                    <tr ng-repeat="adherent in adherentList | filter:searchText | filter:adhesionFilter" ng-click="gotoEditForm(user)" class="{{adherentClass(adherent)}}">
                         <td>{{adherent.adherentNumber}}</td>
                         <td>{{adherent.info.firstname}}</td>
                         <td>{{adherent.info.lastname}}</td>

@@ -35,6 +35,16 @@ okeanosApp.service('securityService', ['$location', function ($location) {
 }]);
 
 /* 
+ * Contexte des filtres de l'utilisateur
+ */
+okeanosApp.service('filterService', [function () {
+    console.log('Init service filterService');
+
+    this.modeVisu = 'validation';
+    this.modeFiltre = "all";
+}]);
+
+/* 
  * Gesion des comptes utilisteurs
  */
 okeanosApp.factory('Account', function ($resource) {
