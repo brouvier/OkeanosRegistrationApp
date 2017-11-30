@@ -1,7 +1,7 @@
 /* 
  * Contrôleur de la liste des formations de plongée
  */
-okeanosAppControllers.controller('adherentInfoSaisonListCtrl', function ($scope, $http, $filter, Upload, securityService, filterService, Saison, AdherentInfo, AdherentInfoSaison, HockeyTeam) {
+okeanosAppControllers.controller('adherentInfoSaisonListCtrl', function ($scope, $http, $filter, Upload, securityService, filterService, Saison, AdherentInfo, AdherentInfoSaison, Subscription, HockeyTeam) {
     securityService.checkIsAdmin();
     $scope.modeDebug = modeDebug;
 
@@ -159,8 +159,15 @@ okeanosAppControllers.controller('adherentInfoSaisonListCtrl', function ($scope,
      * Gestion des filtres
      *****************/
 
+    $scope.subscriptionList = Subscription.query();
+
     $scope.modeVisu = filterService.modeVisu;
     $scope.modeFiltre = filterService.modeFiltre;
+    $scope.subscriptionIdFilter = filterService.subscriptionIdFilter;
+
+    $scope.resetSubscriptionFilter = function () {
+        $scope.subscriptionIdFilter = 0;
+    }
 
     $scope.adhesionFilter = function (adherent) {
         if ($scope.modeFiltre === 'notValid') {
@@ -168,6 +175,13 @@ okeanosAppControllers.controller('adherentInfoSaisonListCtrl', function ($scope,
         }
         if ($scope.modeFiltre === 'valid') {
             return adherent.infoSaison.validation_payment_cashed;
+        }
+        return true;
+    };
+
+    $scope.subscriptionFilter = function (adherent) {
+        if ($scope.subscriptionIdFilter !== 0) {
+            return $scope.subscriptionIdFilter === adherent.infoSaison.fk_subscription_id;
         }
         return true;
     };
@@ -180,6 +194,11 @@ okeanosAppControllers.controller('adherentInfoSaisonListCtrl', function ($scope,
     $scope.$watch("modeFiltre", function (newValue, oldValue) {
         if ($scope.modeFiltre != null && newValue != oldValue) {
             filterService.modeFiltre = $scope.modeFiltre;
+        }
+    });
+    $scope.$watch("subscriptionIdFilter", function (newValue, oldValue) {
+        if ($scope.subscriptionIdFilter != null && newValue != oldValue) {
+            filterService.subscriptionIdFilter = $scope.subscriptionIdFilter;
         }
     });
 

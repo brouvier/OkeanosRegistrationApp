@@ -42,6 +42,7 @@ okeanosApp.service('filterService', [function () {
 
     this.modeVisu = 'validation';
     this.modeFiltre = "all";
+    this.subscriptionIdFilter = 0;
 }]);
 
 /* 

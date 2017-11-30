@@ -12,7 +12,7 @@ public class SubscriptionDao {
 	private static Logger logger = LoggerFactory.getLogger(SubscriptionDao.class);
 
 	public static List<Subscription> getAllItems() {
-		String sql = "SELECT id, fk_saison_id, fk_subscription_type_id, label, price FROM subscription";
+		String sql = "SELECT id, fk_saison_id, fk_subscription_type_id, label, price FROM subscription ORDER BY label";
 
 		try (Connection con = Sql2oDao.sql2o.open()) {
 			return con.createQuery(sql).executeAndFetch(Subscription.class);
