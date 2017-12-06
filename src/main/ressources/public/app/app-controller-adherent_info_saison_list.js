@@ -156,6 +156,14 @@ okeanosAppControllers.controller('adherentInfoSaisonListCtrl', function ($scope,
     };
 
     /*****************
+     * Modal d'urgence
+     *****************/
+
+    $scope.emergency = function (adherent) {
+        $scope.emergencyModalAdherent = adherent;
+    }
+
+    /*****************
      * Gestion des filtres
      *****************/
 
