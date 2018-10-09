@@ -29,11 +29,6 @@ public class AppProperties {
 	public static final String STATIC_FILE_PATH = "/public";
 	public static final String API_CONTEXT = "/api/v1/";
 
-	public final static String keyStorePath = "./security/okeanosKeyStore.jks";
-	public final static String keyStorePassword = "Ok34n0sStorePass";
-	public final static String trustStorePath = null;
-	public final static String trustStorePassword = null;
-
 	public final static String DB_CONNECT_STRING = "jdbc:h2:file:./h2/okeanos;";
 	public final static String DB_CONNECT_OPTION = "INIT=create schema if not exists okeanos\\;use okeanos;TRACE_LEVEL_FILE=0;";
 
@@ -62,6 +57,12 @@ public class AppProperties {
 	public final String frontModeDebug;
 	public final String dbLogin;
 	public final String dbPassword;
+
+	public final String keyStorePath;
+	public final String keyStorePassword;
+	public final String trustStorePath;
+	public final String trustStorePassword;
+
 	public final String mailHostName;
 	public final String mailHostPort;
 	public final String mailHostLogin;
@@ -90,6 +91,11 @@ public class AppProperties {
 
 		dbLogin = prop.getProperty("dbLogin");
 		dbPassword = prop.getProperty("dbPassword");
+
+		keyStorePath = prop.getProperty("keyStorePath");
+		keyStorePassword = prop.getProperty("keyStorePassword");
+		trustStorePath = prop.getProperty("trustStorePath");
+		trustStorePassword = prop.getProperty("trustStorePassword");
 
 		mailHostName = prop.getProperty("mailHostName");
 		mailHostPort = prop.getProperty("mailHostPort");
@@ -148,6 +154,9 @@ public class AppProperties {
 
 		prop.setProperty("dbLogin", "**Database Login**");
 		prop.setProperty("dbPassword", "**Database Password**");
+
+		prop.setProperty("keyStorePath", "./security/**KeyStore file**");
+		prop.setProperty("keyStorePassword", "**KeyStore Password**");
 
 		prop.setProperty("mailHostName", "ns0.ovh.net");
 		prop.setProperty("mailHostPort", "587");

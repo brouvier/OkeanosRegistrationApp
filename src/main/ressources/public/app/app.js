@@ -128,7 +128,7 @@ okeanosApp.run(function ($rootScope, $location, $window) {
     $rootScope.$on('$routeChangeSuccess', function () {
         //console.log($location);
 
-        if ($location.protocol() !== 'https') {
+        if (okeanoAppUrl.includes('https') && $location.protocol() !== 'https') {
             $window.location.href = $location.absUrl().replace('http', 'https');
         };
     });

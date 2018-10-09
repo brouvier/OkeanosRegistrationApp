@@ -28,16 +28,15 @@ public class OkeanosSparkApp {
 		ipAddress(AppProperties.getProperties().restHostName);
 		port(new Integer(AppProperties.getProperties().restHostPort));
 
-		// if ("localhost".equals(AppProperties.getProperties().restHostName)) {
 		String projectDir = System.getProperty("user.dir");
 		String staticDir = "/src/main/ressources/public";
 		externalStaticFileLocation(projectDir + staticDir);
-		// } else {
-		// staticFileLocation(AppProperties.STATIC_FILE_PATH);
-		// }
 
-		secure(AppProperties.keyStorePath, AppProperties.keyStorePassword, AppProperties.trustStorePath,
-				AppProperties.trustStorePassword);
+		// On ne configure le certificat que s'il est renseigné dans les propriétés
+		if (AppProperties.getProperties().keyStorePath != null) {
+			secure(AppProperties.getProperties().keyStorePath, AppProperties.getProperties().keyStorePassword,
+					AppProperties.getProperties().trustStorePath, AppProperties.getProperties().trustStorePassword);
+		}
 
 		// BrrSparkUtil.fullCORS();
 
