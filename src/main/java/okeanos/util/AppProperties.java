@@ -45,6 +45,8 @@ public class AppProperties {
 	public final static String TEMPLATE_LOGO = "./template/OkeanosLogo.png";
 	public final static String TEMPLATE_SIGN = "./template/OkeanosSignature.png";
 
+	public final static String MAIL_TEMPLATE_FILE = SYSTEM_USER_DIT + "/template/mail_template.html";
+
 	// Formater
 	public static final DateFormat DATE_FORMATEUR = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	public static final DateFormat DATE_FORMATEUR_MS = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");

@@ -30,7 +30,6 @@ public class HockeyTeamResource extends AbstractResource {
 
 	protected String ressourcePath = AppProperties.API_CONTEXT + "/hockey_team";
 
-	@SuppressWarnings("deprecation")
 	public HockeyTeamResource() {
 		super.setupEndpoints();
 
