@@ -31,6 +31,9 @@
                         <label class="radio-inline">
                             <input type="radio" name="radioModeVisu" ng-model="modeVisu" value="contact">Contacts des adhésions
                         </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="radioModeVisu" ng-model="modeVisu" value="formation">Formation en cours
+                        </label>
                     </div>
                 </div>
                 <div class="form-group row">
@@ -89,6 +92,8 @@
                         <th class="ignore">Contacter par mail</th>
                         <th class="ignore" ng-show='modeVisu == "validation"'>Editer</th>
                         <th ng-show='modeVisu == "contact"'>Urgence</th>
+                        <th ng-show='modeVisu == "formation"'>Niveau actuel</th>
+                        <th ng-show='modeVisu == "formation"'>Niveau préparé</th>
                     </tr>
                     <tr ng-repeat="adherent in adherentList | filter:searchText | filter:adhesionFilter | filter:subscriptionFilter" ng-click="gotoEditForm(user)" class="{{adherentClass(adherent)}}">
                         <td>{{adherent.adherentNumber}}</td>
@@ -127,6 +132,8 @@
                                 <span class="glyphicon glyphicon-alert" aria-hidden="true" style="color:orangered"></span>
                             </button>
                         </td>
+                        <td ng-show='modeVisu == "formation"'>{{adherent.actualTraining.label}}</td>
+                        <td ng-show='modeVisu == "formation"'>{{adherent.training.label}}</td>
                     </tr>
                 </tbody>
             </table>

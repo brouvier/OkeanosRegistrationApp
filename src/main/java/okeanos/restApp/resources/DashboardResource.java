@@ -8,12 +8,14 @@ import java.util.HashMap;
 import okeanos.dao.AccountDao;
 import okeanos.dao.AdherentInfoDao;
 import okeanos.dao.AdherentInfoSaisonDao;
+import okeanos.dao.DivingTrainingDao;
 import okeanos.dao.FfessmLicenceDao;
 import okeanos.dao.InsuranceDao;
 import okeanos.dao.SubscriptionDao;
 import okeanos.model.Account;
 import okeanos.model.AdherentInfo;
 import okeanos.model.AdherentInfoSaison;
+import okeanos.model.DivingTraining;
 import okeanos.model.FfessmLicence;
 import okeanos.model.Insurance;
 import okeanos.model.Subscription;
@@ -70,12 +72,17 @@ public class DashboardResource extends AbstractResource {
 				insurances.put(insurance.getId(), insurance);
 			}
 
+			HashMap<Long, DivingTraining> trainings = new HashMap<Long, DivingTraining>();
+			for (DivingTraining training : DivingTrainingDao.getAllItems()) {
+				trainings.put(training.getId(), training);
+			}
+
 			// Construction de la liste des adhérents
 			ArrayList<Adherent> res = new ArrayList<Adherent>();
 			Integer i = 1;
 			for (AdherentInfoSaison infoSaison : AdherentInfoSaisonDao.getAllItemsForSaison(saisonId)) {
-				res.add(new Adherent(i, infoSaison, accounts, adherentInfos, insurances, ffessmLicences,
-						subscriptions));
+				res.add(new Adherent(i, infoSaison, accounts, adherentInfos, insurances, ffessmLicences, subscriptions,
+						trainings));
 				i++;
 			}
 
@@ -93,6 +100,8 @@ public class DashboardResource extends AbstractResource {
 		public Insurance insurance;
 		public FfessmLicence licence;
 		public Subscription subscription;
+		public DivingTraining actualTraining;
+		public DivingTraining training;
 
 		public Adherent(Long accountId, Long saisonId) {
 
@@ -111,7 +120,8 @@ public class DashboardResource extends AbstractResource {
 
 		public Adherent(Integer i, AdherentInfoSaison infoSaison, HashMap<Long, Account> accounts,
 				HashMap<Long, AdherentInfo> adherentInfos, HashMap<Long, Insurance> insurances,
-				HashMap<Long, FfessmLicence> ffessmLicences, HashMap<Long, Subscription> subscriptions) {
+				HashMap<Long, FfessmLicence> ffessmLicences, HashMap<Long, Subscription> subscriptions,
+				HashMap<Long, DivingTraining> trainings) {
 
 			this.adherentNumber = i;
 			this.infoSaison = infoSaison;
@@ -123,6 +133,10 @@ public class DashboardResource extends AbstractResource {
 				this.licence = ffessmLicences.get(infoSaison.getFk_ffessm_licence_id());
 			if (infoSaison.getFk_subscription_id() != null)
 				this.subscription = subscriptions.get(infoSaison.getFk_subscription_id());
+			if (infoSaison.getFk_actual_training_id() != null)
+				this.actualTraining = trainings.get(infoSaison.getFk_actual_training_id());
+			if (infoSaison.getFk_training_id() != null)
+				this.training = trainings.get(infoSaison.getFk_training_id());
 		}
 
 	}
