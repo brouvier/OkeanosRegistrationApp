@@ -53,7 +53,6 @@ public class FfessmLicenceDao {
 				logger.debug("ID généré : " + insertedId);
 				return getItemById(insertedId);
 			} catch (Exception e) {
-				// TODO: handle exception
 				logger.error(e.getMessage());
 				e.printStackTrace();
 				return item;
