@@ -137,9 +137,10 @@
 <div class="row" ng-show='adherentInfoSaison.id'>
     <div class="col-md-12">
         <h3 class="page-header">Documents joints</h3>
-        <p>Les fichier doivent être au format PDF et leur taille ne doit pas dépasser 1Mo.</p>
+        <p>Les fichiers doivent être au format PDF et leur taille ne doit pas dépasser 1Mo.</p>
         <h4 class="page-header">Certificat médical</h4>
-        <p>Le certificat médical est obligatoire pour les entraînements piscine (plongée/hockey), et les sorties. Vous devez conserver l’original et nous fournir une copie. Le certificat médical doit également préciser que vous êtes apte à passer un niveau, à pratiquer la compétition (hockey) ou enseigner et encadrer la plongée. Selon la formation engagée ou l’âge, il doit être délivré par le médecin suivant :</p>
+        <p>Le certificat médical est obligatoire pour votre adhésion. Vous devez conserver l’original et nous fournir une copie.<br/>
+            Selon votre situation, il doit être délivré par le médecin suivant :</p>
         <ul>
             <li>Plongée Explo : tous médecins</li>
             <li>Préparation et passage niveau 1 : tous médecins</li>
@@ -149,7 +150,20 @@
             <li>Jeune plongeur +12 ans avec niveau 1 : tous médecins</li>
             <li>Encadrant : médecin du sport, médecin fédéral ou médecin hyperbare</li>
         </ul>
-        <p>Modèle fourni par la fédération : <a href="http://www.okeanos-grenoble.fr/images/docs/Certificat_Medical.pdf" target="_blank">Télécharger</a><br/> Liste des médecin hyperbare : <a href="https://www.ffessmaura.fr/images/le-comite/medical/2017/Liste_des_medecins_federaux_consultants_du_Comite_AURA_au_13-02-2017.pdf" target="_blank">Télécharger</a></p>
+        <p>
+            Votre certificat devrat porter une mention spécifique dans les cas suivants : passage d'une formation (niveau, arbitrage ...), praticipation en compétition de hockey (même amicale), enseignement et encadrement.
+        </p>
+        <p>
+            Pour les pratiquants de hockey subaquatique uniquement, votre certificat peut être valable jusqu'à 3 ans, en fonction des conditions que vous trouverez dans l'"Attestation réponses négatives QS-SPORT" sur la page de la fédération.<br/>
+            Dans ce cas, merci d'importer un unique fichier contenant votre certificat ainsi que votre attestation de réponse négative. 
+        </p>
+        <p>
+            Utilisez de préférence le "Modèle CACI" fourni par la fédération.
+        </p>
+        <p>
+            Toutes les informations de la fédération : <a href="https://ffessm.fr/pages.asp?p=409" target="_blank">DISPOSITIF DU CERTIFICAT MÉDICAL APPLICABLE À PARTIR DE LA NOUVELLE LICENCE 2017/2018</a><br/>
+            Liste des médecins hyperbare : <a href="https://www.ffessmaura.fr/images/le-comite/medical/2017/Liste_des_medecins_federaux_consultants_du_Comite_AURA_au_13-02-2017.pdf" target="_blank">Télécharger</a>
+        </p>
         <form name="sickNoteForm" role="form">
             <input class="btn" ngf-select ng-model="sickNoteFile" name="sickNoteFile" type="file" ngf-accept="'.pdf'" ngf-pattern="'.pdf'" ngf-max-size="1MB">
             <i ng-show="sickNoteForm.sickNoteFile.$error.maxSize">File too large {{errorFile.size / 1000000|number:1}}MB: max 1M</i>
