@@ -25,6 +25,13 @@ okeanosAppControllers.controller('adherentInfoSaisonListCtrl', function ($scope,
                 };
                 console.log('Liste des adhérents mise à jour');
             });
+        /* Recherche de la liste des types d'adésions */
+        $scope.resetSubscriptionFilter();
+        $http.get(okeanoAppUrl + '/subscription/saison/' + $scope.currentSaisonId)
+            .then(function (response) {
+                $scope.subscriptionList = response.data;
+                console.log('Liste des adhésions mise à jour pour le filtre');
+            });
     };
 
     $http.get(okeanoAppUrl + 'saison/currentSaison')
@@ -130,7 +137,7 @@ okeanosAppControllers.controller('adherentInfoSaisonListCtrl', function ($scope,
      *****************/
     // upload on form submit
     $scope.certificateLicenceSubmit = function () {
-        if ($scope.validationAdherentInfoSaisonForm.certificateLicenceFile.$valid && $scope.certificateLicenceFile) {
+        if ($scope.validationAdherentInfoSaisonForm.$valid && $scope.certificateLicenceFile) {
             $scope.upload($scope.certificateLicenceFile, $scope.getCertificateLicenceUrl($scope.modalInfoSaison));
             $scope.certificateLicenceFile = null;
         }
@@ -145,6 +152,7 @@ okeanosAppControllers.controller('adherentInfoSaisonListCtrl', function ($scope,
             }
         }).then(function (resp) {
             console.log('Success ' + resp.config.data.file.name + 'uploaded. Response: ' + resp.data);
+            $scope.refreshList();
         }, function (resp) {
             console.log('Error status: ' + resp.status);
         }, function (evt) {
@@ -152,7 +160,8 @@ okeanosAppControllers.controller('adherentInfoSaisonListCtrl', function ($scope,
             console.log('progress: ' + progressPercentage + '% ' + evt.config.data.file.name);
         });
 
-        $scope.refreshList();
+        // Fermeture de la modal
+        $('#editModal').modal('hide');
     };
 
     /*****************
@@ -166,8 +175,6 @@ okeanosAppControllers.controller('adherentInfoSaisonListCtrl', function ($scope,
     /*****************
      * Gestion des filtres
      *****************/
-
-    $scope.subscriptionList = Subscription.query();
 
     $scope.modeVisu = filterService.modeVisu;
     $scope.modeFiltre = filterService.modeFiltre;

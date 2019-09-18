@@ -10,6 +10,7 @@ import okeanos.dao.AdherentInfoDao;
 import okeanos.dao.AdherentInfoSaisonDao;
 import okeanos.dao.DivingTrainingDao;
 import okeanos.dao.FfessmLicenceDao;
+import okeanos.dao.HockeyTeamDao;
 import okeanos.dao.InsuranceDao;
 import okeanos.dao.SubscriptionDao;
 import okeanos.model.Account;
@@ -17,6 +18,7 @@ import okeanos.model.AdherentInfo;
 import okeanos.model.AdherentInfoSaison;
 import okeanos.model.DivingTraining;
 import okeanos.model.FfessmLicence;
+import okeanos.model.HockeyTeam;
 import okeanos.model.Insurance;
 import okeanos.model.Subscription;
 import okeanos.util.AppProperties;
@@ -77,12 +79,17 @@ public class DashboardResource extends AbstractResource {
 				trainings.put(training.getId(), training);
 			}
 
+			HashMap<Long, HockeyTeam> teams = new HashMap<Long, HockeyTeam>();
+			for (HockeyTeam team : HockeyTeamDao.getAllItems()) {
+				teams.put(team.getId(), team);
+			}
+
 			// Construction de la liste des adhérents
 			ArrayList<Adherent> res = new ArrayList<Adherent>();
 			Integer i = 1;
 			for (AdherentInfoSaison infoSaison : AdherentInfoSaisonDao.getAllItemsForSaison(saisonId)) {
 				res.add(new Adherent(i, infoSaison, accounts, adherentInfos, insurances, ffessmLicences, subscriptions,
-						trainings));
+						trainings, teams));
 				i++;
 			}
 
@@ -102,6 +109,7 @@ public class DashboardResource extends AbstractResource {
 		public Subscription subscription;
 		public DivingTraining actualTraining;
 		public DivingTraining training;
+		public HockeyTeam team;
 
 		public Adherent(Long accountId, Long saisonId) {
 
@@ -121,7 +129,7 @@ public class DashboardResource extends AbstractResource {
 		public Adherent(Integer i, AdherentInfoSaison infoSaison, HashMap<Long, Account> accounts,
 				HashMap<Long, AdherentInfo> adherentInfos, HashMap<Long, Insurance> insurances,
 				HashMap<Long, FfessmLicence> ffessmLicences, HashMap<Long, Subscription> subscriptions,
-				HashMap<Long, DivingTraining> trainings) {
+				HashMap<Long, DivingTraining> trainings, HashMap<Long, HockeyTeam> teams) {
 
 			this.adherentNumber = i;
 			this.infoSaison = infoSaison;
@@ -137,6 +145,8 @@ public class DashboardResource extends AbstractResource {
 				this.actualTraining = trainings.get(infoSaison.getFk_actual_training_id());
 			if (infoSaison.getFk_training_id() != null)
 				this.training = trainings.get(infoSaison.getFk_training_id());
+			if (infoSaison.getFk_team_id() != null)
+				this.team = teams.get(infoSaison.getFk_team_id());
 		}
 
 	}

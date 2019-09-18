@@ -32,7 +32,7 @@
                             <input type="radio" name="radioModeVisu" ng-model="modeVisu" value="contact">Contacts des adhésions
                         </label>
                         <label class="radio-inline">
-                            <input type="radio" name="radioModeVisu" ng-model="modeVisu" value="formation">Formation en cours
+                            <input type="radio" name="radioModeVisu" ng-model="modeVisu" value="formation">Niveaux et équipes
                         </label>
                     </div>
                 </div>
@@ -88,6 +88,7 @@
                         <th ng-show='modeVisu == "contact"'>Couriel</th>
                         <th ng-show='modeVisu == "formation"'>Niveau actuel</th>
                         <th ng-show='modeVisu == "formation"'>Niveau préparé</th>
+                        <th ng-show='modeVisu == "formation"'>Equipe</th>
                         <th class="ignore" ng-show='modeVisu == "contact"'>Urgence</th>
                         <th class="ignore" ng-show='modeVisu == "validation"'>Certificat médical</th>
                         <th class="ignore" ng-show='modeVisu == "validation"'>Certificat de licence</th>
@@ -107,6 +108,7 @@
                         <td ng-show='modeVisu == "contact"'>{{adherent.account.mail}}</td>
                         <td ng-show='modeVisu == "formation"'>{{adherent.actualTraining.label}}</td>
                         <td ng-show='modeVisu == "formation"'>{{adherent.training.label}}</td>
+                        <td ng-show='modeVisu == "formation"'>{{adherent.team.label}}</td>
                         <td class="text-center" ng-show='modeVisu == "contact"'>
                             <button type="button" class="btn btn-default" data-toggle="modal" data-target="#emergencyModal" ng-click="emergency(adherent)">
                                 <span class="glyphicon glyphicon-alert" aria-hidden="true" style="color:orangered"></span>
