@@ -6,6 +6,8 @@ import static spark.Spark.post;
 import java.util.HashMap;
 
 import org.apache.commons.collections4.bidimap.TreeBidiMap;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import okeanos.controler.LoginControler;
 import okeanos.controler.MailControler;
@@ -16,6 +18,7 @@ import spark.Request;
 import spark.Response;
 
 public class SecurityResource extends AbstractResource {
+	private static Logger logger = LoggerFactory.getLogger(SecurityResource.class);
 
 	/* Liste des sessions en cours : ticket de session : Id du compte */
 	protected static TreeBidiMap<String, Long> sessionList = new TreeBidiMap<String, Long>();
@@ -29,6 +32,8 @@ public class SecurityResource extends AbstractResource {
 	protected String ressourcePath = AppProperties.API_CONTEXT + "/security";
 
 	public static Boolean isLogin(Request request) {
+		logger.info(request.session().id());
+		// logger.info(sessionList.toString());
 		return sessionList.containsKey(request.session().id());
 	}
 
@@ -53,7 +58,7 @@ public class SecurityResource extends AbstractResource {
 	}
 
 	public static Boolean isLoginAndCurrentAccount(Request request, Long accountId) {
-		return isLogin(request) & getCurrentUserId(request).equals(accountId);
+		return isLogin(request) && getCurrentUserId(request).equals(accountId);
 	}
 
 	public SecurityResource() {

@@ -28,7 +28,8 @@ public abstract class AbstractResource {
 	protected void setupEndpoints() {
 
 		exception(Exception.class, (e, request, response) -> {
-			logger.error("error during request ", e);
+			// logger.error("error during request ", e);
+			logger.error("error during request : " + e.getMessage());
 			response.status(400);
 			response.body(gson.toJson(new ResponseError(e)));
 		});
