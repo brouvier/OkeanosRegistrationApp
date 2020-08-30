@@ -36,11 +36,12 @@
             <div class="form-group">
                 <label for="optionsAdhesion1" class="col-sm-3 control-label">Mon adhésion :</label>
                 <div class="col-sm-9">
-                    <div class="radio-inline" ng-repeat="subscription in subscriptionList">
-                        <label>
-                            <input type="radio" ng-model="adherentInfoSaison.fk_subscription_id" value={{subscription.id}} ng-disabled="adherentInfoSaison.validation_start==true">
-                            {{subscription.label}} ({{subscription.price | number:2}}€)
-                        </label>
+                    <div class="checkbox">
+                        <select id="selectSubscription" class="form-control" 
+                            ng-model="adherentInfoSaison.fk_subscription_id" 
+                            ng-options="subscription.id as subscription.label + ' (' + subscription.price + '€)' for subscription in subscriptionList" 
+                            ng-disabled="adherentInfoSaison.validation_start==true">
+                        </select>
                     </div>
                     <p>La cotisation couvre l'encadrement piscine et le matériel de plongée en piscine tout au long de la saison. Attention, pour le coût des sorties n'est pas compris dans la cotisation.</p>
                 </div>
@@ -84,7 +85,7 @@
                 </div>
             </div>
 
-            <div class="form-group">
+            <div class="form-group" ng-show="false">
                 <label class="col-sm-3 control-label">Demande d'attestation : </label>
                 <div class="col-sm-9">
                     <div class="checkbox">
@@ -162,6 +163,8 @@
         </p>
         <p>
             Toutes les informations de la fédération : <a href="https://ffessm.fr/pages.asp?p=409" target="_blank">DISPOSITIF DU CERTIFICAT MÉDICAL APPLICABLE À PARTIR DE LA NOUVELLE LICENCE 2017/2018</a><br/>
+            Auto questionnaire avant reprise COVID : <a href="https://ffessm.fr/uploads/media/docs/0001/05/6c5df69429697f0718c7f9d7fd8447ecc6d082e0.pdf" target="_blank">Attestation à fusionner avec votre certificat médicale ou votre CACI</a>
+            <a href="https://www.google.com/search?q=fusion+pdf+en+ligne" target="_blank">(outils de fusion de pdf en ligne)</a><br/>
             Liste des médecins hyperbare : <a href="https://www.ffessmaura.fr/images/le-comite/medical/2017/Liste_des_medecins_federaux_consultants_du_Comite_AURA_au_13-02-2017.pdf" target="_blank">Télécharger</a>
         </p>
         <form name="sickNoteForm" role="form">
