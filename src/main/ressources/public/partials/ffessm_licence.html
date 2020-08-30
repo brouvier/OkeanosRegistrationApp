@@ -1,5 +1,12 @@
 <h2>Liste des tarifs de licence par saison</h2>
 
+<div class="form-group">
+    <label for="selectSaison" class="col-3 control-label">Saison</label>
+    <div class="col-3">
+        <select id="selectSaison" class="form-control" ng-model="currentSaisonId" ng-options="saison.id as saison.label for saison in saisonList" required="required">
+        </select>
+    </div>
+</div>
 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createModal"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Ajouter un tarif</button>
 <button type="button" class="btn btn-info" ng-click="refreshList()"><span class="glyphicon glyphicon-refresh" aria-hidden="true"></span> Rafraichir la liste</button>
 
@@ -13,7 +20,7 @@
                 <th>Editer</th>
                 <th>Supprimer</th>
             </tr>
-            <tr ng-repeat="licence in licenceList">
+            <tr ng-repeat="licence in licenceList | filter:saisonFilter">
                 <td>{{getSaisonLabel(licence)}}</td>
                 <td>{{licence.label}}</td>
                 <td>{{licence.price}}</td>
@@ -36,17 +43,17 @@
             <div class="modal-body">
                 <form name="createForm" ng-submit="saveItem()">
                     <div class="form-group">
-                        <label for="inputSaison">Saison</label>
-                        <select id="inputSaison" class="form-control" ng-model="modalSaisonId" ng-options="saison.id as saison.label for saison in saisonList" required="required">
+                        <label for="inputSaisonCreate">Saison</label>
+                        <select id="inputSaisonCreate" class="form-control" ng-model="modalSaisonId" ng-options="saison.id as saison.label for saison in saisonList" required="required">
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="inputLabel">Label</label>
-                        <input id="inputLabel" type="text" class="form-control" placeholder="Label" ng-model="modalLabel" required="required" />
+                        <label for="inputLabelCreate">Label</label>
+                        <input id="inputLabelCreate" type="text" class="form-control" placeholder="Label" ng-model="modalLabel" required="required" />
                     </div>
                     <div class="form-group">
-                        <label for="inputPrice">Tarif</label>
-                        <div id="inputPrice" class="input-group">
+                        <label for="inputPriceCreate">Tarif</label>
+                        <div id="inputPriceCreate" class="input-group">
                             <span class="input-group-addon">€</span>
                             <input type="number" step="0.01" class="form-control" ng-model="modalPrice" required="required">
                         </div>

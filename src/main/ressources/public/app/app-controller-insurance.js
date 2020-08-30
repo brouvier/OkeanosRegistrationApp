@@ -1,13 +1,26 @@
 /* 
  * Contrôleur de la liste des assurances
  */
-okeanosAppControllers.controller('insuranceCtrl', function ($scope, securityService, Insurance, Saison) {
+okeanosAppControllers.controller('insuranceCtrl', function ($scope, $http, securityService, Insurance, Saison) {
     securityService.checkIsLogin();
     $scope.modeDebug = modeDebug;
 
     $scope.adminMode = securityService.checkIsAdmin();
     $scope.insuranceList = Insurance.query();
     $scope.saisonList = Saison.query();
+
+    $http.get(okeanoAppUrl + 'saison/currentSaison')
+        .then(function (response) {
+            var saison = response.data;
+            $scope.currentSaisonId = saison.id;
+            console.log('currentSaisonId == ' + $scope.currentSaisonId);
+        });
+
+    $scope.saisonFilter = function (item) {
+        if( $scope.currentSaisonId )
+            return item.fk_saison_id == $scope.currentSaisonId;
+        else return true;
+    };
 
     $scope.getSaisonLabel = function (insurance) {
         for (var i = 0; i < $scope.saisonList.length; i++) {

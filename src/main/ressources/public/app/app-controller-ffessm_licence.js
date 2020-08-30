@@ -1,13 +1,26 @@
 /* 
  * Contrôleur de la liste des formations de plongée
  */
-okeanosAppControllers.controller('ffessmLicenceCtrl', function ($scope, securityService, FfessmLicence, Saison) {
+okeanosAppControllers.controller('ffessmLicenceCtrl', function ($scope, $http, securityService, FfessmLicence, Saison) {
     securityService.checkIsLogin();
     $scope.modeDebug = modeDebug;
 
     $scope.adminMode = securityService.checkIsAdmin();
     $scope.licenceList = FfessmLicence.query();
     $scope.saisonList = Saison.query();
+
+    $http.get(okeanoAppUrl + 'saison/currentSaison')
+        .then(function (response) {
+            var saison = response.data;
+            $scope.currentSaisonId = saison.id;
+            console.log('currentSaisonId == ' + $scope.currentSaisonId);
+        });
+
+    $scope.saisonFilter = function (item) {
+        if( $scope.currentSaisonId )
+            return item.fk_saison_id == $scope.currentSaisonId;
+        else return true;
+    };
 
     $scope.getSaisonLabel = function (licence) {
         for (var i = 0; i < $scope.saisonList.length; i++) {

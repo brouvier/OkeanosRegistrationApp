@@ -1,7 +1,7 @@
 /* 
  * Contrôleur de la liste des formations de plongée
  */
-okeanosAppControllers.controller('subscriptionCtrl', function ($scope, securityService, Subscription, Saison, SubscriptionType) {
+okeanosAppControllers.controller('subscriptionCtrl', function ($scope, $http, securityService, Subscription, Saison, SubscriptionType) {
     securityService.checkIsLogin();
     $scope.modeDebug = modeDebug;
 
@@ -9,6 +9,19 @@ okeanosAppControllers.controller('subscriptionCtrl', function ($scope, securityS
     $scope.subscriptionList = Subscription.query();
     $scope.saisonList = Saison.query();
     $scope.subscriptionTypeList = SubscriptionType.query();
+
+    $http.get(okeanoAppUrl + 'saison/currentSaison')
+        .then(function (response) {
+            var saison = response.data;
+            $scope.currentSaisonId = saison.id;
+            console.log('currentSaisonId == ' + $scope.currentSaisonId);
+        });
+
+    $scope.saisonFilter = function (item) {
+        if( $scope.currentSaisonId )
+            return item.fk_saison_id == $scope.currentSaisonId;
+        else return true;
+    };
 
     $scope.getSaisonLabel = function (subscription) {
         for (var i = 0; i < $scope.saisonList.length; i++) {

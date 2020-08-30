@@ -1,5 +1,12 @@
 <h2>Liste des tarifs d'assurance</h2>
 
+<div class="form-group">
+    <label for="selectSaison" class="col-3 control-label">Saison</label>
+    <div class="col-3">
+        <select id="selectSaison" class="form-control" ng-model="currentSaisonId" ng-options="saison.id as saison.label for saison in saisonList" required="required">
+        </select>
+    </div>
+</div>
 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createModal"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Ajouter un tarif</button>
 <button type="button" class="btn btn-info" ng-click="refreshList()"><span class="glyphicon glyphicon-refresh" aria-hidden="true"></span> Rafraichir la liste</button>
 
@@ -13,7 +20,7 @@
                 <th>Editer</th>
                 <th>Supprimer</th>
             </tr>
-            <tr ng-repeat="insurance in insuranceList">
+            <tr ng-repeat="insurance in insuranceList | filter:saisonFilter">
                 <td>{{getSaisonLabel(insurance)}}</td>
                 <td>{{insurance.label}}</td>
                 <td>{{insurance.price}}</td>
