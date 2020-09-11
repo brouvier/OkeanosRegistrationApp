@@ -25,12 +25,21 @@ public abstract class AbstractResource {
 
 	protected Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
 
+	/**
+	 * Capture des exceptions
+	 */
 	protected void setupEndpoints() {
 
 		exception(Exception.class, (e, request, response) -> {
-			// logger.error("error during request ", e);
 			logger.error("error during request : " + e.getMessage());
-			response.status(400);
+			if (e.getClass() == IllegalAccessException.class) {
+				// Destroy cookie
+				response.header("Set-Cookie",
+						"OkSession=\"\";Version=1;Expires=Thu, 01-Jan-1970 00:00:00 GMT;Max-Age=0;SameSite=None;Secure;");
+
+				response.status(401);
+			} else
+				response.status(400);
 			response.body(gson.toJson(new ResponseError(e)));
 		});
 

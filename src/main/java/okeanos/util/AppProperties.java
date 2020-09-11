@@ -18,7 +18,7 @@ public class AppProperties {
 
 	// App
 	public static final String APPLICATION_NAME = "okeanos_rest";
-	public static final String APPLICATION_VERSION = "2.0.0";
+	public static final String APPLICATION_VERSION = "3.0.0";
 	public static final String APPLICATION_FULL_NAME = "Okeanos Registration App";
 
 	protected static final String PROPERTIES_FILE_NAME = "okeanos_rest.properties";
@@ -54,6 +54,7 @@ public class AppProperties {
 	public final String restHostName;
 	public final String restHostPort;
 	public final String frontRestAcces;
+	public final String frontHostName;
 	public final String frontModeDebug;
 	public final String dbLogin;
 	public final String dbPassword;
@@ -87,6 +88,7 @@ public class AppProperties {
 		restHostName = prop.getProperty("restHostName");
 		restHostPort = prop.getProperty("restHostPort");
 		frontRestAcces = prop.getProperty("frontRestAcces");
+		frontHostName = prop.getProperty("frontHostName");
 		frontModeDebug = prop.getProperty("frontModeDebug");
 
 		dbLogin = prop.getProperty("dbLogin");
@@ -150,6 +152,7 @@ public class AppProperties {
 		prop.setProperty("restHostName", "localhost");
 		prop.setProperty("restHostPort", "8080");
 		prop.setProperty("frontRestAcces", "https://localhost");
+		prop.setProperty("frontHostName", "https://localhost");
 		prop.setProperty("frontModeDebug", "true");
 
 		prop.setProperty("dbLogin", "**Database Login**");

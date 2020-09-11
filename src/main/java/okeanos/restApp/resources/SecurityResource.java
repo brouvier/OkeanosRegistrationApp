@@ -32,20 +32,22 @@ public class SecurityResource extends AbstractResource {
 	protected String ressourcePath = AppProperties.API_CONTEXT + "/security";
 
 	public static Boolean isLogin(Request request) {
-		logger.info(request.session().id());
-		// logger.info(sessionList.toString());
-		return sessionList.containsKey(request.session().id());
+		// return sessionList.containsKey(request.session().id());
+		return sessionList.containsKey(request.cookie("OkSession"));
 	}
 
 	public static Long currentAccountId(Request request) {
-		return sessionList.get(request.session().id());
+		// return sessionList.get(request.session().id());
+		return sessionList.get(request.cookie("OkSession"));
 	}
 
 	public static Boolean isAdmin(Request request) {
 		if (!isLogin(request))
 			return false;
 
-		Account user = AccountDao.getItemById(sessionList.get(request.session().id()), false);
+		// Account user =
+		// AccountDao.getItemById(sessionList.get(request.session().id()), false);
+		Account user = AccountDao.getItemById(sessionList.get(request.cookie("OkSession")), false);
 
 		if (user == null)
 			return false;
@@ -54,7 +56,8 @@ public class SecurityResource extends AbstractResource {
 	}
 
 	public static Long getCurrentUserId(Request request) {
-		return sessionList.get(request.session().id());
+		// return sessionList.get(request.session().id());
+		return sessionList.get(request.cookie("OkSession"));
 	}
 
 	public static Boolean isLoginAndCurrentAccount(Request request, Long accountId) {
@@ -106,7 +109,13 @@ public class SecurityResource extends AbstractResource {
 		 * URL deconnexion
 		 */
 		get(ressourcePath + "/logout", (request, response) -> {
-			sessionList.remove(request.session().id());
+			// sessionList.remove(request.session().id());
+			sessionList.remove(request.cookie("OkSession"));
+
+			// Destroy cookie
+			response.header("Set-Cookie",
+					"OkSession=\"\";Version=1;Expires=Thu, 01-Jan-1970 00:00:00 GMT;Max-Age=0;SameSite=None;Secure;");
+
 			request.session().invalidate();
 
 			return true;
@@ -203,11 +212,13 @@ public class SecurityResource extends AbstractResource {
 	protected void registerSession(Request request, Response response, Account user) {
 		// Suppression d'autres sessions de cet utilisateur
 		if (sessionList.containsValue(user.getId())) {
+			logger.info("L'utilisateur avait déjà une session active");
 			sessionList.removeValue(user.getId());
 		}
 
 		// Référencement de la nouvelle session
-		sessionList.put(request.session().id(), user.getId());
+		// sessionList.put(request.session().id(), user.getId());
+		sessionList.put(request.cookie("OkSession"), user.getId());
 
 		// Ajout des infos d'authentification dans l'en-tête de la réponse
 		setSecurity(request, response);
