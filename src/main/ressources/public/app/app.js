@@ -97,6 +97,10 @@ okeanosApp.config(['$routeProvider', '$httpProvider',
                 redirectTo: '/dashboard'
             });
 
+        // Allow credential for CORS request
+        $httpProvider.defaults.withCredentials = true;
+        $httpProvider.defaults.useXDomain = true;
+        delete $httpProvider.defaults.headers.common['X-Requested-With'];
 
         //register the interceptor as a service
         $httpProvider.interceptors.push(function ($location, securityService) {
@@ -106,23 +110,25 @@ okeanosApp.config(['$routeProvider', '$httpProvider',
                         //Do your custom processing here
                         // do something on success
                         //console.log('myHttpInterceptor response : ' + response.config.url);
+                        console.log('okeanoAppUrl startsWith ', okeanoAppUrl, response);
                         securityService.setSecurity(response.headers('isLogin'), response.headers('isAdmin'), response.headers('curentAccountId'));
                         //console.log(securityService.getSecurity());
-                    }
+                    } else console.log('Url startsWith ', okeanoAppUrl, response);
 
                     return response;
                 },
                 'responseError': function (rejection) {
-                    console.log('responseError');
-                    console.log(rejection);
+                    console.log('responseError :', rejection);
                     if (rejection.status === 401) {
-                        $location.url('/dashboard');
+                        securityService.setSecurity(false, false, null);
+                        $location.url('/userLogin');
                     }
                 }
             };
         });
 
-}]);
+    }
+]);
 
 okeanosApp.run(function ($rootScope, $location, $window) {
     $rootScope.$on('$routeChangeSuccess', function () {
