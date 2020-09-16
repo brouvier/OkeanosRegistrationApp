@@ -41,9 +41,10 @@ okeanosAppControllers.controller('loginCtrl', function ($scope, $location, $http
             if ($scope.login.password == null || $scope.login.email == null) {
                 $scope.alerte = "Remplissez tous les champs";
             } else {
+                console.log('Login request send');
                 $http.post(okeanoAppUrl + 'security/login', indata).then(function (response) {
                     console.log('Login response');
-                    console.log(response);
+                    // console.log(response);
                     if (response.data == 'true') {
                         $location.path("dashboard");
                     } else {

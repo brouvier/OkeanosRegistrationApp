@@ -14,6 +14,7 @@ import okeanos.controler.MailControler;
 import okeanos.dao.AccountDao;
 import okeanos.model.Account;
 import okeanos.util.AppProperties;
+import okeanos.util.BrowserCommunication;
 import spark.Request;
 import spark.Response;
 
@@ -31,23 +32,26 @@ public class SecurityResource extends AbstractResource {
 
 	protected String ressourcePath = AppProperties.API_CONTEXT + "/security";
 
+	/**
+	 * @return le ticket de session de l'utilisateur
+	 */
+	protected static String getSessionToken(Request request) {
+		return request.cookie(BrowserCommunication.SESSION_TOKEN_NAME);
+	}
+
 	public static Boolean isLogin(Request request) {
-		// return sessionList.containsKey(request.session().id());
-		return sessionList.containsKey(request.cookie("OkSession"));
+		return sessionList.containsKey(getSessionToken(request));
 	}
 
 	public static Long currentAccountId(Request request) {
-		// return sessionList.get(request.session().id());
-		return sessionList.get(request.cookie("OkSession"));
+		return sessionList.get(getSessionToken(request));
 	}
 
 	public static Boolean isAdmin(Request request) {
 		if (!isLogin(request))
 			return false;
 
-		// Account user =
-		// AccountDao.getItemById(sessionList.get(request.session().id()), false);
-		Account user = AccountDao.getItemById(sessionList.get(request.cookie("OkSession")), false);
+		Account user = AccountDao.getItemById(sessionList.get(getSessionToken(request)), false);
 
 		if (user == null)
 			return false;
@@ -57,7 +61,7 @@ public class SecurityResource extends AbstractResource {
 
 	public static Long getCurrentUserId(Request request) {
 		// return sessionList.get(request.session().id());
-		return sessionList.get(request.cookie("OkSession"));
+		return sessionList.get(getSessionToken(request));
 	}
 
 	public static Boolean isLoginAndCurrentAccount(Request request, Long accountId) {
@@ -110,14 +114,8 @@ public class SecurityResource extends AbstractResource {
 		 */
 		get(ressourcePath + "/logout", (request, response) -> {
 			// sessionList.remove(request.session().id());
-			sessionList.remove(request.cookie("OkSession"));
-
-			// Destroy cookie
-			response.header("Set-Cookie",
-					"OkSession=\"\";Version=1;Expires=Thu, 01-Jan-1970 00:00:00 GMT;Max-Age=0;SameSite=None;Secure;");
-
-			request.session().invalidate();
-
+			sessionList.remove(getSessionToken(request));
+			BrowserCommunication.destroyUserSession(response, request);
 			return true;
 		});
 
@@ -218,7 +216,7 @@ public class SecurityResource extends AbstractResource {
 
 		// Référencement de la nouvelle session
 		// sessionList.put(request.session().id(), user.getId());
-		sessionList.put(request.cookie("OkSession"), user.getId());
+		sessionList.put(getSessionToken(request), user.getId());
 
 		// Ajout des infos d'authentification dans l'en-tête de la réponse
 		setSecurity(request, response);

@@ -1,4 +1,4 @@
-package okeanos.restApp.resources;
+package okeanos.model;
 
 public class ResponseError {
 

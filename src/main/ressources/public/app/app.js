@@ -110,7 +110,7 @@ okeanosApp.config(['$routeProvider', '$httpProvider',
                         //Do your custom processing here
                         // do something on success
                         //console.log('myHttpInterceptor response : ' + response.config.url);
-                        console.log('okeanoAppUrl startsWith ', okeanoAppUrl, response);
+                        //console.log('okeanoAppUrl startsWith ', okeanoAppUrl, response);
                         securityService.setSecurity(response.headers('isLogin'), response.headers('isAdmin'), response.headers('curentAccountId'));
                         //console.log(securityService.getSecurity());
                     } else console.log('Url startsWith ', okeanoAppUrl, response);

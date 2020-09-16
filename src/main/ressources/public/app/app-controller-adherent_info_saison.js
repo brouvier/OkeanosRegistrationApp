@@ -174,15 +174,16 @@ okeanosAppControllers.controller('adherentInfoSaisonCtrl', function ($scope, $ht
                 file: file
             }
         }).then(function (resp) {
+            console.log('Upload finish :', resp);
             console.log('Success ' + resp.config.data.file.name + 'uploaded. Response: ' + resp.data);
+            loadData();
         }, function (resp) {
             console.log('Error status: ' + resp.status);
+            loadData();
         }, function (evt) {
             var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
             console.log('progress: ' + progressPercentage + '% ' + evt.config.data.file.name);
         });
-
-        loadData();
     };
 
 });
