@@ -5,7 +5,7 @@ var okeanosAppControllers = angular.module('okeanosAppControllers', []);
  */
 okeanosAppControllers.controller('sickNoteUploadCtrl', function ($scope, $http, securityService, Upload) {
     // securityService.checkIsAdmin();
-    $scope.modeDebug = modeDebug;
+    $scope.modeDebug = config.modeDebug;
     $scope.document = {};
 
     $scope.$watch("document.file", function (newValue, oldValue) {
@@ -27,7 +27,7 @@ okeanosAppControllers.controller('sickNoteUploadCtrl', function ($scope, $http, 
     // upload on file select or drop
     $scope.upload = function (file) {
         Upload.upload({
-            url: 'https://localhost:8080/api/v1/file/multipart',
+            url: config.okeanoAppUrl + 'file/multipart',
             data: {
                 file: file
             }

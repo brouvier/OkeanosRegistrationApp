@@ -3,14 +3,14 @@
  */
 okeanosAppControllers.controller('subscriptionCtrl', function ($scope, $http, securityService, Subscription, Saison, SubscriptionType) {
     securityService.checkIsLogin();
-    $scope.modeDebug = modeDebug;
+    $scope.modeDebug = config.modeDebug;
 
     $scope.adminMode = securityService.checkIsAdmin();
     $scope.subscriptionList = Subscription.query();
     $scope.saisonList = Saison.query();
     $scope.subscriptionTypeList = SubscriptionType.query();
 
-    $http.get(okeanoAppUrl + 'saison/currentSaison')
+    $http.get(config.okeanoAppUrl + 'saison/currentSaison')
         .then(function (response) {
             var saison = response.data;
             $scope.currentSaisonId = saison.id;

@@ -3,13 +3,13 @@
  */
 okeanosAppControllers.controller('ffessmLicenceCtrl', function ($scope, $http, securityService, FfessmLicence, Saison) {
     securityService.checkIsLogin();
-    $scope.modeDebug = modeDebug;
+    $scope.modeDebug = config.modeDebug;
 
     $scope.adminMode = securityService.checkIsAdmin();
     $scope.licenceList = FfessmLicence.query();
     $scope.saisonList = Saison.query();
 
-    $http.get(okeanoAppUrl + 'saison/currentSaison')
+    $http.get(config.okeanoAppUrl + 'saison/currentSaison')
         .then(function (response) {
             var saison = response.data;
             $scope.currentSaisonId = saison.id;

@@ -3,7 +3,7 @@
  */
 okeanosAppControllers.controller('hockeyTeamCtrl', function ($scope, securityService, HockeyTeam) {
     securityService.checkIsLogin();
-    $scope.modeDebug = modeDebug;
+    $scope.modeDebug = config.modeDebug;
 
     $scope.adminMode = securityService.checkIsAdmin();
     $scope.teamList = HockeyTeam.query();

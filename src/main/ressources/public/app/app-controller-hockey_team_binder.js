@@ -3,13 +3,13 @@
  */
 okeanosAppControllers.controller('hockeyTeamBinderCtrl', function ($scope, $http, securityService, HockeyTeam, Saison) {
     securityService.checkIsLogin();
-    $scope.modeDebug = modeDebug;
+    $scope.modeDebug = config.modeDebug;
 
     $scope.adminMode = securityService.checkIsAdmin();
     $scope.teamList = HockeyTeam.query();
     $scope.saisonList = Saison.query();
 
-    $http.get(okeanoAppUrl + 'saison/currentSaison')
+    $http.get(config.okeanoAppUrl + 'saison/currentSaison')
         .then(function (response) {
             var saison = response.data;
             $scope.currentSaisonId = saison.id;
@@ -20,7 +20,7 @@ okeanosAppControllers.controller('hockeyTeamBinderCtrl', function ($scope, $http
 
     $scope.getBinderUrl = function (team) {
         if (team.id != null)
-            return okeanoAppUrl + "hockey_team/binder_team/" + team.id + "/saison/" + $scope.currentSaisonId;
+            return config.okeanoAppUrl + "hockey_team/binder_team/" + team.id + "/saison/" + $scope.currentSaisonId;
         else
             return null;
     };

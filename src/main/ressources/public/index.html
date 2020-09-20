@@ -40,7 +40,7 @@
     <div id="wrapper">
 
         <!-- Navigation -->
-        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0" ng-controller="loginCtrl">
+        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0" ng-controller="serverStartCtrl">
             <div class="navbar-header">
                 <img src="assets/img/logo_okeanos.jpg" class="img-thumbnail" width="50" height="50" />
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -53,20 +53,8 @@
             </div>
             <!-- /.navbar-header -->
 
-            <ul class="nav navbar-top-links navbar-right" ng-show="security.isLogin=='true'">
-                <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                        <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
-                    </a>
-                    <ul class="dropdown-menu dropdown-messages">
-                        <li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a></li>
-                        <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a></li>
-                        <li class="divider"></li>
-                        <li><a href="#/userLogin" ng-click="logout()"><i class="fa fa-sign-out fa-fw"></i> Logout</a></li>
-                    </ul>
-                    <!-- /.dropdown-user -->
-                </li>
-                <!-- /.dropdown -->
+            <ul class="nav navbar-top-links navbar-right" ng-show="security.isLogin=='true'" ng-controller="loginCtrl">
+                <li><a href="#/userLogin" ng-click="logout()"><i class="fa fa-sign-out fa-fw"></i> Logout</a></li>
             </ul>
             <!-- /.navbar-top-links -->
 
@@ -147,11 +135,11 @@
 
 
     <!-- Controleurs de l'application -->
-    <script src="properties.js"></script>
     <script src="app/app.js"></script>
     <script src="app/app-service.js"></script>
     <script src="app/app-controller.js"></script>
     <script src="app/app-controller-saison.js"></script>
+    <script src="app/app-controller-server-start.js"></script>
     <script src="app/app-controller-diving_training.js"></script>
     <script src="app/app-controller-hockey_team.js"></script>
     <script src="app/app-controller-hockey_team_binder.js"></script>

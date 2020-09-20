@@ -2,9 +2,10 @@
  * Contrôleur du dashboard
  */
 okeanosAppControllers.controller('dashboardCtrl', function ($scope, $http, securityService) {
+    console.log('Init controler dashboardCtrl');
     securityService.checkIsLogin();
-    $scope.modeDebug = modeDebug;
-    $scope.okeanoAppUrl = okeanoAppUrl;
+    $scope.modeDebug = config.modeDebug;
+    $scope.okeanoAppUrl = config.okeanoAppUrl;
 
     $scope.adherentInfoPanel = "panel-red";
     $scope.adherentInfoStatus = "Inconnu !!!";
@@ -31,7 +32,7 @@ okeanosAppControllers.controller('dashboardCtrl', function ($scope, $http, secur
         $scope.totalCost = cost;
     };
 
-    $http.get(okeanoAppUrl + 'saison/currentSaison')
+    $http.get(config.okeanoAppUrl + 'saison/currentSaison')
         .then(function (response) {
             var currentSaison = response.data;
             console.log('currentSaison == ' + currentSaison.label);
@@ -47,7 +48,7 @@ okeanosAppControllers.controller('dashboardCtrl', function ($scope, $http, secur
             }
 
             /* Recherche des informations de l'adherent */
-            $http.get(okeanoAppUrl + 'dashboard/saison/' + currentSaison.id + '/account/' + accountId)
+            $http.get(config.okeanoAppUrl + 'dashboard/saison/' + currentSaison.id + '/account/' + accountId)
                 .then(function (response) {
                     $scope.adherent = response.data;
                 });

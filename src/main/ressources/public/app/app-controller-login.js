@@ -1,9 +1,9 @@
 /* 
- * Contrôleur des données de connexion
- */
+* Contrôleur des données de connexion
+*/
 okeanosAppControllers.controller('loginCtrl', function ($scope, $location, $http, securityService) {
     console.log('Init controler loginCtrl');
-    $scope.modeDebug = modeDebug;
+    $scope.modeDebug = config.modeDebug;
     $scope.security = securityService.getSecurity();
     $scope.alerte = "none";
     $scope.login = {};
@@ -26,7 +26,7 @@ okeanosAppControllers.controller('loginCtrl', function ($scope, $location, $http
             } else if ($scope.login.password != $scope.login.confirmPassword) {
                 $scope.alerte = "Les deux mots de passe ne correspondent pas";
             } else {
-                $http.post(okeanoAppUrl + 'security/signup', indata).then(function (response) {
+                $http.post(config.okeanoAppUrl + 'security/signup', indata).then(function (response) {
                     if (response.data == "true") {
                         $location.path("dashboard");
                     } else {
@@ -41,10 +41,9 @@ okeanosAppControllers.controller('loginCtrl', function ($scope, $location, $http
             if ($scope.login.password == null || $scope.login.email == null) {
                 $scope.alerte = "Remplissez tous les champs";
             } else {
-                console.log('Login request send');
-                $http.post(okeanoAppUrl + 'security/login', indata).then(function (response) {
-                    console.log('Login response');
-                    // console.log(response);
+                console.log('Login request send to', config.okeanoAppUrl + 'security/login');
+                $http.post(config.okeanoAppUrl + 'security/login', indata).then(function (response) {
+                    console.log('Login response', response);
                     if (response.data == 'true') {
                         $location.path("dashboard");
                     } else {
@@ -59,13 +58,13 @@ okeanosAppControllers.controller('loginCtrl', function ($scope, $location, $http
     };
 
     $scope.logout = function () {
-        $http.get(okeanoAppUrl + 'security/logout')
+        $http.get(config.okeanoAppUrl + 'security/logout')
             .then(function (response) {
                 console.log(response);
                 if (response.data == 'true') {
                     $location.path("userLogin");
                 } else {
-                    $scope.alerte = "Erreur de connexion : " + data;
+                    $scope.alerte = "Erreur de déconnexion : " + data;
                 }
             });
     };

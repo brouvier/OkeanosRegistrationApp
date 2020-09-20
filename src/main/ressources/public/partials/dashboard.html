@@ -111,19 +111,19 @@
             <div class="panel-body">
                 <ul>
                     <li ng_show="adherent.infoSaison.fk_sick_note_id">
-                        <a href="{{okeanoAppUrl}}/adherent_info_saison/{{adherent.infoSaison.id}}/sick_note" target="_blank">
+                        <a href="{{config.okeanoAppUrl}}/adherent_info_saison/{{adherent.infoSaison.id}}/sick_note" target="_blank">
                             <span class="pull-left">Certificat médical</span>
                             <span class="pull-right"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span></span>
                         </a>
                     </li>
                     <li ng_show="adherent.infoSaison.fk_parental_agreement_id">
-                        <a href="{{okeanoAppUrl}}/adherent_info_saison/{{adherent.infoSaison.id}}/parental_agreement" target="_blank">
+                        <a href="{{config.okeanoAppUrl}}/adherent_info_saison/{{adherent.infoSaison.id}}/parental_agreement" target="_blank">
                             <span class="pull-left">Accord parental</span>
                             <span class="pull-right"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span></span>
                         </a>
                     </li>
                     <li ng_show="adherent.infoSaison.validation_payment_cashed">
-                        <a href="{{okeanoAppUrl}}/adherent_info_saison/{{adherent.infoSaison.id}}/attestation" target="_blank">
+                        <a href="{{config.okeanoAppUrl}}/adherent_info_saison/{{adherent.infoSaison.id}}/attestation" target="_blank">
                             <span class="pull-left">Attestation d'adhésion</span>
                             <span class="pull-right"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span></span>
                         </a>

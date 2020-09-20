@@ -3,7 +3,7 @@
  */
 okeanosAppControllers.controller('adherentInfoSaisonCtrl', function ($scope, $http, Upload, securityService, SubscriptionType, HockeyTeam, DivingTraining, AdherentInfoSaison, FfessmLicence, Subscription, Insurance) {
     securityService.checkIsLogin();
-    $scope.modeDebug = modeDebug;
+    $scope.modeDebug = config.modeDebug;
 
     var initAlerte = function (l, m) {
         $scope.processRunning = false;
@@ -20,7 +20,7 @@ okeanosAppControllers.controller('adherentInfoSaisonCtrl', function ($scope, $ht
     $scope.divingTrainingList = DivingTraining.query();
 
     var loadData = function () {
-        $http.get(okeanoAppUrl + 'saison/currentSaison')
+        $http.get(config.okeanoAppUrl + 'saison/currentSaison')
             .then(function (response) {
                 $scope.currentSaison = response.data;
                 console.log('currentSaison == ' + $scope.currentSaison.label);
@@ -31,21 +31,21 @@ okeanosAppControllers.controller('adherentInfoSaisonCtrl', function ($scope, $ht
                 }
 
                 /* Listes filtrees par saison */
-                $http.get(okeanoAppUrl + 'ffessm_licence/saison/' + $scope.currentSaison.id)
+                $http.get(config.okeanoAppUrl + 'ffessm_licence/saison/' + $scope.currentSaison.id)
                     .then(function (response) {
                         $scope.licenceList = response.data;
                     });
-                $http.get(okeanoAppUrl + 'subscription/saison/' + $scope.currentSaison.id)
+                $http.get(config.okeanoAppUrl + 'subscription/saison/' + $scope.currentSaison.id)
                     .then(function (response) {
                         $scope.subscriptionList = response.data;
                     });
-                $http.get(okeanoAppUrl + 'insurance/saison/' + $scope.currentSaison.id)
+                $http.get(config.okeanoAppUrl + 'insurance/saison/' + $scope.currentSaison.id)
                     .then(function (response) {
                         $scope.insuranceList = response.data;
                     });
 
                 /* Recherche des informations d'adhésion */
-                $http.get(okeanoAppUrl + 'adherent_info_saison/saison/' + $scope.currentSaison.id + '/account/' + securityService.getSecurity().curentAccountId)
+                $http.get(config.okeanoAppUrl + 'adherent_info_saison/saison/' + $scope.currentSaison.id + '/account/' + securityService.getSecurity().curentAccountId)
                     .then(function (response) {
                         var adherent_info_saison_id = response.data;
                         console.log('adherent_info_saison_id == ' + response.data);
@@ -145,8 +145,8 @@ okeanosAppControllers.controller('adherentInfoSaisonCtrl', function ($scope, $ht
     $scope.parentalAgreementUrl = '';
     $scope.$watch("adherentInfoSaison.id", function (newValue, oldValue) {
         if ($scope.docImportReady()) {
-            $scope.sickNoteUrl = okeanoAppUrl + "adherent_info_saison/" + $scope.adherentInfoSaison.id + "/sick_note";
-            $scope.parentalAgreementUrl = okeanoAppUrl + "adherent_info_saison/" + $scope.adherentInfoSaison.id + "/parental_agreement";
+            $scope.sickNoteUrl = config.okeanoAppUrl + "adherent_info_saison/" + $scope.adherentInfoSaison.id + "/sick_note";
+            $scope.parentalAgreementUrl = config.okeanoAppUrl + "adherent_info_saison/" + $scope.adherentInfoSaison.id + "/parental_agreement";
         }
     });
 

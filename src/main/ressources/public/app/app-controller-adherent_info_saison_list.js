@@ -3,18 +3,18 @@
  */
 okeanosAppControllers.controller('adherentInfoSaisonListCtrl', function ($scope, $http, $filter, Upload, securityService, filterService, Saison, AdherentInfo, AdherentInfoSaison, Subscription, HockeyTeam) {
     securityService.checkIsAdmin();
-    $scope.modeDebug = modeDebug;
+    $scope.modeDebug = config.modeDebug;
 
     $scope.hockeyTeamList = HockeyTeam.query();
 
-    $http.get(okeanoAppUrl + '/saison')
+    $http.get(config.okeanoAppUrl + '/saison')
         .then(function (response) {
             $scope.saisonList = response.data;
         });
 
     $scope.refreshList = function () {
         /* Recherche des informations des adhésion */
-        $http.get(okeanoAppUrl + '/dashboard/saison/' + $scope.currentSaisonId)
+        $http.get(config.okeanoAppUrl + '/dashboard/saison/' + $scope.currentSaisonId)
             .then(function (response) {
                 $scope.adherentList = response.data;
                 for (var i = 0; i < $scope.adherentList.length; i++) {
@@ -27,14 +27,14 @@ okeanosAppControllers.controller('adherentInfoSaisonListCtrl', function ($scope,
             });
         /* Recherche de la liste des types d'adésions */
         $scope.resetSubscriptionFilter();
-        $http.get(okeanoAppUrl + '/subscription/saison/' + $scope.currentSaisonId)
+        $http.get(config.okeanoAppUrl + '/subscription/saison/' + $scope.currentSaisonId)
             .then(function (response) {
                 $scope.subscriptionList = response.data;
                 console.log('Liste des adhésions mise à jour pour le filtre');
             });
     };
 
-    $http.get(okeanoAppUrl + 'saison/currentSaison')
+    $http.get(config.okeanoAppUrl + 'saison/currentSaison')
         .then(function (response) {
             var saison = response.data;
             $scope.currentSaisonId = saison.id;
@@ -54,21 +54,21 @@ okeanosAppControllers.controller('adherentInfoSaisonListCtrl', function ($scope,
      *****************************/
     $scope.getSickNoteUrl = function (infoSaison) {
         if (infoSaison.id != null)
-            return okeanoAppUrl + "adherent_info_saison/" + infoSaison.id + "/sick_note";
+            return config.okeanoAppUrl + "adherent_info_saison/" + infoSaison.id + "/sick_note";
         else
             return null;
     };
 
     $scope.getParentalAgreementUrl = function (infoSaison) {
         if (infoSaison.id != null)
-            return okeanoAppUrl + "adherent_info_saison/" + infoSaison.id + "/parental_agreement";
+            return config.okeanoAppUrl + "adherent_info_saison/" + infoSaison.id + "/parental_agreement";
         else
             return null;
     };
 
     $scope.getCertificateLicenceUrl = function (infoSaison) {
         if (infoSaison && infoSaison.id != null)
-            return okeanoAppUrl + "adherent_info_saison/" + infoSaison.id + "/certificate_licence";
+            return config.okeanoAppUrl + "adherent_info_saison/" + infoSaison.id + "/certificate_licence";
         else
             return null;
     };

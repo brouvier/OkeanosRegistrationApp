@@ -3,7 +3,7 @@
  */
 okeanosAppControllers.controller('adherentInfoCtrl', function ($scope, $http, $filter, $timeout, securityService, AdherentInfo) {
     securityService.checkIsLogin();
-    $scope.modeDebug = modeDebug;
+    $scope.modeDebug = config.modeDebug;
 
     var initAlerte = function (l, m) {
         $scope.processRunning = false;

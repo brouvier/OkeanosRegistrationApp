@@ -3,7 +3,7 @@
  */
 okeanosAppControllers.controller('passwordCtrl', function ($scope, $routeParams, $location, $http, securityService) {
     console.log('Init controler passwordCtrl');
-    $scope.modeDebug = modeDebug;
+    $scope.modeDebug = config.modeDebug;
     $scope.security = securityService.getSecurity();
 
     var initAlerte = function () {
@@ -20,7 +20,7 @@ okeanosAppControllers.controller('passwordCtrl', function ($scope, $routeParams,
     $scope.requestNewPass = function () {
         initAlerte();
 
-        $http.get(okeanoAppUrl + 'security/requestNewPass/' + $scope.email).then(function (response) {
+        $http.get(config.okeanoAppUrl + 'security/requestNewPass/' + $scope.email).then(function (response) {
             $scope.alerte = response.data;
         }, function (response) {
             $scope.alerte = {
@@ -53,7 +53,7 @@ okeanosAppControllers.controller('passwordCtrl', function ($scope, $routeParams,
                 };
             } else // Mise à jour du mot de passe
         {
-            $http.post(okeanoAppUrl + 'security/updatePass/' + $scope.ticket, indata).then(function (response) {
+            $http.post(config.okeanoAppUrl + 'security/updatePass/' + $scope.ticket, indata).then(function (response) {
                 $scope.alerte = response.data;
             }, function (response) {
                 $scope.alerte = {

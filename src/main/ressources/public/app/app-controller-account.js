@@ -3,7 +3,7 @@
  */
 okeanosAppControllers.controller('accountListCtrl', function ($scope, securityService, Account) {
     securityService.checkIsAdmin();
-    $scope.modeDebug = modeDebug;
+    $scope.modeDebug = config.modeDebug;
 
     $scope.accounts = Account.query();
 

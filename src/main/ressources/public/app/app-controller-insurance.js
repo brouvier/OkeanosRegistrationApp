@@ -3,13 +3,13 @@
  */
 okeanosAppControllers.controller('insuranceCtrl', function ($scope, $http, securityService, Insurance, Saison) {
     securityService.checkIsLogin();
-    $scope.modeDebug = modeDebug;
+    $scope.modeDebug = config.modeDebug;
 
     $scope.adminMode = securityService.checkIsAdmin();
     $scope.insuranceList = Insurance.query();
     $scope.saisonList = Saison.query();
 
-    $http.get(okeanoAppUrl + 'saison/currentSaison')
+    $http.get(config.okeanoAppUrl + 'saison/currentSaison')
         .then(function (response) {
             var saison = response.data;
             $scope.currentSaisonId = saison.id;

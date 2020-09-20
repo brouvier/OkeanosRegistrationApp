@@ -12,21 +12,24 @@ public class PropertiesResource extends AbstractResource {
 		super.setupEndpoints();
 
 		get(ressourcePath, (request, response) -> {
-			StringBuilder sb = new StringBuilder();
-
-			sb.append("'use strict';").append(System.getProperty("line.separator"));
-
-			sb.append("var okeanoAppUrl = '").append(AppProperties.getProperties().frontRestAcces).append(":")
-					.append(AppProperties.getProperties().restHostPort).append(AppProperties.API_CONTEXT).append("';")
-					.append(System.getProperty("line.separator"));
-
-			sb.append("var modeDebug = ").append(AppProperties.getProperties().frontModeDebug).append(";")
-					.append(System.getProperty("line.separator"));
-
-			sb.append("var applicationVersion = '" + getClass().getPackage().getImplementationVersion() + "';");
-
-			return sb.toString();
+			return gson.toJson(new PropertiesBean());
 		});
+	}
+
+	/**
+	 * Structure de données pour les échanges avec le front
+	 */
+	private class PropertiesBean {
+		@SuppressWarnings("unused")
+		public String okeanoAppUrl;
+		@SuppressWarnings("unused")
+		public Boolean modeDebug;
+
+		public PropertiesBean() {
+			this.okeanoAppUrl = AppProperties.getProperties().frontRestAcces + ":"
+					+ AppProperties.getProperties().restHostPort + AppProperties.API_CONTEXT;
+			this.modeDebug = "true".equals(AppProperties.getProperties().frontModeDebug);
+		}
 	}
 
 }
