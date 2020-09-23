@@ -7,6 +7,11 @@ var config = {
     okeanoAppUrl: "undefine"
 }; 
 
+// Redirection vers HTTPS
+if (location.protocol !== 'https:') {
+    location.protocol = "https:";
+}
+
 // Contrôle de la disponibilité du serveur
 var xmlHttp = new XMLHttpRequest();
 xmlHttp.open( "GET", config.propertiesUrl, false ); // false for synchronous request
